@@ -67,7 +67,13 @@
     }
 
     .screen.active {
-      display: block;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* チャット画面は内部でスクロール管理するため画面自体はスクロールしない */
+    #screen-chat {
+      overflow: hidden;
     }
 
     /* Wrap to simulate mobile view on desktop */
@@ -521,8 +527,11 @@
 
     .chat-body {
       flex: 1;
+      min-height: 0;
       padding: 16px 12px;
-      overflow-y: auto;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
     }
 
     .chat-date-label {
@@ -714,9 +723,12 @@
       -webkit-backdrop-filter: blur(8px);
       border-top: 1px solid rgba(0, 0, 0, 0.05);
       padding: 20px 16px;
-      position: sticky;
-      bottom: 0;
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      flex-shrink: 0;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: 60vh;
     }
 
     .choice-label {
