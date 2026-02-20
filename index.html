@@ -52,6 +52,7 @@
       background: #0f172a;
       color: var(--text-main);
       -webkit-text-size-adjust: 100%;
+      overscroll-behavior-y: none;
     }
 
     /* ===== SCREEN SYSTEM ===== */
@@ -63,17 +64,13 @@
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       touch-action: pan-y;
+      overscroll-behavior-y: none;
       background: var(--bg-gradient);
     }
 
     .screen.active {
       display: flex;
       flex-direction: column;
-    }
-
-    /* チャット画面は内部でスクロール管理するため画面自体はスクロールしない */
-    #screen-chat {
-      overflow: hidden;
     }
 
     /* Wrap to simulate mobile view on desktop */
@@ -482,8 +479,7 @@
     /* ===== CHAT SCREEN ===== */
     #screen-chat {
       background: var(--chat-bg);
-      min-height: 100vh;
-      flex-direction: column;
+      display: block;
     }
 
     .chat-header {
@@ -526,12 +522,7 @@
     }
 
     .chat-body {
-      flex: 1;
-      min-height: 0;
       padding: 16px 12px;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
     }
 
     .chat-date-label {
@@ -719,16 +710,10 @@
     /* Choice area */
     .choice-area {
       background: var(--surface);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
       border-top: 1px solid rgba(0, 0, 0, 0.05);
       padding: 20px 16px;
       padding-bottom: max(20px, env(safe-area-inset-bottom));
-      flex-shrink: 0;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      max-height: 60vh;
     }
 
     .choice-label {
@@ -2802,9 +2787,9 @@
     // UTILITIES
     // ===========================
     function scrollToBottom() {
-      const chatBody = document.getElementById('chat-body');
+      const screenChat = document.getElementById('screen-chat');
       requestAnimationFrame(() => {
-        chatBody.scrollTop = chatBody.scrollHeight;
+        screenChat.scrollTop = screenChat.scrollHeight;
       });
     }
   </script>
