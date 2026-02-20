@@ -59,15 +59,15 @@
       display: none;
       position: fixed;
       inset: 0;
-      overflow-y: auto;
+      overflow-y: scroll;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
       background: var(--bg-gradient);
     }
 
     .screen.active {
-      display: flex;
-      flex-direction: column;
+      display: block;
     }
 
     /* Wrap to simulate mobile view on desktop */
@@ -316,7 +316,7 @@
       width: 100%;
       max-width: 480px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
     }
 
     .tv-frame {
@@ -1631,7 +1631,7 @@
 
       <div class="tv-frame">
         <div class="tv-header">
-          <div class="tv-channel">📺 ニャンタビ放送 NHK</div>
+          <div class="tv-channel">📺 ニャンタビ放送 NTB</div>
           <div class="tv-live">● LIVE</div>
         </div>
         <div class="tv-screen">
@@ -1650,18 +1650,6 @@
             【速報】またたび市で震度6強 ／ 中央病院含む主要医療機関が被災 ／ 道路寸断・通信障害発生中 ／ 市役所・保健所に調整本部が立ち上げ ／
           </div>
         </div>
-      </div>
-
-      <div class="news-detail">
-        <h3>📋 その後判明した被害状況</h3>
-        <p style="font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:8px;">※発災直後には把握できず、時間の経過とともに明らかになった情報です</p>
-        <ul>
-          <li>市内の複数建物倒壊、主要道路が土砂崩れ等で寸断（南西側市道のみ一部通行可）</li>
-          <li>またたび中央病院など3つの主要施設が被災・機能不全</li>
-          <li>死傷者多数（現在も被害の全容は不明）</li>
-          <li>全面停電、上水道・下水道機能停止、インターネット接続不安定</li>
-          <li>ガス漏れ・爆発の危険あり。避難所開設も物資不足</li>
-        </ul>
       </div>
 
       <div class="news-detail">
@@ -2033,9 +2021,9 @@
               },
               {
                 letter: "B",
-                text: "スマホの防災アプリ（NHKニュース・防災、Yahoo!防災速報など）を開く",
+                text: "スマホの防災アプリ（NTBニュース・防災、Yahoo!防災速報など）を開く",
                 quality: "great",
-                comment: "正解です！「NHKニュース・防災」や「Yahoo!防災速報」は、緊急地震速報・避難情報・被害状況を公式情報としてリアルタイムで届けてくれます。みなさん、スマホにこうした防災アプリは入っていますか？",
+                comment: "正解です！「NTBニュース・防災」や「Yahoo!防災速報」は、緊急地震速報・避難情報・被害状況を公式情報としてリアルタイムで届けてくれます。みなさん、スマホにこうした防災アプリは入っていますか？",
                 bestComment: null
               },
               {
@@ -2046,7 +2034,7 @@
                 bestComment: "B＋C → 防災アプリとラジオの組み合わせが最強"
               }
             ],
-            learningPoint: "【主な防災アプリ一覧】\n・NHKニュース・防災（緊急速報＋ニュース映像）\n・Yahoo!防災速報（地震・津波・大雨など多ハザード対応）\n・ゆれコール（地震早期警報・到達時刻予測）\n・災害用伝言板 Web171（NTT安否確認）\n・各キャリアのエリアメール（自動受信・設定不要）\n\n平時に入れておくだけで、いざというとき大きな差になります！",
+            learningPoint: "【防災アプリで判明した被害状況】\n・市内の複数建物倒壊、主要道路が土砂崩れ等で寸断（南西側市道のみ一部通行可）\n・またたび中央病院など3つの主要施設が被災・機能不全\n・死傷者多数（現在も被害の全容は不明）\n・全面停電、上水道・下水道機能停止、インターネット接続不安定\n・ガス漏れ・爆発の危険あり。避難所開設も物資不足\n\n【主な防災アプリ一覧】\n・NTBニュース・防災（緊急速報＋ニュース映像）\n・Yahoo!防災速報（地震・津波・大雨など多ハザード対応）\n・ゆれコール（地震早期警報・到達時刻予測）\n・災害用伝言板 Web171（NTT安否確認）\n・各キャリアのエリアメール（自動受信・設定不要）\n\n平時に入れておくだけで、いざというとき大きな差になります！",
             nextScene: "2-2"
           },
           {
