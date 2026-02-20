@@ -1982,12 +1982,12 @@
             id: "2-1",
             label: "第2幕 シーン3",
             messages: [
-              { type: "narrator", text: "迂回路を通り、なんとかクリニックに到着した。午前11時30分。" },
-              { type: "narrator", text: "クリニックは建物の外観は無事だが、停電している。受付・処置室のスタッフの姿が見えない。" },
-              { type: "nanta", text: "スタッフは……？ みんなは無事か？" },
-              { type: "narrator", text: "自分のスマホの電波は1本。いつ切れてもおかしくない状況だ。" }
+              { type: "narrator", text: "揺れがおさまったのを確認し、路肩に車を停めた。時刻は午前10時57分。" },
+              { type: "narrator", text: "まず自分の体を確認する。打撲はあるが、大きな怪我はなさそうだ。" },
+              { type: "nanta", text: "家族は……クリニックのスタッフは……みんな無事か？" },
+              { type: "narrator", text: "スマホを手にとる。電波は1本。いつ切れてもおかしくない状況だ。" }
             ],
-            question: "クリニックスタッフへの連絡方法はどうしますか？",
+            question: "家族とクリニックへの連絡、どうしますか？",
             choices: [
               {
                 letter: "A",
@@ -2021,7 +2021,9 @@
               // <!-- 画像挿入ポイント：停電したクリニック内部の画像 -->
               // { type: "system", text: `<div class="image-placeholder" style="width: 100%; height: 120px; background: rgba(0,0,0,0.1); border: 2px dashed rgba(0,0,0,0.3); border-radius: 8px; margin: 8px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">停電したクリニックの画像</div>` },
 
-              { type: "narrator", text: "連絡ツリーを使い、スタッフ4人のうち3人の安否が確認できた。1人は道路寸断で来られないが無事とのこと。" },
+              { type: "narrator", text: "連絡ツリーを使い、家族の無事を確認。スタッフ4人のうち3人の安否も取れた。1人は道路寸断で来られないが無事とのこと。" },
+              { type: "narrator", text: "迂回路を通り、なんとかクリニックに到着した。午前11時30分。" },
+              { type: "narrator", text: "クリニックは建物の外観は無事だが、停電している。" },
               { type: "nanta", text: "よかった……。さあ、クリニックを再開する準備を——" },
               { type: "patient", text: "先生！ 透析病院が被災したって聞きました。どうすればいいんですか……！" },
               { type: "narrator", text: "週3回透析が必要な患者さん・三毛ノリさん（78歳）から緊急連絡が入った。次の透析は明日だ。" }
