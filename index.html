@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>地震TRPGシナリオ — マタタビクリニック院長の一日</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Palette */
+      --primary: #5A67D8;
+      /* Indigo base */
+      --primary-dark: #434190;
+      --secondary: #2DD4BF;
+      /* Teal highlight */
+      --accent: #F97316;
+      /* Orange active highlight */
+      --bg-dark: #0F172A;
+      /* Slate 900 */
+      --bg-gradient: linear-gradient(135deg, #1E293B, #0F172A);
+      --surface: rgba(255, 255, 255, 0.95);
+      --surface-glass: rgba(255, 255, 255, 0.08);
+      --text-main: #111827;
+      --text-muted: #6B7280;
+      --text-light: #F1F5F9;
+      --orange: #FF6B35;
+      --yellow: #FFD166;
+      --red: #EF4444;
+      --green: #10B981;
+      --blue: #118AB2;
+      --bubble-left: #FFFFFF;
+      --bubble-right: #E0E7FF;
+      --font-main: 'Zen Kaku Gothic New', "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: var(--font-main);
+      background: #0f172a;
+      color: var(--text-main);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ===== SCREEN SYSTEM ===== */
+    .screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      background: var(--bg-gradient);
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Wrap to simulate mobile view on desktop */
+    #app-container {
+      width: 100%;
+      max-width: 480px;
+      /* iPhone width approx */
+      background: var(--bg-dark);
+      position: relative;
+      overflow-x: hidden;
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    #progress-bar-wrap {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: 1000;
+      display: none;
+    }
+
+    #progress-bar-wrap.visible {
+      display: block;
+    }
+
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--yellow));
+      transition: width 0.4s ease;
+    }
+
+    /* ===== ACT LABEL ===== */
+    .act-label {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(29, 29, 44, 0.8);
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      z-index: 999;
+      letter-spacing: 0.5px;
+      display: none;
+    }
+
+    .act-label.visible {
+      display: block;
+    }
+
+    /* ===== TITLE SCREEN ===== */
+    #screen-title {
+      background: linear-gradient(145deg, #1E1B4B 0%, var(--bg-dark) 100%);
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    #screen-title::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 30%, rgba(90, 103, 216, 0.2), transparent 60%);
+      pointer-events: none;
+    }
+
+    .title-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .workshop-label {
+      background: transparent;
+      color: var(--secondary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .title-cat {
+      font-size: 80px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 4px 12px rgba(255, 107, 53, 0.4));
+    }
+
+    .title-main {
+      font-size: 32px;
+      font-weight: 900;
+      color: white;
+      text-align: center;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, #FFFFFF, #E2E8F0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .char-card {
+      background: var(--surface-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      margin-bottom: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .char-card-title {
+      font-size: 12px;
+      color: var(--secondary);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .char-name {
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .char-name-sub {
+      font-size: 12px;
+      color: #94A3B8;
+      margin-bottom: 12px;
+    }
+
+    .char-desc {
+      font-size: 13px;
+      color: #CBD5E1;
+      line-height: 1.7;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 12px;
+    }
+
+    .time-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 16px;
+      padding: 16px;
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .time-badge .icon {
+      font-size: 24px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .time-badge .text {
+      font-size: 13px;
+      color: #FECACA;
+      line-height: 1.5;
+    }
+
+    .time-badge .text strong {
+      color: #FCA5A5;
+      font-size: 14px;
+    }
+
+    .btn-start {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--accent), #EA580C);
+      color: white;
+      font-size: 18px;
+      font-weight: 900;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 24px rgba(234, 88, 12, 0.4);
+      transition: all 0.2s ease;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(234, 88, 12, 0.5);
+    }
+
+    .btn-start:active {
+      transform: scale(0.98);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+    }
+
+    /* ===== NEWS SCREEN ===== */
+    #screen-news {
+      background: #111;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .news-inner {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .tv-frame {
+      background: #222;
+      border: 3px solid #444;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .tv-header {
+      background: #CC0000;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tv-channel {
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .tv-live {
+      background: #FF0000;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .tv-screen {
+      background: linear-gradient(180deg, #1a2a4a 0%, #0a0a1a 100%);
+      padding: 20px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tv-breaking {
+      background: var(--red);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      display: inline-block;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+
+    .tv-headline {
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .tv-body {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.8;
+    }
+
+    .tv-ticker {
+      background: var(--orange);
+      overflow: hidden;
+      padding: 8px 0;
+    }
+
+    .tv-ticker-inner {
+      white-space: nowrap;
+      animation: ticker 20s linear infinite;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      padding-left: 100%;
+    }
+
+    @keyframes ticker {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .news-detail {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .news-detail h3 {
+      font-size: 13px;
+      color: var(--yellow);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .news-detail ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .news-detail ul li {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      line-height: 1.6;
+    }
+
+    .news-detail ul li::before {
+      content: "▶ ";
+      color: var(--orange);
+    }
+
+    .news-detail ul li:last-child {
+      border-bottom: none;
+    }
+
+    .btn-news-next {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #CC0000, var(--orange));
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(204, 0, 0, 0.3);
+    }
+
+    /* ===== CHAT SCREEN ===== */
+    #screen-chat {
+      background: var(--chat-bg);
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background: #075E54;
+      padding: 12px 16px;
+      padding-top: max(12px, env(safe-area-inset-top));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .chat-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), #FF8C5A);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .chat-header-info {
+      flex: 1;
+    }
+
+    .chat-header-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .chat-header-sub {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 16px 12px;
+      overflow-y: auto;
+    }
+
+    .chat-date-label {
+      text-align: center;
+      margin: 12px 0;
+    }
+
+    .chat-date-label span {
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 10px;
+    }
+
+    .chat-scene-label {
+      text-align: center;
+      margin: 20px 0 12px;
+    }
+
+    .chat-scene-label span {
+      background: var(--orange);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      box-shadow: 0 3px 10px rgba(255, 107, 53, 0.3);
+    }
+
+    /* Bubbles */
+    .bubble-wrap {
+      display: flex;
+      margin-bottom: 12px;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .bubble-wrap.right {
+      flex-direction: row-reverse;
+    }
+
+    .bubble-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      background: #ddd;
+    }
+
+    .bubble-avatar.narrator {
+      background: linear-gradient(135deg, #4a9eda, #2980b9);
+    }
+
+    .bubble-avatar.nanta {
+      background: linear-gradient(135deg, var(--orange), #FF8C5A);
+    }
+
+    .bubble-avatar.staff {
+      background: linear-gradient(135deg, #06D6A0, #05b386);
+    }
+
+    .bubble-avatar.patient {
+      background: linear-gradient(135deg, #8B5CF6, #7c3aed);
+    }
+
+    .bubble-avatar.system {
+      background: linear-gradient(135deg, #E63946, #cc2f3b);
+    }
+
+    .bubble-content {
+      max-width: calc(100% - 50px);
+    }
+
+    .bubble-sender {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 4px;
+      padding-left: 4px;
+    }
+
+    .bubble {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 100%;
+      position: relative;
+      word-break: break-word;
+    }
+
+    .bubble.left {
+      background: var(--bubble-left);
+      border-top-left-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .bubble.right {
+      background: var(--bubble-right);
+      border-top-right-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .bubble.system-msg {
+      background: rgba(230, 57, 70, 0.1);
+      border: 1px solid rgba(230, 57, 70, 0.3);
+      border-radius: 12px;
+      color: var(--red);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .bubble-time {
+      font-size: 10px;
+      color: var(--gray);
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    .bubble-wrap.right .bubble-time {
+      text-align: right;
+      padding-left: 0;
+      padding-right: 4px;
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .typing-indicator.visible {
+      opacity: 1;
+    }
+
+    .typing-dots {
+      background: white;
+      border-radius: 18px;
+      border-top-left-radius: 4px;
+      padding: 10px 14px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #aaa;
+      animation: typingBounce 1.2s ease infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typingBounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* Choice area */
+    .choice-area {
+      background: var(--surface);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 20px 16px;
+      position: sticky;
+      bottom: 0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .choice-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .choice-btn {
+      width: 100%;
+      padding: 16px 18px;
+      margin-bottom: 10px;
+      background: white;
+      border: 2px solid #E2E8F0;
+      border-radius: 16px;
+      font-size: 14px;
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: left;
+      line-height: 1.5;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .choice-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(90, 103, 216, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .choice-btn:active {
+      transform: scale(0.98);
+    }
+
+    .choice-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #F1F5F9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .choice-btn.best {
+      border-color: var(--green);
+      background: #ECFDF5;
+    }
+
+    .choice-btn.best .choice-letter {
+      background: var(--green);
+      color: white;
+    }
+
+    .choice-btn.ok {
+      border-color: var(--accent);
+      background: #FFF7ED;
+    }
+
+    .choice-btn.ok .choice-letter {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* ===== RESULT SCREEN ===== */
+    #screen-result {
+      background: var(--light-gray);
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .result-header {
+      padding: 20px 16px 12px;
+      background: white;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .result-badge.great {
+      background: rgba(6, 214, 160, 0.15);
+      color: #059669;
+    }
+
+    .result-badge.good {
+      background: rgba(255, 209, 102, 0.2);
+      color: #D97706;
+    }
+
+    .result-badge.rethink {
+      background: rgba(229, 57, 70, 0.1);
+      color: var(--red);
+    }
+
+    .result-title {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.3;
+    }
+
+    .result-body {
+      padding: 16px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .result-selected {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--gray);
+    }
+
+    .result-selected.great {
+      border-left-color: var(--green);
+    }
+
+    .result-selected.good {
+      border-left-color: var(--yellow);
+    }
+
+    .result-selected.rethink {
+      border-left-color: var(--red);
+    }
+
+    .result-selected-label {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .result-selected-text {
+      font-size: 15px;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .result-comment {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .result-comment h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-comment p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #374151;
+    }
+
+    .best-choice-box {
+      background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(6, 214, 160, 0.05));
+      border: 2px solid var(--green);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .best-choice-box h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .best-choice-box p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #065F46;
+    }
+
+    .learning-box {
+      background: linear-gradient(135deg, rgba(17, 138, 178, 0.1), rgba(17, 138, 178, 0.05));
+      border: 2px solid var(--blue);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .learning-box h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .learning-box p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #1E40AF;
+      font-weight: 600;
+    }
+
+    .btn-continue {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--dark), #2D1B4E);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(29, 29, 44, 0.3);
+    }
+
+    /* ===== ACT BREAK SCREEN ===== */
+    #screen-act-break {
+      background: linear-gradient(160deg, #1D1D2C, #2D1B4E);
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .act-break-inner {
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .act-number {
+      font-size: 13px;
+      color: var(--orange);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .act-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .act-goal {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .act-goal-label {
+      font-size: 11px;
+      color: var(--yellow);
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .act-goal-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .act-time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 107, 53, 0.2);
+      border: 1px solid rgba(255, 107, 53, 0.4);
+      color: var(--orange);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+    }
+
+    .btn-act-start {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--orange), #FF8C5A);
+      color: white;
+      font-size: 18px;
+      font-weight: 900;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+    }
+
+    /* ===== HAZARD MAP SCREEN ===== */
+    #screen-hazard {
+      background: #F0F9FF;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .hazard-header {
+      background: linear-gradient(135deg, #0369A1, var(--blue));
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .hazard-header h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .hazard-header p {
+      font-size: 13px;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    .hazard-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .hazard-section {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .hazard-section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hazard-section p {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .link-btn {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, var(--blue), #0369A1);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 8px;
+      transition: opacity 0.15s;
+    }
+
+    .link-btn:active {
+      opacity: 0.85;
+    }
+
+    .link-btn.green {
+      background: linear-gradient(135deg, var(--green), #05b386);
+    }
+
+    .link-btn.orange {
+      background: linear-gradient(135deg, var(--orange), #FF8C5A);
+    }
+
+    .hazard-notice {
+      background: rgba(255, 107, 53, 0.1);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .hazard-notice h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 6px;
+    }
+
+    .hazard-notice p {
+      font-size: 13px;
+      color: #92400E;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .btn-hazard-next {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #0369A1, var(--blue));
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    /* ===== BCP SCREEN ===== */
+    #screen-bcp {
+      background: #F0FDF4;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .bcp-header {
+      background: linear-gradient(135deg, #065F46, var(--green));
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .bcp-header h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .bcp-header p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .bcp-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .bcp-category {
+      background: white;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .bcp-cat-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bcp-cat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .bcp-cat-info {
+      flex: 1;
+    }
+
+    .bcp-cat-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .bcp-cat-sub {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .bcp-items {
+      padding: 0 16px 14px;
+    }
+
+    .bcp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #F3F4F6;
+      cursor: pointer;
+    }
+
+    .bcp-item:last-child {
+      border-bottom: none;
+    }
+
+    .bcp-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #D1D5DB;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      margin-top: 1px;
+    }
+
+    .bcp-checkbox.checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .bcp-checkbox.checked::after {
+      content: "✓";
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .bcp-item-text {
+      flex: 1;
+    }
+
+    .bcp-item-text strong {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+      line-height: 1.4;
+      color: var(--dark);
+    }
+
+    .bcp-item-text span {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .bcp-score-area {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .bcp-score-label {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .bcp-score-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+    }
+
+    .bcp-score-total {
+      font-size: 20px;
+      color: var(--gray);
+    }
+
+    .bcp-score-msg {
+      font-size: 14px;
+      color: var(--dark);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    .btn-bcp-next {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #065F46, var(--green));
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* ===== SUMMARY SCREEN ===== */
+    #screen-summary {
+      background: linear-gradient(160deg, #1D1D2C, #2D1B4E);
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .summary-header {
+      padding: 32px 20px 20px;
+      text-align: center;
+    }
+
+    .summary-emoji {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .summary-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .summary-sub {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .summary-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .summary-key {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .summary-key-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .summary-key-content {
+      flex: 1;
+    }
+
+    .summary-key-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .summary-key-text {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    .action-plan-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 209, 102, 0.4);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .action-plan-box h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--yellow);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .action-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      padding: 12px;
+      color: white;
+      font-size: 14px;
+      font-family: var(--font-main);
+      line-height: 1.6;
+      resize: none;
+      min-height: 100px;
+    }
+
+    .action-input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .action-input:focus {
+      outline: none;
+      border-color: var(--yellow);
+    }
+
+    .action-hint {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .summary-footer {
+      padding: 0 16px 32px;
+      padding-bottom: max(32px, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+
+    .summary-footer p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .btn-restart {
+      width: 100%;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 15px;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* ===== INTRO BANNER (acts 2/3) ===== */
+    .facilitator-banner {
+      background: rgba(255, 107, 53, 0.12);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 0 12px 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .facilitator-banner .icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .facilitator-banner p {
+      font-size: 12px;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .facilitator-banner p strong {
+      color: var(--orange);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.35s ease forwards;
+    }
+
+    /* ===== UTILITIES ===== */
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-8 {
+      margin-bottom: 8px;
+    }
+
+    .mt-16 {
+      margin-top: 16px;
+    }
+
+    /* Added fixes for text visibility */
+    .learning-box,
+    .result-comment,
+    .result-best,
+    .best-choice-box {
+      background: rgba(255, 255, 255, 0.95) !important;
+      color: #1e293b !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .learning-box h3,
+    .result-comment h3,
+    .result-best h3 {
+      color: #d97706 !important;
+    }
+
+    #break-facilitator-note,
+    .facil-note {
+      background: rgba(255, 255, 255, 0.95) !important;
+      color: #1e293b !important;
+      text-shadow: none !important;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== PROGRESS BAR ===== -->
+  <div id="progress-bar-wrap">
+    <div id="progress-bar" style="width: 0%"></div>
+  </div>
+  <div class="act-label" id="act-label"></div>
+
+  <!-- ===========================
+     SCREEN 1: TITLE
+=========================== -->
+  <div id="screen-title" class="screen active">
+    <div class="title-inner">
+      <div class="workshop-label">若手医師のための家庭医療学 冬季セミナー2026</div>
+
+      <!-- 画像挿入ポイント：タイトル画面のトップ画像 -->
+      <img src="doctor_cat.png" alt="Doctor Cat"
+        style="width: 160px; height: 160px; border-radius: 50%; border: 4px solid white; margin-bottom: 20px; box-shadow: 0 10px 25px rgba(255,107,53,0.4); object-fit: cover; background: white; object-position: center top;">
+
+      <div class="title-main">地震TRPGシナリオ<br>マタタビクリニック院長の一日</div>
+      <div class="title-sub">あなたが地域医療を守るために<br>今日できることを考えよう</div>
+
+      <div class="char-card">
+        <div class="char-card-title">🎭 あなたのキャラクター</div>
+        <div class="char-name">🐾 ネコミヤ ニャンタ</div>
+        <div class="char-name-sub">猫山県またたび市　マタタビクリニック 院長</div>
+        <div class="char-desc">
+          2025年4月に開業した無床診療所医師（医師1名、事務2名、看護師2名）。
+          月水金は午前外来・午後在宅診療、それ以外は終日外来をこなす家庭医。
+          今日は在宅診療の帰り道。午前10時45分。
+        </div>
+      </div>
+
+      <div class="time-badge">
+        <div class="icon">🚨</div>
+        <div class="text">
+          <strong>緊急速報</strong><br>
+          2026年2月23日（火）10:45<br>
+          ねこやま県またたび市で震度6強
+        </div>
+      </div>
+
+      <button class="btn-start" onclick="showScreen('news')">
+        シナリオを開始する →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 2: NEWS
+=========================== -->
+  <div id="screen-news" class="screen">
+    <div class="news-inner">
+
+      <!-- 画像挿入ポイント：ニュース画面（街の被害など） -->
+      <!-- <div class="image-placeholder" style="width: 100%; height: 160px; background: rgba(255,255,255,0.1); border: 2px dashed rgba(255,255,255,0.3); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 12px;">ニュース映像・街の被害の画像</div> -->
+
+      <div class="tv-frame">
+        <div class="tv-header">
+          <div class="tv-channel">📺 ニャンタビ放送 NHK</div>
+          <div class="tv-live">● LIVE</div>
+        </div>
+        <div class="tv-screen">
+          <div class="tv-breaking">⚡ 緊急速報</div>
+          <div class="tv-headline">ねこやま県またたび市<br>震度6強の地震発生</div>
+          <div class="tv-body">
+            本日午前9時45分ごろ、ねこやま県またたび市を震源とする
+            震度6強の地震が発生しました。
+            市内各所で建物倒壊等の甚大な被害が確認され、
+            またたび中央病院を含む主要医療機関が被災し受け入れ困難な状況です。
+            現在、市役所および保健所に災害対策本部・保健医療福祉調整本部が立ち上がり情報収集を急いでいます。
+          </div>
+        </div>
+        <div class="tv-ticker">
+          <div class="tv-ticker-inner">
+            【速報】またたび市で震度6強 ／ 中央病院含む主要医療機関が被災 ／ 道路寸断・通信障害発生中 ／ 市役所・保健所に調整本部が立ち上げ ／
+          </div>
+        </div>
+      </div>
+
+      <div class="news-detail">
+        <h3>📋 被害状況（10:45現在）</h3>
+        <ul>
+          <li>市内の複数建物倒壊、主要道路が土砂崩れ等で寸断（南西側市道のみ一部通行可）</li>
+          <li>またたび中央病院など3つの主要施設が被災・機能不全</li>
+          <li>死傷者多数（現在も被害の全容は不明）</li>
+          <li>全面停電、上水道・下水道機能停止、インターネット接続不安定</li>
+          <li>ガス漏れ・爆発の危険あり。避難所開設も物資不足</li>
+        </ul>
+      </div>
+
+      <div class="news-detail">
+        <h3>🚗 あなたの状況</h3>
+        <ul>
+          <li>午前中の在宅診療を終え、クリニックへの帰り道</li>
+          <li>突然の強い揺れ。直ちに車を路肩に停車</li>
+          <li>前方の道路が大きく陥没しているのを目撃</li>
+        </ul>
+      </div>
+
+      <button class="btn-news-next" onclick="startAct1()">
+        第1幕へ進む →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 3: CHAT (LINE-style)
+=========================== -->
+  <div id="screen-chat" class="screen">
+    <div class="chat-header">
+      <div class="chat-avatar">🐾</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">マタタビクリニック院長の一日</div>
+        <div class="chat-header-sub" id="chat-header-sub">第1幕：発災直後の初動</div>
+      </div>
+    </div>
+
+    <div class="chat-body" id="chat-body">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <div class="choice-area" id="choice-area" style="display:none">
+      <div class="choice-label" id="choice-label">どうしますか？</div>
+      <div id="choice-buttons"></div>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 4: RESULT
+=========================== -->
+  <div id="screen-result" class="screen">
+    <div class="result-header">
+      <div class="result-badge" id="result-badge"></div>
+      <div class="result-title" id="result-title"></div>
+    </div>
+    <div class="result-body" id="result-body"></div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 5: ACT BREAK
+=========================== -->
+  <div id="screen-act-break" class="screen">
+    <div class="act-break-inner">
+      <div class="act-number" id="break-act-number"></div>
+      <div class="act-title" id="break-act-title"></div>
+      <div class="act-goal">
+        <div class="act-goal-label">このActのねらい</div>
+        <div class="act-goal-text" id="break-act-goal"></div>
+      </div>
+      <div class="act-time-badge">
+        <span>⏱</span>
+        <span id="break-act-time"></span>
+      </div>
+      <div
+        style="margin-bottom:16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:14px 16px; text-align:left;">
+        <div style="font-size:11px; color:#FFD166; font-weight:700; margin-bottom:6px;">🎙 ファシリテーターから</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.8); line-height:1.7;" id="break-facilitator-note"></div>
+      </div>
+      <button class="btn-act-start" id="btn-act-start">開始する →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 6: HAZARD MAP
+=========================== -->
+  <div id="screen-hazard" class="screen">
+    <div class="hazard-header">
+      <h2>🗺 ハザードマップ確認</h2>
+      <p>またたび市での体験をもとに、あなたの地域のハザードマップも確認しましょう。</p>
+    </div>
+    <div class="hazard-body">
+      <div class="hazard-notice">
+        <h4>📍 またたび市シナリオから学んだこと</h4>
+        <p>
+          震度6強では道路寸断・建物被害・通信障害が同時に発生します。
+          平時に「どこに何があるか」を知っておくことが、災害時の行動を大きく変えます。
+        </p>
+      </div>
+
+      <div class="hazard-section">
+        <h3>🌐 全国ハザードマップ</h3>
+        <p>
+          国土地理院の「重ねるハザードマップ」で洪水・土砂・地震・津波など
+          複数のリスクを重ねて確認できます。
+        </p>
+        <a href="https://disaportal.gsi.go.jp/" target="_blank" class="link-btn">
+          🗾 重ねるハザードマップ（国土地理院）
+        </a>
+      </div>
+
+
+      <div
+        style="background:white; border-radius:14px; padding:16px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <h3 style="font-size:15px; font-weight:700; color:var(--dark); margin-bottom:12px;">✍️ 個人ワーク</h3>
+        <p style="font-size:14px; color:#374151; line-height:1.8; margin-bottom:12px;">
+          上のリンクを開いて、以下を確認してみましょう：
+        </p>
+        <div style="background:var(--light-gray); border-radius:10px; padding:14px;">
+          <div style="font-size:13px; color:var(--dark); line-height:2;">
+            ☐ あなたのクリニック（または職場）のハザードリスク<br>
+            ☐ 自宅のハザードリスク<br>
+            ☐ 担当している要配慮者の居住エリア<br>
+            ☐ 近隣の避難所・避難場所の位置
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-hazard-next" onclick="showBCP()">
+        BCPチェックリストへ →
+      </button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 7: BCP CHECKLIST
+=========================== -->
+  <div id="screen-bcp" class="screen">
+    <div class="bcp-header">
+      <h2>📋 BCPチェックリスト</h2>
+      <p>あなたのクリニックは災害に備えていますか？4つの視点で確認しましょう。</p>
+    </div>
+    <div class="bcp-body" id="bcp-body">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN 8: SUMMARY
+=========================== -->
+  <div id="screen-summary" class="screen">
+    <div class="summary-header">
+      <div class="summary-emoji">🎉</div>
+      <div class="summary-title">ワークショップ完了！</div>
+      <div class="summary-sub">3つの幕を通じて、地域医療を守るための<br>気づきを得ることができました</div>
+    </div>
+    <div class="summary-body">
+      <div class="summary-key">
+        <div class="summary-key-num">1</div>
+        <div class="summary-key-content">
+          <div class="summary-key-title">自分 → 家族 → 仕事の順番</div>
+          <div class="summary-key-text">
+            発災時は「自分の安全確認」が最初。
+            自分が動けなければ誰も助けられません。
+            自分→家族→仕事の優先順位を事前に決めておきましょう。
+          </div>
+        </div>
+      </div>
+      <div class="summary-key">
+        <div class="summary-key-num">2</div>
+        <div class="summary-key-content">
+          <div class="summary-key-title">コミュニケーション手段は2つ以上確保</div>
+          <div class="summary-key-text">
+            大規模災害では電話回線が輻輳します。
+            LINE・SMS・連絡ツリー・無線など、
+            複数の手段を平時から整えておくことが不可欠です。
+          </div>
+        </div>
+      </div>
+      <div class="summary-key">
+        <div class="summary-key-num">3</div>
+        <div class="summary-key-content">
+          <div class="summary-key-title">平時の対話がBCPの基本</div>
+          <div class="summary-key-text">
+            要配慮者との「どこに逃げるか」の対話、
+            棚の固定・耐震補強、BCPの整備——
+            これらは「災害対策」であると同時に「日常の医療の質」向上です。
+          </div>
+        </div>
+      </div>
+
+      <div class="action-plan-box">
+        <h3>✍️ アクションプランニング</h3>
+        <div style="font-size:13px; color:rgba(255,255,255,0.7); margin-bottom:10px; line-height:1.6;">
+          このワークショップを受けて、明日から実践できることを書いてみましょう：
+        </div>
+        <textarea class="action-input" id="action-input"
+          placeholder="例：スタッフと連絡ツリーを作成する&#10;例：患者Aさんと避難場所を話し合う&#10;例：棚の固定をチェックする"></textarea>
+        <div class="action-hint">スクリーンショットで保存できます 📸</div>
+      </div>
+      <div class="action-plan-box"
+        style="margin-top:20px; background:rgba(45,212,191,0.1); border-color:var(--secondary);">
+        <h3>📘 参考・事例紹介</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.8); line-height:1.6; margin-bottom:12px;">
+          実際の災害支援活動において、地域のプライマリ・ケアがどのように外部支援と連携し受援力を発揮したか。以下の報告書もぜひご一読ください。
+        </p>
+        <a href="https://example.com/pcat-report" target="_blank"
+          onclick="alert('能登半島地震・奥能登豪雨災害支援報告書のURL（プレースホルダー）を開きます'); return false;" class="btn-continue"
+          style="background:var(--secondary); text-align:center; padding:12px; display:block; text-decoration:none; font-size:14px;">
+          能登半島地震・奥能登豪雨災害支援報告書
+        </a>
+      </div>
+    </div>
+
+    <div class="summary-footer">
+      <p>
+        若手医師のための家庭医療学 冬季セミナー2026<br>
+        地域医療を守るために、今日から一歩踏み出しましょう 🐾
+      </p>
+      <button class="btn-restart" onclick="restart()">
+        もう一度プレイする
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ===========================
+    // DATA: STORY SCENES
+    // ===========================
+
+    const STORY = {
+      act1: {
+        label: "第1幕",
+        title: "発災！まず何から？",
+        goal: "自分→家族→仕事の安全確認の順序を体感する。「当たり前」を決断する難しさを知る。",
+        time: "約10分",
+        facilNote: "まずグループで「あなたはどう行動しますか？」と話し合ってから選択肢を選びましょう。正解探しではなく、みんなの最初の判断を共有することが大切です。",
+        headerSub: "第1幕：発災直後の初動",
+        scenes: [
+          {
+            id: "1-1",
+            label: "第1幕 シーン1",
+            messages: [
+              { type: "narrator", text: "在宅診療の帰り道。午前10時45分。" },
+              { type: "narrator", text: "突然、車が大きく揺れた。緊急速報がけたたましく鳴り響く。" },
+              { type: "system", text: "⚡️ 緊急地震速報\nただいま強い地震が発生しています。揺れに警戒してください。" },
+              { type: "narrator", text: "揺れが収まった。前を見ると、道路の一部が大きくめくれあがっていた。" },
+
+              // <!-- 画像挿入ポイント：陥没した道路の画像 -->
+              // { type: "system", text: `<div class="image-placeholder" style="width: 100%; height: 120px; background: rgba(0,0,0,0.1); border: 2px dashed rgba(0,0,0,0.3); border-radius: 8px; margin: 8px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">陥没した道路の画像</div>` },
+
+              { type: "nanta", text: "うわっ……！ 止まれた。道が……陥没している。" },
+              { type: "narrator", text: "他にも数台の車が路肩に止まっている。遠くから火災らしき煙も見える。" }
+            ],
+            question: "あなたはまず何をしますか？",
+            choices: [
+              {
+                letter: "A",
+                text: "すぐにクリニックに電話してスタッフと患者の状況を確認する",
+                quality: "rethink",
+                comment: "医療者としての責任感からクリニックを心配する気持ちはわかりますが、まず自分の安全確認が先です。自分が負傷していては診療どころではありません。",
+                bestComment: "B → 支援者となるためには、まず自分自身の安全確保（Do no harmの前提）が必要です"
+              },
+              {
+                letter: "B",
+                text: "車を安全な場所（広場など）に止め直し、自分の身体状況と周囲の危険を確認する",
+                quality: "great",
+                comment: "正しい優先順位です！支援を行うための大前提は「支援者自身が安全であること」です。まずご自身の無事を確認することから始めましょう。",
+                bestComment: null
+              },
+              {
+                letter: "C",
+                text: "在宅診療で先ほど訪問した患者宅に引き返す",
+                quality: "rethink",
+                comment: "患者さんを心配する気持ちは大切ですが、道路が陥没しガス漏れ等の危険な状況下では、まず自分の安全確認が必要です。二次災害に巻き込まれる恐れがあります。",
+                bestComment: "B → まず自分の身体・環境の安全確認"
+              }
+            ],
+            nextScene: "1-2"
+          },
+          {
+            id: "1-2",
+            label: "第1幕 シーン2",
+            preMessages: [
+              { type: "narrator", text: "車を路肩に止め、身体を確認した。打撲はない。無事だ。" },
+              { type: "nanta", text: "よし……動ける。次は家族に連絡しないと。" },
+              { type: "narrator", text: "スマホを取り出す。しかし、発信音がしない。電話回線が混雑している。" },
+              { type: "system", text: "📵 通話がつながりにくい状況です。\n回線が集中しています。" }
+            ],
+            question: "家族への連絡手段はどれにしますか？",
+            choices: [
+              {
+                letter: "A",
+                text: "公衆電話を探す。固定電話ならつながるかもしれない",
+                quality: "ok",
+                comment: "公衆電話は災害時に無料開放されることがありますが、場所を探す時間がかかります。まずは手元の手段を試しましょう。",
+                bestComment: "B → SNSやLINEの安否確認機能は回線が少なくてすむため有効"
+              },
+              {
+                letter: "B",
+                text: "LINEの安否確認メッセージやSNSのステータス機能を使う",
+                quality: "great",
+                comment: "正解！音声通話と比べてデータ通信は少ない帯域で動くため、回線混雑時でも届きやすい。LINEの安否確認機能は特に有効です。",
+                bestComment: null
+              },
+              {
+                letter: "C",
+                text: "連絡を後回しにして、直接自宅に向かう",
+                quality: "rethink",
+                comment: "家族の安否を後回しにすると、心配が判断の邪魔をします。また移動中の二次災害リスクもあります。まずデジタルで連絡を試みましょう。",
+                bestComment: "B → まずテキスト・SNSで安否確認"
+              }
+            ],
+            learningPoint: "自分 → 家族 → 仕事の順番が基本。\n音声回線は輻輳（混雑）しやすい。テキスト・SNSを活用しよう。",
+            nextAct: "act2"
+          }
+        ]
+      },
+      act2: {
+        label: "第2幕",
+        title: "通信が使えない…",
+        goal: "複数のコミュニケーション手段の必要性を体感し、情報収集のルートを知る。",
+        time: "約10分",
+        facilNote: "通信が途絶えた経験はありますか？グループで「どんな連絡手段を持っているか」を確認し合ってから選択肢を選んでみましょう。",
+        headerSub: "第2幕：コミュニケーション・情報収集",
+        scenes: [
+          {
+            id: "2-1",
+            label: "第2幕 シーン3",
+            messages: [
+              { type: "narrator", text: "迂回路を通り、なんとかクリニックに到着した。午前11時30分。" },
+              { type: "narrator", text: "クリニックは建物の外観は無事だが、停電している。受付・処置室のスタッフの姿が見えない。" },
+              { type: "nanta", text: "スタッフは……？ みんなは無事か？" },
+              { type: "narrator", text: "自分のスマホの電波は1本。いつ切れてもおかしくない状況だ。" }
+            ],
+            question: "クリニックスタッフへの連絡方法はどうしますか？",
+            choices: [
+              {
+                letter: "A",
+                text: "スタッフの携帯に順番に電話をかけ続ける",
+                quality: "ok",
+                comment: "電話は確実に話せますが、回線輻輳で繋がらない可能性が高い。一手段に頼らず複数手段を並行して使うことが大切です。",
+                bestComment: "C → 連絡ツリー＋複数手段を平時から準備しておく"
+              },
+              {
+                letter: "B",
+                text: "メールを一斉送信する。見てくれるはずだ",
+                quality: "rethink",
+                comment: "メールは届いても気づかれにくく、停電でPCが使えない状況も考えられます。受信確認もできません。",
+                bestComment: "C → 事前に決めた連絡ツリーと複数手段の組み合わせが必要"
+              },
+              {
+                letter: "C",
+                text: "事前に決めていた「連絡ツリー」を使い、LINE・SMS・無線を並行して使う",
+                quality: "great",
+                comment: "最善の選択です！平時に「連絡ツリー」と複数の通信手段を整備しておくことで、こうした状況でも確実に連絡が取れます。",
+                bestComment: null
+              }
+            ],
+            nextScene: "2-2"
+          },
+          {
+            id: "2-2",
+            label: "第2幕 シーン4",
+            preMessages: [
+
+              // <!-- 画像挿入ポイント：停電したクリニック内部の画像 -->
+              // { type: "system", text: `<div class="image-placeholder" style="width: 100%; height: 120px; background: rgba(0,0,0,0.1); border: 2px dashed rgba(0,0,0,0.3); border-radius: 8px; margin: 8px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">停電したクリニックの画像</div>` },
+
+              { type: "narrator", text: "連絡ツリーを使い、スタッフ4人のうち3人の安否が確認できた。1人は道路寸断で来られないが無事とのこと。" },
+              { type: "nanta", text: "よかった……。さあ、クリニックを再開する準備を——" },
+              { type: "patient", text: "先生！ 透析病院が被災したって聞きました。どうすればいいんですか……！" },
+              { type: "narrator", text: "週3回透析が必要な患者さん・三毛ノリさん（78歳）から緊急連絡が入った。次の透析は明日だ。" }
+            ],
+            question: "この状況、どう対応しますか？",
+            choices: [
+              {
+                letter: "A",
+                text: "市役所に設置された「保健医療福祉調整本部」に被害状況を報告し、広域連携で透析可能施設を調整してもらう",
+                quality: "great",
+                comment: "正解！プライマリ・ケア医は地域の状況を把握し、行政や調整本部へ確実につなぐ「受援力（外部支援を適切に受け入れる力）」が求められます。公式ルートを活用した調整が最も確実です。",
+                bestComment: null
+              },
+              {
+                letter: "B",
+                text: "知り合いの病院に片っ端から直接電話する",
+                quality: "ok",
+                comment: "人脈は大切ですが、大規模災害時はどこも被災しており、個別の電話は調整の混乱を招く可能性があります。公式の調整本部等を通した広域連携を優先させましょう。",
+                bestComment: "A → 保健医療福祉調整本部を通じた広域調整が基本となります"
+              },
+              {
+                letter: "C",
+                text: "明日まで様子を見る",
+                quality: "rethink",
+                comment: "透析患者さんにとって1日の遅れは命に関わります。今すぐ調整に向けた情報伝達（行政・調整本部へのSOS）を開始することが必要です。",
+                bestComment: "A → 行政や保健医療福祉調整本部へ即座に報告・相談する"
+              }
+            ],
+            learningPoint: "コミュニケーション手段は必ず2つ以上確保しよう。\n外部の支援や調整機関（保健医療福祉調整本部等）を頼る「受援力」が地域医療を守る鍵です。",
+            nextAct: "act3"
+          }
+        ]
+      },
+      act3: {
+        label: "第3幕",
+        title: "クリニックをどう守るか",
+        goal: "患者との事前の対話と、クリニックの物理的・制度的備えの重要性を理解する。",
+        time: "約10分",
+        facilNote: "",
+        headerSub: "第3幕：患者・クリニックの対応",
+        scenes: [
+          {
+            id: "3-1",
+            label: "第3幕 シーン5",
+            messages: [
+              { type: "narrator", text: "発災から3時間。避難者の対応でクリニックは混み合い始めていた。" },
+              { type: "staff", text: "先生、独居の縞田チヨさん（85歳）から連絡が取れません。避難所に来ているはずなんですが……" },
+              { type: "nanta", text: "縞田チヨさんか……。どこに避難するか、話し合ったことがなかったな。" },
+              { type: "narrator", text: "縞田チヨさんは要支援2の独居高齢者。災害時個別避難計画は未作成だった。" }
+            ],
+            question: "こうした状況を防ぐために、普段からできることは何でしたか？",
+            choices: [
+              {
+                letter: "A",
+                text: "災害時は市の行政や民生委員が対応してくれるはず",
+                quality: "rethink",
+                comment: "行政・民生委員も大切な役割ですが、大規模災害時は人手が圧倒的に不足します。かかりつけ医との日常的な関係が重要な安全網になります。",
+                bestComment: "B → 普段の診療で「避難先」「緊急連絡先」を確認しておく"
+              },
+              {
+                letter: "B",
+                text: "普段の診療のなかで「どこに避難するか」「誰に助けてもらうか」を話し合っておく",
+                quality: "great",
+                comment: "正解！かかりつけ医は患者さんの生活・家族状況をよく知っています。日常診療の中で「災害時個別避難計画」の話題を出すことが最大の備えです。",
+                bestComment: null
+              },
+              {
+                letter: "C",
+                text: "緊急連絡先だけカルテに記録しておけば十分",
+                quality: "ok",
+                comment: "緊急連絡先の把握は必要ですが、「誰がどこに避難するか」まで具体化しておかないと、災害時に動けません。もう一歩踏み込んだ対話が必要です。",
+                bestComment: "B → 「どこに逃げるか」まで話し合っておくことが重要"
+              }
+            ],
+            nextScene: "3-2"
+          },
+          {
+            id: "3-2",
+            label: "第3幕 シーン6",
+            preMessages: [
+
+              // <!-- 画像挿入ポイント：棚から薬が散乱している画像 -->
+              // { type: "system", text: `<div class="image-placeholder" style="width: 100%; height: 120px; background: rgba(0,0,0,0.1); border: 2px dashed rgba(0,0,0,0.3); border-radius: 8px; margin: 8px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">散乱した医薬品の画像</div>` },
+
+              { type: "narrator", text: "クリニックの診察室に戻ると、薬品棚が傾き、一部の薬が床に散乱していた。" },
+              { type: "nanta", text: "……棚が固定されていなかった。薬が……使えなくなったものがある。" },
+              { type: "staff", text: "先生、非常用バッテリーの場所ってどこでしたっけ？ 備え付けの場所がわからなくて……" },
+              { type: "nanta", text: "（BCPを整備しておくべきだったな……）" }
+            ],
+            question: "平時の備えとして、何が最も重要だったでしょうか？",
+            choices: [
+              {
+                letter: "A",
+                text: "十分な在庫（薬・消耗品）を確保しておくだけでよい",
+                quality: "ok",
+                comment: "在庫確保は大切ですが、棚が倒れれば薬も使えなくなります。ハードとソフトの両方の備えが必要です。",
+                bestComment: "B → 棚の固定・耐震、BCPの整備が物的・人的な備えの基本"
+              },
+              {
+                letter: "B",
+                text: "棚の固定・建物耐震確認・BCPの整備（人・モノ・通信・お金の4項目）",
+                quality: "great",
+                comment: "最善の選択です！BCPは4つの柱（人・モノ・通信・お金）で考えます。建物・設備の物理的な備えと、スタッフが動ける仕組み作りが両輪です。",
+                bestComment: null
+              },
+              {
+                letter: "C",
+                text: "医療保険をしっかりかけておけばよい",
+                quality: "rethink",
+                comment: "保険も大切ですが、発災直後の対応には役立ちません。BCPは「継続して診療できるか」という観点で整備するものです。",
+                bestComment: "B → 棚の固定・耐震確認・BCPの整備が優先"
+              }
+            ],
+            learningPoint: "「人・モノ・通信・お金」の4視点でBCPを整備しよう。\n要配慮者との平時の対話が、災害時の安全網になる。",
+            nextAct: "act4"
+          }
+        ]
+      },
+      act4: {
+        label: "第4幕",
+        title: "あのスタッフへの声かけ",
+        goal: "スタッフのメンタル面に気を配り、PFA（心理的応急処置）の視点を持つ。",
+        time: "約15〜20分",
+        facilNote: "発災から時間が経ち、疲労が蓄積する時期です。身近なスタッフのケアも管理者の重要な役割です。",
+        headerSub: "第4幕：発災1週間後〜スタッフのケアとPFA〜",
+        scenes: [
+          {
+            id: "4-1",
+            label: "第4幕 シーン7",
+            messages: [
+              { type: "narrator", text: "発災から1週間が経過。診療所の体制を無理やり回している。" },
+              { type: "narrator", text: "そんな中、事務スタッフのネコムラメッケさん（30歳）の顔色が優れないことに気づいた。" },
+              { type: "nanta", text: "（美希さん、少し様子がおかしいな。疲労がたまっているのだろうか……声をかけてみようか。）" }
+            ],
+            question: "どのように美希さんに声をかけ、話を聞きますか？",
+            choices: [
+              {
+                letter: "S",
+                text: "【シミュレーション開始】外部ボットで美希さんの状況を聞き取る",
+                quality: "ok",
+                comment: "シミュレーションツールを開いて話し合いを行いましょう。",
+                bestComment: null,
+                action: "open_simulation"
+              }
+            ],
+            nextScene: "4-2"
+          },
+          {
+            id: "4-2",
+            label: "第4幕 シーン8",
+            preMessages: [
+              { type: "system", text: "📋 【美希さんの状況サマリ】\n\n・被災し自宅が全壊判定\n・避難所で暮らしながら通勤中\n・同居の両親も避難所にいるが、55歳の母親は避難中に足を負傷\n・60歳の父親はトイレが遠いため水分を控え、元気がなくなっている\n・美希さん自身も周囲の物音で眠れず、今後の見通しが立たず落ち込んでいる" },
+              { type: "narrator", text: "想像以上に過酷な状況だった。管理者としてどうサポートできるだろうか。" },
+              { type: "system", text: "💡 【PFA（心理的応急処置）に基づいた対応】\n\n・見る (Look)：安全の確認、急な支援が必要な人はいないか。\n・聞く (Listen)：無理に聞き出さず、そばにいて安心させる。\n・つなぐ (Link)：必要な情報や専門的なサポートへつなげる。" }
+            ],
+            question: "PFAの視点を踏まえ、美希さんに何と声をかけ、どう対応しますか？",
+            choices: [
+              {
+                letter: "A",
+                text: "「大変だったね。まずは休んで、お父さんの水分補給のことなど関係機関につなげよう」",
+                quality: "great",
+                comment: "正解です！「眠れないのは当然の反応だよ（Normalization: 正常化）」「同じように悩んでいる人も多いよ（Generalization: 普遍化）」と伝えつつ、無理に励まさず状況を受容し、具体的な支援（つなぐ）を提案できているPFAに沿った良い対応です。",
+                bestComment: null
+              },
+              {
+                letter: "B",
+                text: "「みんな辛いから、今は頑張るしかないよ。仕事に集中して気を紛らわそう」",
+                quality: "rethink",
+                comment: "励ましのつもりでも、プレッシャーを与えてしまいます。「聞く」姿勢を取り、相手のペースを尊重しましょう。",
+                bestComment: "A → PFAの原則（安全・安心感の確保）を優先する"
+              },
+              {
+                letter: "C",
+                text: "「辛いなら無理せず1ヶ月くらい休んでいいよ」",
+                quality: "ok",
+                comment: "配慮は必要ですが、いきなり長期休暇を指示すると逆に疎外感を感じさせてしまうことがあります。まずは具体的な困りごとのサポート（つなぐ）を相談しましょう。",
+                bestComment: "A → 今日の安全と具体的な情報・支援への接続を優先"
+              }
+            ],
+            learningPoint: "スタッフも被災者です。管理者として PFA (心理的応急処置) の「見る・聞く・つなぐ」を意識したケアが重要です。",
+            nextAct: "act5"
+          }
+        ]
+      },
+      act5: {
+        label: "第5幕",
+        title: "支援の受け入れ（受援力）",
+        goal: "中長期的な視点での地域連携と外部支援（PCAT等）の受け入れをシミュレーションする。",
+        time: "約20分",
+        facilNote: "自分たちだけで抱え込まず、どう外部支援を効果的に活用するか（受援力）をディスカッションします。",
+        headerSub: "第5幕：発災1ヶ月後〜地域連携と受援力〜",
+        scenes: [
+          {
+            id: "5-1",
+            label: "第5幕 シーン9",
+            messages: [
+              { type: "narrator", text: "さらに時が経ち、発災から1ヶ月後（地震から約4週間）。" },
+              { type: "narrator", text: "地域の急性期対応が落ち着き始め、医師会から「状況報告のために集まろう」と連絡があり、会合に出席した。" },
+              { type: "system", text: "🏥 【外部チームからの提案】\nDMAT、JMAT等急性期の救護班の活動に目処が立ち、今後のケアを地域の医療者へ引き継ぎたい。" },
+              { type: "nanta", text: "（引き継ぐといっても……自分自身も目の前の診療で手一杯だ。）" },
+              { type: "nanta", text: "（道路状況も悪く、普段30分で行ける往診に1〜2時間かかる。新たな支援を引き受ける余裕なんて……）" },
+              { type: "narrator", text: "そんな時、プライマリ・ケア連合学会の災害支援事務局（PCAT）から「メディカルスタッフを派遣できる可能性がある」と連絡が入った。" }
+            ],
+            question: "あなたのクリニックに、PCATチームをどんな目的・形で入ってもらいますか？",
+            choices: [
+              {
+                letter: "W",
+                text: "【グループワーク】自院へのPCAT受け入れシミュレーション",
+                quality: "ok",
+                comment: "この付箋のアイデアを写真に撮り、共有ドライブにアップロードしてください。",
+                bestComment: null,
+                action: "open_upload"
+              }
+            ],
+            nextAct: "hazard"
+          }
+        ]
+      }
+    };
+
+    const BCP_DATA = [
+      {
+        icon: "👥",
+        name: "人",
+        sub: "スタッフ・体制",
+        color: "#3B82F6",
+        bg: "rgba(59,130,246,0.1)",
+        items: [
+          { text: "スタッフの緊急連絡先リストを整備している", detail: "携帯・自宅・家族の連絡先を含む" },
+          { text: "連絡ツリー（連絡網）を決めている", detail: "誰が誰に連絡するかの役割分担" },
+          { text: "在院できないスタッフが出た場合の代替体制がある", detail: "最低限の人数での診療プランを策定" },
+          { text: "スタッフ自身の家族安否確認の優先を認めている", detail: "スタッフが安心して働けるルール作り" }
+        ]
+      },
+      {
+        icon: "📦",
+        name: "モノ",
+        sub: "設備・備品・物品",
+        color: "#10B981",
+        bg: "rgba(16,185,129,0.1)",
+        items: [
+          { text: "棚・大型機器を壁や床に固定している", detail: "転倒防止の耐震固定（L型金具等）" },
+          { text: "発電機・非常用電源を確保している", detail: "稼働状況・燃料も定期確認" },
+          { text: "3日分以上の医薬品・消耗品の在庫がある", detail: "ローリングストック方式で管理" },
+          { text: "重要書類・データのバックアップをとっている", detail: "クラウドまたは別拠点での保管" }
+        ]
+      },
+      {
+        icon: "📡",
+        name: "通信",
+        sub: "情報・コミュニケーション",
+        color: "#F59E0B",
+        bg: "rgba(245,158,11,0.1)",
+        items: [
+          { text: "2種類以上の連絡手段を確保している", detail: "電話・LINE・SMS・無線など" },
+          { text: "（統括本部等への被災状況報告ルールを知っている）", detail: "被災概況の報告・集約" },
+          { text: "（地域の保健医療福祉調整本部の連絡先を知っている）", detail: "県・市の災害医療コーディネーターへの相談ルート" },
+          { text: "患者さんへの一斉連絡手段がある", detail: "SNS・電話リスト・地域の見守りネット" }
+        ]
+      },
+      {
+        icon: "💰",
+        name: "お金",
+        sub: "財務・保険・資金",
+        color: "#EF4444",
+        bg: "rgba(239,68,68,0.1)",
+        items: [
+          { text: "診療停止時の固定費を3ヶ月以上賄える資金準備がある", detail: "家賃・人件費・リース等の固定費" },
+          { text: "医業継続保険（休業補償）に加入している", detail: "災害時の休業損失をカバー" },
+          { text: "BCP（事業継続計画）文書を作成・更新している", detail: "年1回の見直しが推奨される" },
+          { text: "地域の医師会・連合会のBCP支援を把握している", detail: "支援制度・ネットワークを事前確認" }
+        ]
+      }
+    ];
+
+    // ===========================
+    // STATE
+    // ===========================
+    let currentAct = null;
+    let currentSceneIndex = 0;
+    let currentScene = null;
+    let messageQueue = [];
+    let isAnimating = false;
+    let checkedItems = {};
+    let totalBCPItems = 0;
+
+    // ===========================
+    // SCREEN MANAGEMENT
+    // ===========================
+    function showScreen(name) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + name).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function updateProgress(val) {
+      const bar = document.getElementById('progress-bar-wrap');
+      const fill = document.getElementById('progress-bar');
+      const label = document.getElementById('act-label');
+      if (val > 0) {
+        bar.classList.add('visible');
+        label.classList.add('visible');
+        fill.style.width = val + '%';
+      } else {
+        bar.classList.remove('visible');
+        label.classList.remove('visible');
+      }
+    }
+
+    function setActLabel(text) {
+      document.getElementById('act-label').textContent = text;
+    }
+
+    // ===========================
+    // NEWS → ACT 1
+    // ===========================
+    function startAct1() {
+      showActBreak('act1', function () {
+        startAct('act1');
+      });
+    }
+
+    // ===========================
+    // ACT BREAK
+    // ===========================
+    function showActBreak(actKey, callback) {
+      const act = STORY[actKey];
+      document.getElementById('break-act-number').textContent = act.label;
+      document.getElementById('break-act-title').textContent = act.title;
+      document.getElementById('break-act-goal').textContent = act.goal;
+      document.getElementById('break-act-time').textContent = act.time;
+      document.getElementById('break-facilitator-note').textContent = act.facilNote;
+      document.getElementById('btn-act-start').onclick = function () {
+        if (callback) callback();
+      };
+      showScreen('act-break');
+    }
+
+    // ===========================
+    // CHAT: ACT START
+    // ===========================
+    function startAct(actKey) {
+      currentAct = actKey;
+      currentSceneIndex = 0;
+      const act = STORY[actKey];
+      document.getElementById('chat-header-sub').textContent = act.headerSub;
+
+      const progMap = { act1: 15, act2: 35, act3: 55, act4: 70, act5: 85 };
+      updateProgress(progMap[actKey] || 0);
+      setActLabel(act.label + '：' + act.title);
+
+      const chatBody = document.getElementById('chat-body');
+      chatBody.innerHTML = '';
+      addDateLabel();
+
+      if (actKey === 'act2' || actKey === 'act3') {
+        addFacilitatorBanner(act.facilNote);
+      }
+
+      showScreen('chat');
+      loadScene(act.scenes[0]);
+    }
+
+    function addDateLabel() {
+      const div = document.createElement('div');
+      div.className = 'chat-date-label animate-in';
+      div.innerHTML = '<span>2026年2月23日（火）</span>';
+      document.getElementById('chat-body').appendChild(div);
+    }
+
+    function addFacilitatorBanner(note) {
+      const banner = document.createElement('div');
+      banner.className = 'facilitator-banner animate-in';
+      banner.innerHTML = `<div class="icon">🎙</div><p><strong>ファシリテーターより：</strong><br>${note}</p>`;
+      document.getElementById('chat-body').appendChild(banner);
+    }
+
+    // ===========================
+    // SCENE LOADING
+    // ===========================
+    function loadScene(scene) {
+      currentScene = scene;
+
+      const chatBody = document.getElementById('chat-body');
+
+      // Scene label
+      const lbl = document.createElement('div');
+      lbl.className = 'chat-scene-label animate-in';
+      lbl.innerHTML = `<span>${scene.label}</span>`;
+      chatBody.appendChild(lbl);
+
+      const msgs = scene.messages || (scene.preMessages ? [...scene.preMessages] : []);
+      messageQueue = [...msgs];
+      showChoiceArea(false);
+      showNextMessage();
+    }
+
+    function loadNextScene(scene) {
+      currentScene = scene;
+      const chatBody = document.getElementById('chat-body');
+
+      const lbl = document.createElement('div');
+      lbl.className = 'chat-scene-label animate-in';
+      lbl.innerHTML = `<span>${scene.label}</span>`;
+      chatBody.appendChild(lbl);
+
+      const msgs = scene.preMessages || [];
+      messageQueue = [...msgs];
+      showChoiceArea(false);
+      showNextMessage();
+    }
+
+    function showNextMessage() {
+      if (messageQueue.length === 0) {
+        // Show choices
+        setTimeout(() => {
+          showChoiceArea(true);
+          scrollToBottom();
+        }, 400);
+        return;
+      }
+
+      const msg = messageQueue.shift();
+      addMessage(msg);
+      scrollToBottom();
+
+      const delay = msg.text.length * 30 + 400;
+      setTimeout(showNextMessage, Math.min(delay, 1800));
+    }
+
+    // ===========================
+    // MESSAGE RENDERING
+    // ===========================
+    const AVATARS = {
+      narrator: { emoji: '📖', label: 'ナレーター', side: 'left' },
+      nanta: { emoji: '🐾', label: 'ニャンタ院長', side: 'right' },
+      staff: { emoji: '👩‍⚕️', label: 'スタッフ', side: 'left' },
+      patient: { emoji: '🧓', label: '患者さん', side: 'left' },
+      system: { emoji: '🚨', label: '緊急情報', side: 'left' }
+    };
+
+    function addMessage(msg) {
+      const chatBody = document.getElementById('chat-body');
+      const av = AVATARS[msg.type] || AVATARS.narrator;
+
+      const wrap = document.createElement('div');
+      wrap.className = `bubble-wrap ${av.side} animate-in`;
+
+      const time = new Date(2026, 1, 23, 10, 45 + Math.floor(Math.random() * 60));
+      const timeStr = time.getHours() + ':' + String(time.getMinutes()).padStart(2, '0');
+
+      if (av.side === 'left') {
+        wrap.innerHTML = `
+      <div class="bubble-avatar ${msg.type}">${av.emoji}</div>
+      <div class="bubble-content">
+        <div class="bubble-sender">${av.label}</div>
+        <div class="bubble ${av.side} ${msg.type === 'system' ? 'system-msg' : ''}">${msg.text.replace(/\n/g, '<br>')}</div>
+        <div class="bubble-time">${timeStr}</div>
+      </div>
+    `;
+      } else {
+        wrap.innerHTML = `
+      <div class="bubble-content">
+        <div class="bubble-sender" style="text-align:right;">${av.label}</div>
+        <div class="bubble right" style="float:right; clear:right;">${msg.text.replace(/\n/g, '<br>')}</div>
+        <div class="bubble-time">${timeStr}</div>
+      </div>
+      <div class="bubble-avatar nanta">${av.emoji}</div>
+    `;
+      }
+
+      chatBody.appendChild(wrap);
+    }
+
+    // ===========================
+    // CHOICE AREA
+    // ===========================
+    function showChoiceArea(show) {
+      const area = document.getElementById('choice-area');
+      const btns = document.getElementById('choice-buttons');
+
+      if (!show) {
+        area.style.display = 'none';
+        return;
+      }
+
+      area.style.display = 'block';
+      document.getElementById('choice-label').textContent = currentScene.question;
+      btns.innerHTML = '';
+
+      currentScene.choices.forEach((choice, i) => {
+        const btn = document.createElement('button');
+        btn.className = `choice-btn ${choice.quality}`;
+        btn.innerHTML = `
+      <div class="choice-letter">${choice.letter}</div>
+      <div>${choice.text}</div>
+    `;
+        btn.onclick = () => selectChoice(i);
+        btns.appendChild(btn);
+      });
+    }
+
+    // ===========================
+    // CHOICE SELECTION → RESULT
+    // ===========================
+    function selectChoice(index) {
+      const choice = currentScene.choices[index];
+      showResult(choice, index);
+    }
+
+    function showResult(choice, index) {
+      const qualityMap = {
+        great: { badge: '⭐ より良い選択です！', cls: 'great', title: '素晴らしい判断！' },
+        ok: { badge: '👍 悪くない選択', cls: 'good', title: 'まずまずの判断' },
+        rethink: { badge: '🤔 もう少し考えてみよう', cls: 'rethink', title: '別の視点を考えてみましょう' }
+      };
+
+      const q = qualityMap[choice.quality];
+      document.getElementById('result-badge').className = `result-badge ${q.cls}`;
+      document.getElementById('result-badge').textContent = q.badge;
+      document.getElementById('result-title').textContent = q.title;
+
+      const bestChoice = currentScene.choices.find(c => c.quality === 'great');
+
+      let html = `
+    <div style="text-align: center; margin: 16px 0;">
+      <!-- 画像挿入ポイント：フィードバックイラスト（${choice.quality}） -->
+      <img src="${choice.quality}.png" alt="${choice.quality}" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid ${choice.quality === 'great' ? '#10B981' : choice.quality === 'rethink' ? '#F59E0B' : '#E2E8F0'}; margin: 0 auto; display: block; object-fit: cover; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    </div>
+    
+    <div class="result-selected ${q.cls}">
+      <div class="result-selected-label">あなたの選択</div>
+      <div class="result-selected-text">${choice.letter}. ${choice.text}</div>
+    </div>
+
+    <div class="result-comment">
+      <h3>💬 解説</h3>
+      <p>${choice.comment}</p>
+    </div>
+  `;
+
+      if (choice.quality !== 'great' && choice.bestComment) {
+        html += `
+      <div class="best-choice-box">
+        <h3>✅ より良い選択は？</h3>
+        <p>${choice.bestComment}</p>
+      </div>
+    `;
+      }
+
+      // Learning point (last scene of each act)
+      if (currentScene.learningPoint) {
+        html += `
+      <div class="learning-box">
+        <h3>📚 学びのポイント</h3>
+        <p>${currentScene.learningPoint.replace(/\n/g, '<br>')}</p>
+      </div>
+    `;
+      }
+
+      if (choice.action === 'open_simulation') {
+        html += `<div style="margin:20px 0;"><a href="#" onclick="alert('シミュレーションボット（URLプレースホルダー）を開きます');" class="btn-continue" style="background:#3B82F6; display:block; text-align:center; text-decoration:none;">💬 シミュレーションを開始する</a></div>`;
+      } else if (choice.action === 'open_upload') {
+        html += `<div style="margin:20px 0;"><a href="#" onclick="alert('Google Drive（URLプレースホルダー）を開きます');" class="btn-continue" style="background:#10B981; display:block; text-align:center; text-decoration:none;">📁 写真をアップロードする</a></div>`;
+      }
+
+      // Next button
+      const nextAct = currentScene.nextAct;
+      const nextSceneId = currentScene.nextScene;
+
+      if (nextAct === 'hazard') {
+        html += `<button class="btn-continue" onclick="goToHazard()">ハザードマップを確認する →</button>`;
+      } else if (nextAct) {
+        const actKey = nextAct;
+        const actLabel = STORY[actKey].label;
+        html += `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
+      } else if (nextSceneId) {
+        html += `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
+      }
+
+      document.getElementById('result-body').innerHTML = html;
+      showScreen('result');
+      updateProgress(getProgress());
+    }
+
+    function getProgress() {
+      const sceneMap = {
+        '1-1': 20, '1-2': 30,
+        '2-1': 40, '2-2': 50,
+        '3-1': 60, '3-2': 65,
+        '4-1': 75, '4-2': 80,
+        '5-1': 90
+      };
+      return sceneMap[currentScene?.id] || 10;
+    }
+
+    function goToNextScene(sceneId) {
+      const act = STORY[currentAct];
+      const scene = act.scenes.find(s => s.id === sceneId);
+      if (!scene) return;
+
+      showScreen('chat');
+
+      const chatBody = document.getElementById('chat-body');
+      showChoiceArea(false);
+      loadNextScene(scene);
+      scrollToBottom();
+    }
+
+    function goToNextAct(actKey) {
+      showActBreak(actKey, function () {
+        startAct(actKey);
+      });
+    }
+
+    function goToHazard() {
+      updateProgress(92);
+      setActLabel('ハザードマップ確認');
+      showScreen('hazard');
+    }
+
+    // ===========================
+    // BCP SCREEN
+    // ===========================
+    function showBCP() {
+      updateProgress(96);
+      setActLabel('BCPチェックリスト');
+      renderBCP();
+      showScreen('bcp');
+    }
+
+    function renderBCP() {
+      const body = document.getElementById('bcp-body');
+      totalBCPItems = 0;
+      let html = '';
+
+      BCP_DATA.forEach((cat, ci) => {
+        totalBCPItems += cat.items.length;
+        html += `
+      <div class="bcp-category">
+        <div class="bcp-cat-header">
+          <div class="bcp-cat-icon" style="background:${cat.bg};">${cat.icon}</div>
+          <div class="bcp-cat-info">
+            <div class="bcp-cat-name">${cat.name}</div>
+            <div class="bcp-cat-sub">${cat.sub}</div>
+          </div>
+        </div>
+        <div class="bcp-items">
+          ${cat.items.map((item, ii) => {
+          const key = `${ci}-${ii}`;
+          return `
+              <div class="bcp-item" onclick="toggleBCP('${key}')">
+                <div class="bcp-checkbox" id="chk-${key}"></div>
+                <div class="bcp-item-text">
+                  <strong>${item.text}</strong>
+                  <span>${item.detail}</span>
+                </div>
+              </div>
+            `;
+        }).join('')}
+        </div>
+      </div>
+    `;
+      });
+
+      html += `
+    <div class="bcp-score-area">
+      <div class="bcp-score-label">現在のチェック数</div>
+      <div>
+        <span class="bcp-score-num" id="bcp-score">0</span>
+        <span class="bcp-score-total"> / ${totalBCPItems}</span>
+      </div>
+      <div class="bcp-score-msg" id="bcp-score-msg">チェックしながら確認してみましょう</div>
+    </div>
+    <button class="btn-bcp-next" onclick="showSummary()">まとめへ進む →</button>
+  `;
+
+      body.innerHTML = html;
+    }
+
+    function toggleBCP(key) {
+      const chk = document.getElementById('chk-' + key);
+      if (!chk) return;
+
+      if (checkedItems[key]) {
+        delete checkedItems[key];
+        chk.classList.remove('checked');
+      } else {
+        checkedItems[key] = true;
+        chk.classList.add('checked');
+      }
+
+      updateBCPScore();
+    }
+
+    function updateBCPScore() {
+      const count = Object.keys(checkedItems).length;
+      document.getElementById('bcp-score').textContent = count;
+
+      const msgs = [
+        [0, 3, 'これから整備していきましょう。一つずつ取り組もう！'],
+        [4, 7, '少しずつ備えができています。さらに充実させましょう。'],
+        [8, 11, 'かなり備えができています！残りを確認してみましょう。'],
+        [12, 16, '万全の備えです！ぜひ地域でも共有してください！']
+      ];
+
+      for (const [min, max, msg] of msgs) {
+        if (count >= min && count <= max) {
+          document.getElementById('bcp-score-msg').textContent = msg;
+          break;
+        }
+      }
+    }
+
+    // ===========================
+    // SUMMARY
+    // ===========================
+    function showSummary() {
+      updateProgress(100);
+      setActLabel('まとめ');
+      showScreen('summary');
+    }
+
+    // ===========================
+    // RESTART
+    // ===========================
+    function restart() {
+      checkedItems = {};
+      currentAct = null;
+      currentSceneIndex = 0;
+      currentScene = null;
+      messageQueue = [];
+      updateProgress(0);
+      document.getElementById('action-input').value = '';
+      document.getElementById('chat-body').innerHTML = '';
+      showScreen('title');
+    }
+
+    // ===========================
+    // UTILITIES
+    // ===========================
+    function scrollToBottom() {
+      const chatBody = document.getElementById('chat-body');
+      requestAnimationFrame(() => {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      });
+    }
+  </script>
+</body>
+
+</html>

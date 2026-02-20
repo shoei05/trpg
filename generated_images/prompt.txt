@@ -1,0 +1,6 @@
+Using the attached doctor_cat.png as a strict reference for character design (matching the geometry, colors, glasses, headlamp, and general style), please generate 3 flat vector illustrations of this identical cat doctor:
+1. `great`: The cat is looking very happy, cheering, praising, with a big smile and a thumbs up pose.
+2. `ok`: The cat is nodding gently, looking calm, convinced, and professional, with a gentle reassuring smile.
+3. `rethink`: The cat is looking troubled and thinking hard, with crossed arms, a sweat drop on its forehead, and a difficult, pensive expression.
+
+Solid light or transparent background. Clean black linework, vibrant colors, minimalist modern aesthetic. Please output the 3 images separately.
