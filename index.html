@@ -479,10 +479,12 @@
     /* ===== CHAT SCREEN ===== */
     #screen-chat {
       background: var(--chat-bg);
+      overflow: hidden;
     }
 
     #screen-chat.active {
-      display: block;
+      display: flex;
+      flex-direction: column;
     }
 
     .chat-header {
@@ -526,6 +528,11 @@
 
     .chat-body {
       padding: 16px 12px;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-y: contain;
     }
 
     .chat-date-label {
@@ -717,6 +724,10 @@
       padding: 20px 16px;
       padding-bottom: max(20px, env(safe-area-inset-bottom));
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+      flex-shrink: 0;
+      max-height: 55vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .choice-label {
@@ -2790,9 +2801,13 @@
     // UTILITIES
     // ===========================
     function scrollToBottom() {
-      const screenChat = document.getElementById('screen-chat');
+      const chatBody = document.getElementById('chat-body');
+      if (!chatBody) return;
       requestAnimationFrame(() => {
-        screenChat.scrollTop = screenChat.scrollHeight;
+        chatBody.scrollTop = chatBody.scrollHeight;
+        requestAnimationFrame(() => {
+          chatBody.scrollTop = chatBody.scrollHeight;
+        });
       });
     }
   </script>
