@@ -2678,7 +2678,13 @@
     function showScreen(name) {
       closeJumpMenu();
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('screen-' + name).classList.add('active');
+      const targetScreen = document.getElementById('screen-' + name);
+      if (!targetScreen) return;
+      targetScreen.classList.add('active');
+      targetScreen.scrollTop = 0;
+      requestAnimationFrame(() => {
+        targetScreen.scrollTop = 0;
+      });
       window.scrollTo(0, 0);
     }
 
