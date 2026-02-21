@@ -1039,6 +1039,10 @@
       color: #fff !important;
     }
 
+    .btn-sim-open {
+      background: linear-gradient(135deg, #0F766E, #0E7490) !important;
+    }
+
     .simulation-scroll-spacer {
       min-height: calc(120px + env(safe-area-inset-bottom));
       padding: 12px 14px calc(20px + env(safe-area-inset-bottom));
@@ -2978,6 +2982,7 @@
     // MESSAGE RENDERING
     // ===========================
     const MEKKE_IMAGE_URL = 'clerk.png?v=20260221-1415';
+    const SIMULATION_CHAT_URL = 'https://udify.app/chatbot/lDBY9ClRYT3XKx9m';
 
     const AVATARS = {
       narrator: { emoji: '📖', label: 'ナレーター', side: 'left' },
@@ -3162,11 +3167,13 @@
 
       if (choice.action === 'open_simulation') {
         const simulationNextButtonHtml = nextButtonHtml.replace('btn-continue', 'btn-continue btn-sim-control');
+        const simulationOpenTabHtml = `<a href="${SIMULATION_CHAT_URL}" target="_blank" rel="noopener noreferrer" class="btn-continue btn-sim-control btn-sim-open" style="text-decoration:none; text-align:center; margin-bottom:10px;">タブで開く</a>`;
         html += `
+      ${simulationOpenTabHtml}
       ${simulationNextButtonHtml}
       <div class="learning-box simulation-embed">
         <iframe
-          src="https://udify.app/chatbot/lDBY9ClRYT3XKx9m"
+          src="${SIMULATION_CHAT_URL}"
           frameborder="0"
           allow="microphone">
         </iframe>
