@@ -1031,8 +1031,13 @@
       color: #fff !important;
     }
 
-    .btn-sim-open {
-      background: linear-gradient(135deg, #0F766E, #0D9488) !important;
+    .simulation-after-box {
+      margin-top: 12px;
+    }
+
+    .simulation-scroll-spacer {
+      height: calc(120px + env(safe-area-inset-bottom));
+      pointer-events: none;
     }
 
     .result-selected {
@@ -3130,17 +3135,15 @@
         const simulationNextButtonHtml = nextButtonHtml.replace('btn-continue', 'btn-continue btn-sim-control');
         html += `
       ${simulationNextButtonHtml}
-      <a href="https://udify.app/chatbot/lDBY9ClRYT3XKx9m" target="_blank" rel="noopener noreferrer" class="btn-continue btn-sim-control btn-sim-open"
-        style="margin-bottom:12px; text-decoration:none; text-align:center;">
-        別タブで開く
-      </a>
       <div class="learning-box simulation-embed">
         <iframe
           src="https://udify.app/chatbot/lDBY9ClRYT3XKx9m"
           frameborder="0"
           allow="microphone">
         </iframe>
-      </div>`;
+      </div>
+      <div class="simulation-after-box">${simulationNextButtonHtml}</div>
+      <div class="simulation-scroll-spacer" aria-hidden="true"></div>`;
       } else if (choice.action === 'open_upload') {
         html += `<div style="margin:20px 0;"><a href="https://drive.google.com/drive/folders/19GiNAp9a34pMP2E0POAeSvcqjCSeQhbp?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-continue" style="background:#10B981; display:block; text-align:center; text-decoration:none;">📁 写真をアップロードする</a></div>`;
       }
