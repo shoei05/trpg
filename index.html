@@ -1010,37 +1010,20 @@
     .simulation-embed {
       padding: 0 !important;
       overflow: visible !important;
-      margin-bottom: calc(20px + env(safe-area-inset-bottom));
+      margin-bottom: calc(12px + env(safe-area-inset-bottom));
     }
 
     .simulation-embed iframe {
       width: 100%;
-      height: clamp(360px, calc(100vh - 320px), 620px);
+      height: clamp(340px, 50svh, 520px);
       border: 0;
       display: block;
     }
 
-    @supports (height: 100svh) {
+    @supports not (height: 100svh) {
       .simulation-embed iframe {
-        height: clamp(360px, calc(100svh - 320px), 620px);
+        height: clamp(340px, 50vh, 520px);
       }
-    }
-
-    .simulation-after-box {
-      margin-top: 12px;
-    }
-
-    .simulation-after-box p {
-      font-size: 13px;
-      line-height: 1.6;
-      color: #334155 !important;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    .simulation-scroll-spacer {
-      height: calc(140px + env(safe-area-inset-bottom));
-      pointer-events: none;
     }
 
     .result-selected {
@@ -3147,13 +3130,7 @@
           frameborder="0"
           allow="microphone">
         </iframe>
-      </div>
-      <div class="learning-box simulation-after-box">
-        <h3>⬇ スクロール補助エリア</h3>
-        <p>入力欄が下端で見切れるときは、ここまでスクロールして位置を調整してください。</p>
-        ${nextButtonHtml}
-      </div>
-      <div class="simulation-scroll-spacer" aria-hidden="true"></div>`;
+      </div>`;
       } else if (choice.action === 'open_upload') {
         html += `<div style="margin:20px 0;"><a href="https://drive.google.com/drive/folders/19GiNAp9a34pMP2E0POAeSvcqjCSeQhbp?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-continue" style="background:#10B981; display:block; text-align:center; text-decoration:none;">📁 写真をアップロードする</a></div>`;
       }
