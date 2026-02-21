@@ -1308,66 +1308,9 @@
 
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
-      background: #F8FAFC;
+      background: #F0F9FF;
       min-height: 100vh;
       flex-direction: column;
-    }
-
-    .apps-guide-header {
-      background: linear-gradient(135deg, #1D4ED8, #0EA5E9);
-      color: white;
-      padding: 20px 16px;
-    }
-
-    .apps-guide-header h2 {
-      font-size: 20px;
-      font-weight: 900;
-      margin-bottom: 8px;
-    }
-
-    .apps-guide-header p {
-      font-size: 13px;
-      line-height: 1.7;
-      opacity: 0.95;
-    }
-
-    .apps-guide-body {
-      padding: 16px;
-      flex: 1;
-    }
-
-    .apps-guide-note {
-      background: #EFF6FF;
-      border: 1px solid #BFDBFE;
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #1E3A8A;
-    }
-
-    .app-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
-    }
-
-    .app-card h3 {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 6px;
-      color: #111827;
-    }
-
-    .app-card p {
-      font-size: 13px;
-      color: #374151;
-      line-height: 1.7;
-      margin-bottom: 8px;
     }
 
     .app-points {
@@ -1388,24 +1331,6 @@
       color: #2563EB;
       font-weight: 900;
       margin-right: 2px;
-    }
-
-    .apps-guide-footer {
-      padding: 12px 16px 24px;
-      padding-bottom: max(24px, env(safe-area-inset-bottom));
-    }
-
-    .btn-apps-next {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 16px;
-      font-size: 16px;
-      font-weight: 900;
-      color: white;
-      background: linear-gradient(135deg, #1D4ED8, #0EA5E9);
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(30, 64, 175, 0.25);
     }
 
     .bcp-header {
@@ -2071,28 +1996,29 @@
      SCREEN 7: DISASTER APP GUIDE
 =========================== -->
   <div id="screen-disaster-apps" class="screen">
-    <div class="apps-guide-header">
+    <div class="hazard-header">
       <h2>📱 防災アプリ紹介</h2>
       <p>次のシーンに進む前に、災害時に役立つアプリを確認しましょう。</p>
     </div>
-    <div class="apps-guide-body">
-      <div class="apps-guide-note">
+    <div class="hazard-body">
+      <div class="hazard-notice">
         災害時は電話・通常サイトがつながりにくくなります。<br>
         平時から「速報性」と「公式性」の高いアプリを準備しておくと、初動判断が速くなります。
       </div>
 
-      <div class="app-card">
-        <h3>NHKニュース・防災</h3>
+      <div class="hazard-section">
+        <h3>📡 NHKニュース・防災</h3>
         <p>地震・津波・気象警報などを速報で確認しやすいアプリです。</p>
         <ul class="app-points">
+          <li>地域設定で登録地域の防災情報を受け取れる</li>
           <li>災害関連ニュースをまとめて確認しやすい</li>
           <li>地図とあわせて現在の状況を把握しやすい</li>
           <li>公式メディア情報として判断材料に使える</li>
         </ul>
       </div>
 
-      <div class="app-card">
-        <h3>Yahoo!防災速報</h3>
+      <div class="hazard-section">
+        <h3>📡 Yahoo!防災速報</h3>
         <p>地震・大雨・避難情報など、多ハザードの通知に対応しています。</p>
         <ul class="app-points">
           <li>現在地や登録地域ごとに通知を受け取れる</li>
@@ -2101,13 +2027,12 @@
         </ul>
       </div>
 
-      <div class="apps-guide-note">
+      <div class="hazard-notice">
         使い分けの例：<br>
         NHKで全体像を把握し、Yahoo!防災速報で地域別通知を追うと、情報の取りこぼしを減らせます。
       </div>
-    </div>
-    <div class="apps-guide-footer">
-      <button class="btn-apps-next" onclick="continueFromDisasterAppsGuide()">次のシーンへ進む →</button>
+
+      <button class="btn-hazard-next" onclick="continueFromDisasterAppsGuide()">次のシーンへ進む →</button>
     </div>
   </div>
 
