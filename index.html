@@ -911,24 +911,21 @@
       transition: background 0.2s, color 0.2s;
     }
 
-    .choice-btn.best {
-      border-color: var(--green);
-      background: #ECFDF5;
+    /* Keep choices visually neutral before selection to avoid hinting answers. */
+    .choice-btn.best,
+    .choice-btn.ok,
+    .choice-btn.great,
+    .choice-btn.rethink {
+      border-color: #E2E8F0;
+      background: white;
     }
 
-    .choice-btn.best .choice-letter {
-      background: var(--green);
-      color: white;
-    }
-
-    .choice-btn.ok {
-      border-color: var(--accent);
-      background: #FFF7ED;
-    }
-
-    .choice-btn.ok .choice-letter {
-      background: var(--accent);
-      color: white;
+    .choice-btn.best .choice-letter,
+    .choice-btn.ok .choice-letter,
+    .choice-btn.great .choice-letter,
+    .choice-btn.rethink .choice-letter {
+      background: #F1F5F9;
+      color: var(--text-muted);
     }
 
     /* ===== RESULT SCREEN ===== */
