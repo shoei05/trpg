@@ -960,7 +960,9 @@
       background: var(--light-gray);
       min-height: 100vh;
       flex-direction: column;
-      overflow: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
     }
 
     .result-header {
@@ -1004,12 +1006,8 @@
 
     .result-body {
       padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-y: contain;
-      touch-action: pan-y;
+      flex: none;
+      overflow: visible;
     }
 
     .simulation-embed {
