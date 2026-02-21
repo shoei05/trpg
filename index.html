@@ -257,6 +257,19 @@
       background: #E2E8F0;
     }
 
+    .jump-item-primary {
+      background: linear-gradient(135deg, var(--accent), #EA580C);
+      color: white;
+      font-weight: 800;
+      border: 1px solid rgba(234, 88, 12, 0.35);
+      box-shadow: 0 6px 18px rgba(234, 88, 12, 0.28);
+      margin-bottom: 10px;
+    }
+
+    .jump-item-primary:active {
+      background: linear-gradient(135deg, #EA580C, #C2410C);
+    }
+
     /* ===== TITLE SCREEN ===== */
     #screen-title {
       background: linear-gradient(145deg, #1E1B4B 0%, var(--bg-dark) 100%);
@@ -1755,6 +1768,10 @@
     </div>
     <div class="jump-menu-body">
       <div class="jump-group">
+        <div class="jump-group-title">おすすめ</div>
+        <button class="jump-item jump-item-primary" type="button" onclick="jumpToOpeningDoor()">🚪 冒頭の扉へ（第1幕開始前）</button>
+      </div>
+      <div class="jump-group">
         <div class="jump-group-title">全体</div>
         <button class="jump-item" type="button" onclick="jumpToScreen('title')">タイトル</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('news')">ニュース</button>
@@ -2663,6 +2680,22 @@
       window.location.reload();
     }
 
+    function jumpToOpeningDoor() {
+      messageRunId += 1;
+      checkedItems = {};
+      currentAct = null;
+      currentSceneIndex = 0;
+      currentScene = null;
+      messageQueue = [];
+      nextSceneAfterAppsGuide = null;
+      nextActAfterBCP = 'summary';
+      updateProgress(0);
+      document.getElementById('chat-body').innerHTML = '';
+      showActBreak('act1', function () {
+        startAct('act1');
+      });
+    }
+
     function findSceneById(sceneId) {
       for (const [actKey, act] of Object.entries(STORY)) {
         const sceneIndex = act.scenes.findIndex(s => s.id === sceneId);
@@ -2717,9 +2750,6 @@
       const chatBody = document.getElementById('chat-body');
       chatBody.innerHTML = '';
       addDateLabel();
-      if (actKey === 'act3') {
-        addFacilitatorBanner(act.facilNote);
-      }
 
       showScreen('chat');
       loadScene(scene);
@@ -2767,10 +2797,6 @@
       const chatBody = document.getElementById('chat-body');
       chatBody.innerHTML = '';
       addDateLabel();
-
-      if (actKey === 'act3') {
-        addFacilitatorBanner(act.facilNote);
-      }
 
       showScreen('chat');
       loadScene(act.scenes[0]);
