@@ -735,6 +735,14 @@
       background: #ddd;
     }
 
+    .bubble-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
     .bubble-avatar.narrator {
       background: linear-gradient(135deg, #4a9eda, #2980b9);
     }
@@ -2483,7 +2491,8 @@
             label: "第4幕 シーン7",
             messages: [
               { type: "narrator", text: "発災から1週間が経過。診療所の体制を無理やり回している。" },
-              { type: "narrator", text: "<img src='clerk.png' alt='めっけさん' style='width: 140px; height: 140px; border-radius: 50%; border: 4px solid #Eaeaea; margin: 16px auto; display: block; object-fit: cover; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);'><br>そんな中、事務スタッフのめっけさん（30歳）の顔色が優れないことに気づいた。" },
+              { type: "narrator", text: "そんな中、事務スタッフのめっけさん（30歳）の顔色が優れないことに気づいた。" },
+              { type: "mekke", text: "院長……少しだけお時間いいですか。家のこともあって、最近ほとんど眠れていなくて……。" },
               { type: "nanta", text: "（めっけさん、少し様子がおかしいな。疲労がたまっているのだろうか……声をかけてみようか。）" }
             ],
             question: "どのようにめっけさんに声をかけ、話を聞きますか？",
@@ -2907,6 +2916,7 @@
       narrator: { emoji: '📖', label: 'ナレーター', side: 'left' },
       nanta: { emoji: '🐾', label: 'ニャンタ院長', side: 'right' },
       staff: { emoji: '👩‍⚕️', label: 'スタッフ', side: 'left' },
+      mekke: { emoji: '🐱', label: 'めっけさん', side: 'left', image: 'clerk.png' },
       patient: { emoji: '🧓', label: '患者さん', side: 'left' },
       system: { emoji: '🚨', label: '緊急情報', side: 'left' }
     };
@@ -2914,6 +2924,9 @@
     function addMessage(msg) {
       const chatBody = document.getElementById('chat-body');
       const av = AVATARS[msg.type] || AVATARS.narrator;
+      const avatarHtml = av.image
+        ? `<div class="bubble-avatar ${msg.type}"><img src="${av.image}" alt="${av.label}" onerror="this.style.display='none'; this.parentElement.textContent='${av.emoji || '👤'}';"></div>`
+        : `<div class="bubble-avatar ${msg.type}">${av.emoji}</div>`;
 
       const wrap = document.createElement('div');
       wrap.className = `bubble-wrap ${av.side} animate-in`;
@@ -2923,7 +2936,7 @@
 
       if (av.side === 'left') {
         wrap.innerHTML = `
-      <div class="bubble-avatar ${msg.type}">${av.emoji}</div>
+      ${avatarHtml}
       <div class="bubble-content">
         <div class="bubble-sender">${av.label}</div>
         <div class="bubble ${av.side} ${msg.type === 'system' ? 'system-msg' : ''}">${msg.text.replace(/\n/g, '<br>')}</div>
@@ -2937,7 +2950,7 @@
         <div class="bubble right" style="float:right; clear:right;">${msg.text.replace(/\n/g, '<br>')}</div>
         <div class="bubble-time">${timeStr}</div>
       </div>
-      <div class="bubble-avatar nanta">${av.emoji}</div>
+      ${avatarHtml}
     `;
       }
 
