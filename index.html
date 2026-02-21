@@ -2980,7 +2980,8 @@
     // MESSAGE RENDERING
     // ===========================
     const MEKKE_IMAGE_URL = 'clerk.png?v=20260221-1415';
-    const SIMULATION_CHAT_URL = 'https://udify.app/chatbot/lDBY9ClRYT3XKx9m';
+    const SIMULATION_EMBED_URL = 'https://udify.app/chatbot/lDBY9ClRYT3XKx9m';
+    const SIMULATION_TAB_URL = 'https://udify.app/chat/lDBY9ClRYT3XKx9m';
 
     const AVATARS = {
       narrator: { emoji: '📖', label: 'ナレーター', side: 'left' },
@@ -3165,13 +3166,13 @@
 
       if (choice.action === 'open_simulation') {
         const simulationNextButtonHtml = nextButtonHtml.replace('btn-continue', 'btn-continue btn-sim-control');
-        const simulationOpenTabHtml = `<a href="${SIMULATION_CHAT_URL}" target="_blank" rel="noopener noreferrer" class="btn-continue btn-sim-control btn-sim-open" style="text-decoration:none; text-align:center; margin-bottom:10px;">タブで開く</a>`;
+        const simulationOpenTabHtml = `<a href="${SIMULATION_TAB_URL}" target="_blank" rel="noopener noreferrer" class="btn-continue btn-sim-control btn-sim-open" style="text-decoration:none; text-align:center; margin-bottom:10px;">タブで開く</a>`;
         html += `
       ${simulationOpenTabHtml}
       ${simulationNextButtonHtml}
       <div class="learning-box simulation-embed">
         <iframe
-          src="${SIMULATION_CHAT_URL}"
+          src="${SIMULATION_EMBED_URL}"
           frameborder="0"
           allow="microphone">
         </iframe>
