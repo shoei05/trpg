@@ -3510,9 +3510,9 @@
 
         try {
           const goodImg = await loadImage('ok.png');
-          const iconSize = 132;
-          const iconX = width - 72 - iconSize;
-          const iconY = height - 72 - iconSize;
+          const iconSize = 208;
+          const iconX = width - 56 - iconSize;
+          const iconY = height - 64 - iconSize;
           ctx.save();
           ctx.beginPath();
           ctx.arc(iconX + iconSize / 2, iconY + iconSize / 2, iconSize / 2, 0, Math.PI * 2);
@@ -3527,8 +3527,8 @@
           ctx.stroke();
         } catch (e) {
           ctx.fillStyle = '#10B981';
-          ctx.font = '900 78px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-          ctx.fillText('👍', width - 150, height - 86);
+          ctx.font = '900 108px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+          ctx.fillText('👍', width - 190, height - 92);
         }
 
         const now = new Date();
