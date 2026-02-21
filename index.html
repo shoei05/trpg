@@ -1002,9 +1002,28 @@
     }
 
     .result-body {
-      padding: 16px;
+      padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
       flex: 1;
       overflow-y: auto;
+    }
+
+    .simulation-embed {
+      padding: 0 !important;
+      overflow: visible !important;
+      margin-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .simulation-embed iframe {
+      width: 100%;
+      height: clamp(420px, calc(100dvh - 260px), 760px);
+      border: 0;
+      display: block;
+    }
+
+    @supports not (height: 100dvh) {
+      .simulation-embed iframe {
+        height: clamp(420px, calc(100vh - 260px), 760px);
+      }
     }
 
     .result-selected {
@@ -3101,10 +3120,13 @@
       if (choice.action === 'open_simulation') {
         html += `
       ${nextButtonHtml}
-      <div class="learning-box" style="padding:0;">
+      <a href="https://udify.app/chatbot/lDBY9ClRYT3XKx9m" target="_blank" rel="noopener noreferrer" class="btn-continue"
+        style="margin-bottom:12px; background:#334155; text-decoration:none; text-align:center;">
+        別タブで開く
+      </a>
+      <div class="learning-box simulation-embed">
         <iframe
           src="https://udify.app/chatbot/lDBY9ClRYT3XKx9m"
-          style="width: 100%; height: 100%; min-height: 700px; border: 0; display: block;"
           frameborder="0"
           allow="microphone">
         </iframe>
