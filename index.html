@@ -2986,9 +2986,19 @@
       };
 
       const q = qualityMap[choice.quality];
-      document.getElementById('result-badge').className = `result-badge ${q.cls}`;
-      document.getElementById('result-badge').textContent = q.badge;
-      document.getElementById('result-title').textContent = q.title;
+      const badgeEl = document.getElementById('result-badge');
+      const titleEl = document.getElementById('result-title');
+      const isWorkshopUpload = choice.action === 'open_upload';
+
+      if (isWorkshopUpload) {
+        badgeEl.style.display = 'none';
+        titleEl.textContent = 'グループワーク';
+      } else {
+        badgeEl.style.display = 'inline-flex';
+        badgeEl.className = `result-badge ${q.cls}`;
+        badgeEl.textContent = q.badge;
+        titleEl.textContent = q.title;
+      }
 
       const bestChoice = currentScene.choices.find(c => c.quality === 'great');
 
