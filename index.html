@@ -3435,30 +3435,13 @@
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, width, height);
 
+        const snapshotTitle = '災害への備えをプライマリ・ケア診療に活かす';
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = '900 58px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText('地震TRPG ワークショップまとめ', 72, 118 + topInset);
+        ctx.font = '900 56px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        drawWrappedText(ctx, snapshotTitle, 72, 126 + topInset, width - 144, 66, 2);
         ctx.fillStyle = 'rgba(255,255,255,0.72)';
-        ctx.font = '500 34px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText('若手医師のための家庭医療学 冬期セミナー2026', 72, 170 + topInset);
-
-        try {
-          const doctorImg = await loadImage('doctor_cat.png');
-          const imgSize = 180;
-          const imgX = width - 72 - imgSize;
-          const imgY = 48 + topInset;
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(imgX + imgSize / 2, imgY + imgSize / 2, imgSize / 2, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.clip();
-          ctx.drawImage(doctorImg, imgX, imgY, imgSize, imgSize);
-          ctx.restore();
-        } catch (e) {
-          ctx.fillStyle = '#F59E0B';
-          ctx.font = '900 96px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-          ctx.fillText('🐾', width - 180, 148 + topInset);
-        }
+        ctx.font = '500 32px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        ctx.fillText('ワークショップまとめ', 72, 266 + topInset);
 
         let y = 250 + topInset;
         summaryKeys.forEach((item) => {
@@ -3521,6 +3504,29 @@
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '500 32px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
         drawWrappedText(ctx, userText, actionBoxX + 46, actionBoxY + 146, actionBoxW - 92, 46, 14);
+
+        try {
+          const goodImg = await loadImage('ok.png');
+          const iconSize = 132;
+          const iconX = width - 72 - iconSize;
+          const iconY = height - 72 - iconSize;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(iconX + iconSize / 2, iconY + iconSize / 2, iconSize / 2, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(goodImg, iconX, iconY, iconSize, iconSize);
+          ctx.restore();
+          ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.arc(iconX + iconSize / 2, iconY + iconSize / 2, iconSize / 2 - 2, 0, Math.PI * 2);
+          ctx.stroke();
+        } catch (e) {
+          ctx.fillStyle = '#10B981';
+          ctx.font = '900 78px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+          ctx.fillText('👍', width - 150, height - 86);
+        }
 
         const now = new Date();
         const stamp = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
