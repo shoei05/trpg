@@ -1791,6 +1791,10 @@
         <button class="jump-item" type="button" onclick="jumpToScreen('hazard')">ハザードマップ</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('bcp')">BCPチェックリスト</button>
       </div>
+      <div class="jump-group">
+        <div class="jump-group-title">システム</div>
+        <button class="jump-item" type="button" onclick="reloadPage()">ページ更新</button>
+      </div>
     </div>
   </aside>
 
@@ -2652,6 +2656,11 @@
 
     function closeJumpMenu() {
       toggleJumpMenu(false);
+    }
+
+    function reloadPage() {
+      closeJumpMenu();
+      window.location.reload();
     }
 
     function findSceneById(sceneId) {
