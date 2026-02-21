@@ -3421,7 +3421,7 @@
 
         const width = 1170;
         const height = 2532;
-        const topInset = 96;
+        const topInset = 120;
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
@@ -3437,10 +3437,14 @@
         const snapshotTitle = '災害への備えを\nプライマリ・ケア診療に活かす';
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '900 56px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        drawWrappedText(ctx, snapshotTitle, 72, 126 + topInset, width - 144, 66, 2);
+        const titleLines = snapshotTitle.split('\n');
+        const titleStartY = 126 + topInset;
+        titleLines.forEach((line, idx) => {
+          ctx.fillText(line, 72, titleStartY + idx * 66);
+        });
         ctx.fillStyle = 'rgba(255,255,255,0.72)';
         ctx.font = '500 32px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText('ワークショップまとめ', 72, 266 + topInset);
+        ctx.fillText('ワークショップまとめ', 72, titleStartY + titleLines.length * 66 + 8);
 
         let y = 250 + topInset;
         summaryKeys.forEach((item) => {
