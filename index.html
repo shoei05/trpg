@@ -127,6 +127,136 @@
       display: block;
     }
 
+    /* ===== JUMP MENU ===== */
+    .menu-toggle-btn {
+      position: fixed;
+      top: 12px;
+      left: 10px;
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(15, 23, 42, 0.8);
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .jump-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1190;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .jump-menu-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .jump-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: min(340px, 84vw);
+      background: #FFFFFF;
+      z-index: 1210;
+      transform: translateX(-100%);
+      transition: transform 0.22s ease;
+      box-shadow: 8px 0 24px rgba(15, 23, 42, 0.22);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .jump-menu.open {
+      transform: translateX(0);
+    }
+
+    .jump-menu-header {
+      padding: 16px;
+      background: linear-gradient(135deg, #1D4ED8, #2563EB);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .jump-menu-title {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+
+    .jump-menu-close {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .jump-menu-body {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+      background: #F8FAFC;
+    }
+
+    .jump-group {
+      background: white;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .jump-group-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #64748B;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .jump-item {
+      width: 100%;
+      border: none;
+      background: #F1F5F9;
+      color: #0F172A;
+      font-size: 13px;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+
+    .jump-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .jump-item:active {
+      transform: scale(0.98);
+      background: #E2E8F0;
+    }
+
     /* ===== TITLE SCREEN ===== */
     #screen-title {
       background: linear-gradient(145deg, #1E1B4B 0%, var(--bg-dark) 100%);
@@ -1691,6 +1821,56 @@
     <div id="progress-bar" style="width: 0%"></div>
   </div>
   <div class="act-label" id="act-label"></div>
+  <button id="menu-toggle-btn" class="menu-toggle-btn" type="button" aria-label="シーンジャンプメニュー"
+    aria-expanded="false" onclick="toggleJumpMenu()">
+    ☰
+  </button>
+  <div id="jump-menu-overlay" class="jump-menu-overlay" onclick="closeJumpMenu()"></div>
+  <aside id="jump-menu" class="jump-menu" aria-label="シーンジャンプメニュー">
+    <div class="jump-menu-header">
+      <div class="jump-menu-title">シーンジャンプ</div>
+      <button class="jump-menu-close" type="button" aria-label="メニューを閉じる" onclick="closeJumpMenu()">×</button>
+    </div>
+    <div class="jump-menu-body">
+      <div class="jump-group">
+        <div class="jump-group-title">全体</div>
+        <button class="jump-item" type="button" onclick="jumpToScreen('title')">タイトル</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('news')">ニュース</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('summary')">まとめ</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">第1幕</div>
+        <button class="jump-item" type="button" onclick="jumpToScene('1-1')">シーン1（発災！まず何から？）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('1-2')">シーン2（家族への連絡）</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">第2幕</div>
+        <button class="jump-item" type="button" onclick="jumpToScene('2-1')">シーン3（連絡ツリー）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('2-info')">シーン情報収集（防災アプリ）</button>
+        <button class="jump-item" type="button" onclick="openDisasterAppsGuide('2-2')">防災アプリ紹介ページ</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('2-2')">シーン4（透析患者の対応）</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">第3幕</div>
+        <button class="jump-item" type="button" onclick="jumpToScene('3-1')">シーン5（要配慮者の避難）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('3-2')">シーン6（BCPの備え）</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">第4幕</div>
+        <button class="jump-item" type="button" onclick="jumpToScene('4-1')">シーン7（スタッフへの声かけ）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('4-2')">シーン8（PFA対応）</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">第5幕</div>
+        <button class="jump-item" type="button" onclick="jumpToScene('5-1')">シーン9（受援力）</button>
+      </div>
+      <div class="jump-group">
+        <div class="jump-group-title">その他</div>
+        <button class="jump-item" type="button" onclick="jumpToScreen('hazard')">ハザードマップ</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('bcp')">BCPチェックリスト</button>
+      </div>
+    </div>
+  </aside>
 
   <!-- ===========================
      SCREEN 1: TITLE
@@ -2490,11 +2670,13 @@
     let checkedItems = {};
     let totalBCPItems = 0;
     let nextSceneAfterAppsGuide = null;
+    let messageRunId = 0;
 
     // ===========================
     // SCREEN MANAGEMENT
     // ===========================
     function showScreen(name) {
+      closeJumpMenu();
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById('screen-' + name).classList.add('active');
       window.scrollTo(0, 0);
@@ -2516,6 +2698,84 @@
 
     function setActLabel(text) {
       document.getElementById('act-label').textContent = text;
+    }
+
+    function toggleJumpMenu(forceOpen) {
+      const menu = document.getElementById('jump-menu');
+      const overlay = document.getElementById('jump-menu-overlay');
+      const toggleBtn = document.getElementById('menu-toggle-btn');
+      if (!menu || !overlay || !toggleBtn) return;
+
+      const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !menu.classList.contains('open');
+      menu.classList.toggle('open', shouldOpen);
+      overlay.classList.toggle('visible', shouldOpen);
+      toggleBtn.setAttribute('aria-expanded', String(shouldOpen));
+    }
+
+    function closeJumpMenu() {
+      toggleJumpMenu(false);
+    }
+
+    function findSceneById(sceneId) {
+      for (const [actKey, act] of Object.entries(STORY)) {
+        const sceneIndex = act.scenes.findIndex(s => s.id === sceneId);
+        if (sceneIndex !== -1) {
+          return { actKey, act, scene: act.scenes[sceneIndex], sceneIndex };
+        }
+      }
+      return null;
+    }
+
+    function jumpToScreen(screenName) {
+      messageRunId += 1;
+      nextSceneAfterAppsGuide = null;
+      showChoiceArea(false);
+
+      if (screenName === 'hazard') {
+        goToHazard();
+        return;
+      }
+      if (screenName === 'bcp') {
+        showBCP();
+        return;
+      }
+      if (screenName === 'summary') {
+        showSummary();
+        return;
+      }
+      if (screenName === 'news' || screenName === 'title') {
+        currentAct = null;
+        currentScene = null;
+        messageQueue = [];
+        updateProgress(0);
+      }
+      showScreen(screenName);
+    }
+
+    function jumpToScene(sceneId) {
+      const found = findSceneById(sceneId);
+      if (!found) return;
+      const { actKey, act, scene, sceneIndex } = found;
+
+      currentAct = actKey;
+      currentSceneIndex = sceneIndex;
+      nextSceneAfterAppsGuide = null;
+      document.getElementById('chat-header-sub').textContent = act.headerSub;
+      setActLabel(act.label + '：' + act.title);
+
+      const progMap = { act1: 15, act2: 35, act3: 55, act4: 70, act5: 85 };
+      updateProgress(progMap[actKey] || 0);
+
+      const chatBody = document.getElementById('chat-body');
+      chatBody.innerHTML = '';
+      addDateLabel();
+      if (actKey === 'act3') {
+        addFacilitatorBanner(act.facilNote);
+      }
+
+      showScreen('chat');
+      loadScene(scene);
+      updateProgress(getProgress());
     }
 
     // ===========================
@@ -2587,6 +2847,8 @@
     // ===========================
     function loadScene(scene) {
       currentScene = scene;
+      messageRunId += 1;
+      const runId = messageRunId;
 
       const chatBody = document.getElementById('chat-body');
 
@@ -2599,11 +2861,13 @@
       const msgs = scene.messages || (scene.preMessages ? [...scene.preMessages] : []);
       messageQueue = [...msgs];
       showChoiceArea(false);
-      showNextMessage();
+      showNextMessage(runId);
     }
 
     function loadNextScene(scene) {
       currentScene = scene;
+      messageRunId += 1;
+      const runId = messageRunId;
       const chatBody = document.getElementById('chat-body');
 
       const lbl = document.createElement('div');
@@ -2614,13 +2878,16 @@
       const msgs = scene.preMessages || [];
       messageQueue = [...msgs];
       showChoiceArea(false);
-      showNextMessage();
+      showNextMessage(runId);
     }
 
-    function showNextMessage() {
+    function showNextMessage(runId = messageRunId) {
+      if (runId !== messageRunId) return;
+
       if (messageQueue.length === 0) {
         // Show choices
         setTimeout(() => {
+          if (runId !== messageRunId) return;
           showChoiceArea(true);
           scrollToBottom();
         }, 400);
@@ -2632,7 +2899,7 @@
       scrollToBottom();
 
       const delay = msg.text.length * 30 + 400;
-      setTimeout(showNextMessage, Math.min(delay, 1800));
+      setTimeout(() => showNextMessage(runId), Math.min(delay, 1800));
     }
 
     // ===========================
@@ -2971,6 +3238,7 @@
       currentScene = null;
       messageQueue = [];
       nextSceneAfterAppsGuide = null;
+      messageRunId += 1;
       updateProgress(0);
       document.getElementById('action-input').value = '';
       document.getElementById('chat-body').innerHTML = '';
