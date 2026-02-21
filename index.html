@@ -270,6 +270,12 @@
       background: linear-gradient(135deg, #EA580C, #C2410C);
     }
 
+    .jump-item-door {
+      border-left: 4px solid #F97316;
+      background: #FFF7ED;
+      font-weight: 800;
+    }
+
     /* ===== TITLE SCREEN ===== */
     #screen-title {
       background: linear-gradient(145deg, #1E1B4B 0%, var(--bg-dark) 100%);
@@ -1772,6 +1778,14 @@
         <button class="jump-item jump-item-primary" type="button" onclick="jumpToOpeningDoor()">🚪 冒頭の扉へ（第1幕開始前）</button>
       </div>
       <div class="jump-group">
+        <div class="jump-group-title">章の扉</div>
+        <button class="jump-item jump-item-door" type="button" onclick="jumpToActDoor('act1')">🚪 第1幕の扉</button>
+        <button class="jump-item jump-item-door" type="button" onclick="jumpToActDoor('act2')">🚪 第2幕の扉</button>
+        <button class="jump-item jump-item-door" type="button" onclick="jumpToActDoor('act3')">🚪 第3幕の扉</button>
+        <button class="jump-item jump-item-door" type="button" onclick="jumpToActDoor('act4')">🚪 第4幕の扉</button>
+        <button class="jump-item jump-item-door" type="button" onclick="jumpToActDoor('act5')">🚪 第5幕の扉</button>
+      </div>
+      <div class="jump-group">
         <div class="jump-group-title">全体</div>
         <button class="jump-item" type="button" onclick="jumpToScreen('title')">タイトル</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('news')">ニュース</button>
@@ -2681,18 +2695,26 @@
     }
 
     function jumpToOpeningDoor() {
+      jumpToActDoor('act1');
+    }
+
+    function jumpToActDoor(actKey) {
+      if (!STORY[actKey]) return;
       messageRunId += 1;
-      checkedItems = {};
-      currentAct = null;
-      currentSceneIndex = 0;
-      currentScene = null;
-      messageQueue = [];
+      if (actKey === 'act1') {
+        checkedItems = {};
+        currentAct = null;
+        currentSceneIndex = 0;
+        currentScene = null;
+        messageQueue = [];
+        nextActAfterBCP = 'summary';
+        updateProgress(0);
+      }
       nextSceneAfterAppsGuide = null;
-      nextActAfterBCP = 'summary';
-      updateProgress(0);
+      showChoiceArea(false);
       document.getElementById('chat-body').innerHTML = '';
-      showActBreak('act1', function () {
-        startAct('act1');
+      showActBreak(actKey, function () {
+        startAct(actKey);
       });
     }
 
