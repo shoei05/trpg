@@ -1015,15 +1015,24 @@
 
     .simulation-embed iframe {
       width: 100%;
-      height: clamp(340px, 50svh, 520px);
+      height: clamp(380px, 62svh, 680px);
       border: 0;
       display: block;
     }
 
     @supports not (height: 100svh) {
       .simulation-embed iframe {
-        height: clamp(340px, 50vh, 520px);
+        height: clamp(380px, 62vh, 680px);
       }
+    }
+
+    .btn-sim-control {
+      background: linear-gradient(135deg, #1D4ED8, #2563EB) !important;
+      color: #fff !important;
+    }
+
+    .btn-sim-open {
+      background: linear-gradient(135deg, #0F766E, #0D9488) !important;
     }
 
     .result-selected {
@@ -3118,10 +3127,11 @@
       }
 
       if (choice.action === 'open_simulation') {
+        const simulationNextButtonHtml = nextButtonHtml.replace('btn-continue', 'btn-continue btn-sim-control');
         html += `
-      ${nextButtonHtml}
-      <a href="https://udify.app/chatbot/lDBY9ClRYT3XKx9m" target="_blank" rel="noopener noreferrer" class="btn-continue"
-        style="margin-bottom:12px; background:#334155; text-decoration:none; text-align:center;">
+      ${simulationNextButtonHtml}
+      <a href="https://udify.app/chatbot/lDBY9ClRYT3XKx9m" target="_blank" rel="noopener noreferrer" class="btn-continue btn-sim-control btn-sim-open"
+        style="margin-bottom:12px; text-decoration:none; text-align:center;">
         別タブで開く
       </a>
       <div class="learning-box simulation-embed">
