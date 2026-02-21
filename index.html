@@ -59,17 +59,17 @@
       display: none;
       position: relative;
       width: 100%;
+      min-height: 100vh;
       min-height: 100dvh;
-      overflow-y: auto;
+      overflow: visible;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
       overscroll-behavior-y: auto;
       background: var(--bg-gradient);
     }
 
     @supports (-webkit-touch-callout: none) {
       .screen {
-        min-height: -webkit-fill-available;
+        min-height: 100svh;
       }
     }
 
@@ -965,9 +965,7 @@
       background: var(--light-gray);
       min-height: 100vh;
       flex-direction: column;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
+      overflow: visible;
     }
 
     .result-header {
