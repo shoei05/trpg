@@ -2912,11 +2912,13 @@
     // ===========================
     // MESSAGE RENDERING
     // ===========================
+    const MEKKE_IMAGE_URL = 'https://drive.google.com/uc?export=view&id=1HJ20y2dVH3Gj0AjRnbAmish-jub8qz9m';
+
     const AVATARS = {
       narrator: { emoji: '📖', label: 'ナレーター', side: 'left' },
       nanta: { emoji: '🐾', label: 'ニャンタ院長', side: 'right' },
       staff: { emoji: '👩‍⚕️', label: 'スタッフ', side: 'left' },
-      mekke: { emoji: '🐱', label: 'めっけさん', side: 'left', image: 'https://drive.google.com/uc?export=view&id=1HJ20y2dVH3Gj0AjRnbAmish-jub8qz9m' },
+      mekke: { emoji: '🐱', label: 'めっけさん', side: 'left', image: MEKKE_IMAGE_URL },
       patient: { emoji: '🧓', label: '患者さん', side: 'left' },
       system: { emoji: '🚨', label: '緊急情報', side: 'left' }
     };
@@ -3004,10 +3006,12 @@
       const badgeEl = document.getElementById('result-badge');
       const titleEl = document.getElementById('result-title');
       const isWorkshopUpload = choice.action === 'open_upload';
+      const isWorkshopSimulation = choice.action === 'open_simulation';
+      const isWorkshopAction = isWorkshopUpload || isWorkshopSimulation;
 
-      if (isWorkshopUpload) {
+      if (isWorkshopAction) {
         badgeEl.style.display = 'none';
-        titleEl.textContent = 'グループワーク';
+        titleEl.textContent = isWorkshopSimulation ? 'シミュレーション' : 'グループワーク';
       } else {
         badgeEl.style.display = 'inline-flex';
         badgeEl.className = `result-badge ${q.cls}`;
@@ -3016,11 +3020,13 @@
       }
 
       const bestChoice = currentScene.choices.find(c => c.quality === 'great');
+      const resultImageSrc = isWorkshopSimulation ? MEKKE_IMAGE_URL : `${choice.quality}.png`;
+      const resultImageAlt = isWorkshopSimulation ? 'めっけさん' : choice.quality;
 
       let html = `
     <div style="text-align: center; margin: 16px 0;">
       <!-- 画像挿入ポイント：フィードバックイラスト（${choice.quality}） -->
-      <img src="${choice.quality}.png" alt="${choice.quality}" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid ${choice.quality === 'great' ? '#10B981' : choice.quality === 'rethink' ? '#F59E0B' : '#E2E8F0'}; margin: 0 auto; display: block; object-fit: cover; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+      <img src="${resultImageSrc}" alt="${resultImageAlt}" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid ${choice.quality === 'great' ? '#10B981' : choice.quality === 'rethink' ? '#F59E0B' : '#E2E8F0'}; margin: 0 auto; display: block; object-fit: cover; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
     </div>
     
     <div class="result-selected ${q.cls}">
@@ -3068,7 +3074,15 @@
       }
 
       if (choice.action === 'open_simulation') {
-        html += `<div style="margin:20px 0;"><a href="#" onclick="alert('シミュレーションボット（URLプレースホルダー）を開きます');" class="btn-continue" style="background:#3B82F6; display:block; text-align:center; text-decoration:none;">💬 シミュレーションを開始する</a></div>`;
+        html += `
+      <div class="learning-box" style="padding:0; overflow:hidden;">
+        <iframe
+          src="https://udify.app/chatbot/lDBY9ClRYT3XKx9m"
+          style="width: 100%; height: 100%; min-height: 700px; border: 0;"
+          frameborder="0"
+          allow="microphone">
+        </iframe>
+      </div>`;
       } else if (choice.action === 'open_upload') {
         html += `<div style="margin:20px 0;"><a href="https://drive.google.com/drive/folders/19GiNAp9a34pMP2E0POAeSvcqjCSeQhbp?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-continue" style="background:#10B981; display:block; text-align:center; text-decoration:none;">📁 写真をアップロードする</a></div>`;
       }
