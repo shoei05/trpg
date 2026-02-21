@@ -3615,11 +3615,26 @@
     // ===========================
     function scrollToBottom() {
       const chatBody = document.getElementById('chat-body');
-      if (!chatBody) return;
-      requestAnimationFrame(() => {
-        chatBody.scrollTop = chatBody.scrollHeight;
-        requestAnimationFrame(() => {
+      const activeScreen = document.querySelector('.screen.active');
+      const docRoot = document.documentElement;
+
+      const applyBottomScroll = () => {
+        if (chatBody) {
           chatBody.scrollTop = chatBody.scrollHeight;
+        }
+        if (activeScreen) {
+          activeScreen.scrollTop = activeScreen.scrollHeight;
+        }
+        if (docRoot) {
+          window.scrollTo(0, docRoot.scrollHeight);
+        }
+      };
+
+      requestAnimationFrame(() => {
+        applyBottomScroll();
+        requestAnimationFrame(() => {
+          applyBottomScroll();
+          setTimeout(applyBottomScroll, 140);
         });
       });
     }
