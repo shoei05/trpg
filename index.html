@@ -2618,6 +2618,20 @@
     `;
       }
 
+      // Brief primer shown before leaving the contact-tree scene.
+      if (currentScene.id === '2-1') {
+        html += `
+      <div class="learning-box">
+        <h3>📡 災害時の連絡ツリーとは？</h3>
+        <p>
+          「誰が、誰に、何を伝えるか」を平時に決めておく緊急連絡網のことです。<br>
+          1人が次の担当者へ順に展開することで、安否・現在地・出勤可否などを短時間で共有できます。<br>
+          音声通話が混雑してつながりにくい状況に備え、電話に加えてLINE・SMSなど代替手段もセットで決めておくのがポイントです。
+        </p>
+      </div>
+    `;
+      }
+
       if (choice.action === 'open_simulation') {
         html += `<div style="margin:20px 0;"><a href="#" onclick="alert('シミュレーションボット（URLプレースホルダー）を開きます');" class="btn-continue" style="background:#3B82F6; display:block; text-align:center; text-decoration:none;">💬 シミュレーションを開始する</a></div>`;
       } else if (choice.action === 'open_upload') {
