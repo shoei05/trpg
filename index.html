@@ -3076,12 +3076,35 @@
     `;
       }
 
+      // Next button
+      const nextAct = currentScene.nextAct;
+      const nextSceneId = currentScene.nextScene;
+      let nextButtonHtml = '';
+
+      if (nextAct === 'hazard') {
+        const afterBCPAct = currentScene.nextAfterBCP || 'summary';
+        nextButtonHtml = `<button class="btn-continue" onclick="goToHazard('${afterBCPAct}')">ハザードマップを確認する →</button>`;
+      } else if (nextAct === 'summary') {
+        nextButtonHtml = `<button class="btn-continue" onclick="showSummary()">まとめへ進む →</button>`;
+      } else if (nextAct) {
+        const actKey = nextAct;
+        const actLabel = STORY[actKey].label;
+        nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
+      } else if (nextSceneId) {
+        if (currentScene.id === '2-info') {
+          nextButtonHtml = `<button class="btn-continue" onclick="openDisasterAppsGuide('${nextSceneId}')">防災アプリ紹介へ →</button>`;
+        } else {
+          nextButtonHtml = `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
+        }
+      }
+
       if (choice.action === 'open_simulation') {
         html += `
+      ${nextButtonHtml}
       <div class="learning-box" style="padding:0; overflow:hidden;">
         <iframe
           src="https://udify.app/chatbot/lDBY9ClRYT3XKx9m"
-          style="width: 100%; height: 100%; min-height: 700px; border: 0;"
+          style="width: 100%; height: 620px; border: 0;"
           frameborder="0"
           allow="microphone">
         </iframe>
@@ -3089,26 +3112,8 @@
       } else if (choice.action === 'open_upload') {
         html += `<div style="margin:20px 0;"><a href="https://drive.google.com/drive/folders/19GiNAp9a34pMP2E0POAeSvcqjCSeQhbp?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-continue" style="background:#10B981; display:block; text-align:center; text-decoration:none;">📁 写真をアップロードする</a></div>`;
       }
-
-      // Next button
-      const nextAct = currentScene.nextAct;
-      const nextSceneId = currentScene.nextScene;
-
-      if (nextAct === 'hazard') {
-        const afterBCPAct = currentScene.nextAfterBCP || 'summary';
-        html += `<button class="btn-continue" onclick="goToHazard('${afterBCPAct}')">ハザードマップを確認する →</button>`;
-      } else if (nextAct === 'summary') {
-        html += `<button class="btn-continue" onclick="showSummary()">まとめへ進む →</button>`;
-      } else if (nextAct) {
-        const actKey = nextAct;
-        const actLabel = STORY[actKey].label;
-        html += `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
-      } else if (nextSceneId) {
-        if (currentScene.id === '2-info') {
-          html += `<button class="btn-continue" onclick="openDisasterAppsGuide('${nextSceneId}')">防災アプリ紹介へ →</button>`;
-        } else {
-          html += `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
-        }
+      if (choice.action !== 'open_simulation') {
+        html += nextButtonHtml;
       }
 
       document.getElementById('result-body').innerHTML = html;
