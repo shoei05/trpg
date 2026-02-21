@@ -52,7 +52,6 @@
       background: #0f172a;
       color: var(--text-main);
       -webkit-text-size-adjust: 100%;
-      overscroll-behavior-y: none;
     }
 
     /* ===== SCREEN SYSTEM ===== */
@@ -60,12 +59,20 @@
       display: none;
       position: fixed;
       inset: 0;
-      overflow-y: scroll;
+      min-height: 100dvh;
+      height: 100dvh;
+      overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
-      overscroll-behavior-y: none;
+      overscroll-behavior-y: auto;
       background: var(--bg-gradient);
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .screen {
+        min-height: -webkit-fill-available;
+        height: -webkit-fill-available;
+      }
     }
 
     .screen.active {
