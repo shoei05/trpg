@@ -2422,15 +2422,15 @@
             preMessages: [
               { type: "system", text: "📡 【防災アプリで判明した被害状況】\n\n・市内の複数建物倒壊、主要道路が土砂崩れ等で寸断（南西側市道のみ一部通行可）\n・またたび中央病院など3つの主要施設が被災・機能不全\n・死傷者多数（現在も被害の全容は不明）\n・一部停電、断水地区あり、インターネット接続不安定\n・避難所開設" },
 
-              // <!-- 画像挿入ポイント：停電したクリニック内部の画像 -->
-              // { type: "system", text: `<div class="image-placeholder" style="width: 100%; height: 120px; background: rgba(0,0,0,0.1); border: 2px dashed rgba(0,0,0,0.3); border-radius: 8px; margin: 8px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 11px;">停電したクリニックの画像</div>` },
+
 
               { type: "narrator", text: "連絡ツリーを使い、家族の無事を確認。スタッフ4人のうち3人の安否も取れた。1人は道路寸断で来られないが無事とのこと。" },
               { type: "narrator", text: "迂回路を通り、なんとかクリニックに到着した。午前11時30分。" },
-              { type: "narrator", text: "クリニックは建物の外観は無事だが、停電している。" },
+              { type: "narrator", text: "クリニックは建物の外観は無事で、電気も復旧している。" },
               { type: "nanta", text: "よかった……。さあ、クリニックを再開する準備を——" },
               { type: "patient", text: "先生！ 透析病院が被災したって聞きました。どうすればいいんですか……！" },
-              { type: "narrator", text: "週3回透析が必要な患者さん・三毛ノリさん（78歳）から緊急連絡が入った。次の透析は明日だ。" }
+              { type: "narrator", text: "週3回透析が必要な患者さん・三毛ノリさん（78歳）から緊急連絡が入った。次の透析は明日だ。" },
+              { type: "narrator", text: "<img src='phone_call_scene.png' alt='電話対応するナンタ院長' style='width: 100%; max-width: 360px; border-radius: 12px; margin: 8px auto; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.15);'>" }
             ],
             question: "この状況、どう対応しますか？",
             choices: [
