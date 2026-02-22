@@ -1377,6 +1377,163 @@
       flex-direction: column;
     }
 
+    /* ===== COLUMN: DISASTER PRIORITY PHONE ===== */
+    #screen-column-phone {
+      background: #FAF5FF;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .column-header {
+      background: linear-gradient(135deg, #5B21B6, #7C3AED);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .column-header p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .column-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .column-section {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .column-section h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .column-section p {
+      font-size: 13px;
+      color: #4B5563;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .column-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .column-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .column-table th {
+      background: #EDE9FE;
+      color: #5B21B6;
+      font-weight: 700;
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 2px solid #DDD6FE;
+    }
+
+    .column-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #F3F4F6;
+      color: #374151;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .column-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .column-callout {
+      background: rgba(124, 58, 237, 0.08);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #5B21B6;
+      line-height: 1.7;
+    }
+
+    .column-callout strong {
+      color: #4C1D95;
+    }
+
+    .column-source {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .column-source h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1F2937;
+      margin-bottom: 10px;
+    }
+
+    .column-source ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .column-source ul li {
+      font-size: 11px;
+      color: #6B7280;
+      padding: 5px 0;
+      border-bottom: 1px solid #F3F4F6;
+      line-height: 1.5;
+    }
+
+    .column-source ul li:last-child {
+      border-bottom: none;
+    }
+
+    .column-source ul li a {
+      color: #7C3AED;
+      text-decoration: none;
+    }
+
+    .column-source ul li a:active {
+      opacity: 0.7;
+    }
+
+    .btn-column-next {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #5B21B6, #7C3AED);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
       background: #F0F9FF;
@@ -1873,6 +2030,7 @@
       <div class="jump-group">
         <div class="jump-group-title">第2幕</div>
         <button class="jump-item" type="button" onclick="jumpToScene('2-1')">シーン3（連絡ツリー）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-phone')">📞 コラム：災害時優先電話</button>
         <button class="jump-item" type="button" onclick="jumpToScene('2-info')">シーン情報収集（防災アプリ）</button>
         <button class="jump-item" type="button" onclick="openDisasterAppsGuide('2-2')">防災アプリ紹介ページ</button>
         <button class="jump-item" type="button" onclick="jumpToScene('2-2')">シーン4（透析患者の対応）</button>
@@ -2147,6 +2305,186 @@
       </div>
 
       <button class="btn-hazard-next" onclick="continueFromDisasterAppsGuide()">次のシーンへ進む →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN: COLUMN – DISASTER PRIORITY PHONE
+=========================== -->
+  <div id="screen-column-phone" class="screen">
+    <div class="column-header">
+      <h2>📞 コラム：災害時優先電話</h2>
+      <p>クリニック・病院はどこまで使えるのか？ シーンの補足として知っておきたい知識をまとめました。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 1. 制度概要 -->
+      <div class="column-section">
+        <h3>📋 災害時優先電話とは</h3>
+        <p><strong>電気通信事業法 第8条</strong>（重要通信の確保）に基づく制度です。通信事業者は非常事態において「重要通信」を優先的に取り扱う義務があります。</p>
+        <p>ただし、<strong>優先されるのは「発信」だけ</strong>。着信は一般電話と同じ扱いで、基地局が壊れていれば接続できません。</p>
+      </div>
+
+      <!-- 2. 優先の範囲 -->
+      <div class="column-section">
+        <h3>📊 何が優先されるのか</h3>
+        <table class="column-table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>優先？</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>発信</strong></td>
+              <td>○</td>
+              <td>一般回線が規制中でも発信可能</td>
+            </tr>
+            <tr>
+              <td><strong>着信</strong></td>
+              <td>×</td>
+              <td>一般電話と同じ扱い</td>
+            </tr>
+            <tr>
+              <td><strong>相手が話中</strong></td>
+              <td>×</td>
+              <td>割り込み機能ではない</td>
+            </tr>
+            <tr>
+              <td><strong>物理的被災</strong></td>
+              <td>×</td>
+              <td>基地局が壊れていれば不通</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>💡 つまり「<strong>回線混雑（輻輳）に対する優先措置</strong>」であり、インフラ損壊への保証ではありません。</p>
+      </div>
+
+      <!-- 3. 対象機関 -->
+      <div class="column-section">
+        <h3>🏥 誰が使えるのか</h3>
+        <table class="column-table">
+          <thead>
+            <tr>
+              <th>施設区分</th>
+              <th>対象？</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>災害拠点病院</td>
+              <td>✅ ほぼ確実</td>
+            </tr>
+            <tr>
+              <td>救急告示病院等</td>
+              <td>⚠️ 条件付きで可能性あり</td>
+            </tr>
+            <tr>
+              <td><strong>一般診療所・クリニック</strong></td>
+              <td>❌ 原則対象外の可能性が高い</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4. よくある誤解 -->
+      <div class="column-section">
+        <h3>⚠️ よくある誤解</h3>
+        <table class="column-table">
+          <thead>
+            <tr>
+              <th>誤解</th>
+              <th>実際</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>優先電話なら必ずつながる</td>
+              <td>発信規制の回避のみ。基地局被災なら不通</td>
+            </tr>
+            <tr>
+              <td>着信も優先される</td>
+              <td>着信は一般と同じ</td>
+            </tr>
+            <tr>
+              <td>データ通信も優先される</td>
+              <td>音声通話のみ。ネットは対象外</td>
+            </tr>
+            <tr>
+              <td>病院なら自動的に対象</td>
+              <td>一般診療所は原則対象外</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 5. 現実的対策 -->
+      <div class="column-section">
+        <h3>🛡️ クリニックが取るべき対策</h3>
+        <p>優先電話に頼れない一般クリニックこそ、<strong>複数の通信手段を平時から整備</strong>しておくことが生命線です。</p>
+        <table class="column-table">
+          <thead>
+            <tr>
+              <th>手段</th>
+              <th>特徴</th>
+              <th>コスト</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>災害用伝言ダイヤル（171）</td>
+              <td>毎月1日・15日に体験利用可</td>
+              <td>無料</td>
+            </tr>
+            <tr>
+              <td>LINE / SNS（テキスト）</td>
+              <td>音声通話より輻輳しにくい</td>
+              <td>無料</td>
+            </tr>
+            <tr>
+              <td>SMS</td>
+              <td>音声回線とは別経路</td>
+              <td>低額</td>
+            </tr>
+            <tr>
+              <td>衛星電話（スターリンク等）</td>
+              <td>地上インフラに依存しない</td>
+              <td>高額</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>📌 「電話 → SMS → LINE → 伝言ダイヤル」の順で試す<strong>連絡ツリー</strong>を印刷配布し、年1回以上の通信訓練を推奨。</p>
+      </div>
+
+      <!-- 6. ワークショップとの接続 -->
+      <div class="column-callout">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        一般無床診療所であるマタタビクリニックは、災害時優先電話の恩恵を直接受けられない可能性が高い。だからこそ、<strong>複数の代替通信手段（LINE・SMS・衛星通信・災害用伝言ダイヤル）を平時から準備しておくこと</strong>が重要です。
+      </div>
+
+      <!-- 7. 出典 -->
+      <div class="column-source">
+        <h3>📚 参考資料・情報源</h3>
+        <ul>
+          <li><a href="https://group.ntt/jp/disaster/3principles/tsushin.html" target="_blank"
+              rel="noopener noreferrer">NTTグループ 防災（重要通信の確保）</a></li>
+          <li><a href="https://group.ntt/jp/disaster/simulation/04.html" target="_blank"
+              rel="noopener noreferrer">NTTグループ 防災シミュレーション</a></li>
+          <li><a href="https://www.soumu.go.jp/menu_seisaku/ictseisaku/net_anzen/hijyo/yusen.html" target="_blank"
+              rel="noopener noreferrer">総務省 非常時の通信確保</a></li>
+          <li><a href="https://laws.e-gov.go.jp/law/359AC0000000086" target="_blank"
+              rel="noopener noreferrer">電気通信事業法（e-Gov）</a></li>
+          <li><a href="https://www.wds.emis.go.jp/" target="_blank" rel="noopener noreferrer">EMIS（広域災害救急医療情報システム）</a>
+          </li>
+        </ul>
+      </div>
+
+      <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※
+        本資料は2026年2月時点のWeb検索に基づく整理です。最新情報は各公式サイトをご確認ください。</div>
+
+      <button class="btn-column-next" onclick="continueFromColumn()">次のシーンへ進む →</button>
     </div>
   </div>
 
@@ -2813,6 +3151,10 @@
       nextSceneAfterAppsGuide = null;
       showChoiceArea(false);
 
+      if (screenName === 'column-phone') {
+        showColumnPhone();
+        return;
+      }
       if (screenName === 'hazard') {
         goToHazard('summary');
         return;
@@ -3159,7 +3501,9 @@
         const actLabel = STORY[actKey].label;
         nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
       } else if (nextSceneId) {
-        if (currentScene.id === '2-info') {
+        if (currentScene.id === '2-1') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnPhone()">📞 コラムを読む →</button>`;
+        } else if (currentScene.id === '2-info') {
           nextButtonHtml = `<button class="btn-continue" onclick="openDisasterAppsGuide('${nextSceneId}')">防災アプリ紹介へ →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
@@ -3214,6 +3558,19 @@
       showChoiceArea(false);
       loadNextScene(scene);
       scrollToBottom();
+    }
+
+    function showColumnPhone() {
+      setActLabel('コラム：災害時優先電話');
+      showScreen('column-phone');
+    }
+
+    function continueFromColumn() {
+      if (currentAct && STORY[currentAct]) {
+        const act = STORY[currentAct];
+        setActLabel(act.label + '：' + act.title);
+      }
+      goToNextScene('2-info');
     }
 
     function openDisasterAppsGuide(sceneId) {
