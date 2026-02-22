@@ -1619,6 +1619,134 @@
       margin-right: 8px;
     }
 
+    /* ===== COLUMN: LEGAL FRAMEWORK ===== */
+    #screen-column-legal {
+      background: #EFF6FF;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .column-header-blue {
+      background: linear-gradient(135deg, #1D4ED8, #2563EB);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header-blue h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .column-header-blue p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .column-table-blue th {
+      background: #DBEAFE;
+      color: #1D4ED8;
+      border-bottom: 2px solid #BFDBFE;
+    }
+
+    .column-callout-blue {
+      background: rgba(29, 78, 216, 0.08);
+      border: 1px solid rgba(29, 78, 216, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #1E40AF;
+      line-height: 1.7;
+    }
+
+    .column-callout-blue strong {
+      color: #1E3A8A;
+    }
+
+    .column-source-blue ul li a {
+      color: #2563EB;
+    }
+
+    .btn-column-next-blue {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #1D4ED8, #2563EB);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .column-org-chart {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .column-org-level {
+      background: white;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border-left: 4px solid #2563EB;
+    }
+
+    .column-org-level.prefecture {
+      border-left-color: #059669;
+    }
+
+    .column-org-level.city {
+      border-left-color: #F97316;
+    }
+
+    .column-org-level h4 {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .column-org-level p {
+      font-size: 12px;
+      color: #6B7280;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .column-org-sub {
+      background: rgba(37, 99, 235, 0.06);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #1E40AF;
+    }
+
+    .column-org-sub.green {
+      background: rgba(5, 150, 105, 0.06);
+      color: #065F46;
+    }
+
+    .column-org-sub.orange {
+      background: rgba(249, 115, 22, 0.06);
+      color: #9A3412;
+    }
+
+    .column-org-arrow {
+      text-align: center;
+      font-size: 18px;
+      color: #94A3B8;
+      margin: 4px 0;
+    }
+
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
       background: #F0F9FF;
@@ -2119,6 +2247,7 @@
         <button class="jump-item" type="button" onclick="jumpToScene('2-info')">シーン情報収集（防災アプリ）</button>
         <button class="jump-item" type="button" onclick="openDisasterAppsGuide('2-2')">防災アプリ紹介ページ</button>
         <button class="jump-item" type="button" onclick="jumpToScene('2-2')">シーン4（透析患者の対応）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-legal')">⚖️ コラム：災害対応の法的枠組み</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第3幕</div>
@@ -2391,6 +2520,185 @@
       </div>
 
       <button class="btn-hazard-next" onclick="continueFromDisasterAppsGuide()">次のシーンへ進む →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN: COLUMN – LEGAL FRAMEWORK
+=========================== -->
+  <div id="screen-column-legal" class="screen">
+    <div class="column-header-blue">
+      <h2>⚖️ コラム：災害対応の法的枠組み</h2>
+      <p>シナリオで登場した「保健医療福祉調整本部」はどんな組織？ 日本の災害対応の仕組みを俯瞰します。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 1. 災害対策基本法 -->
+      <div class="column-section">
+        <h3>📜 災害対策基本法 ── 災害対応の"憲法"</h3>
+        <p>「<strong>災害対策基本法</strong>」（昭和36年制定）は、日本の災害対応全体の枠組みを定める法律です。</p>
+        <table class="column-table column-table-blue">
+          <thead>
+            <tr>
+              <th>定めていること</th>
+              <th>内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>役割分担</td>
+              <td>国・都道府県・市区町村の責務</td>
+            </tr>
+            <tr>
+              <td>災害対策本部</td>
+              <td>誰が・いつ・どこに設置するか</td>
+            </tr>
+            <tr>
+              <td>地域防災計画</td>
+              <td>自治体ごとの策定義務</td>
+            </tr>
+            <tr>
+              <td>受援への配慮</td>
+              <td>応援を受ける体制の整備（第40条）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2. 災害救助法 -->
+      <div class="column-section">
+        <h3>🏥 災害救助法 ── 被災者を直接支える</h3>
+        <p>「<strong>災害救助法</strong>」は被災者への具体的な救助（避難所設置、食糧・飲料水、医療提供等）を定めた法律です。</p>
+        <p>災害対策基本法が「枠組み（誰が何をするか）」なら、災害救助法は「<strong>実行（何を届けるか）</strong>」を規定しています。</p>
+      </div>
+
+      <!-- 3. 組織図 -->
+      <div class="column-section">
+        <h3>🏢 災害時の組織図</h3>
+        <p>「災害対策本部」とその中の「保健医療福祉調整本部」の関係を見てみましょう。</p>
+
+        <div class="column-org-chart">
+          <div class="column-org-level">
+            <h4>🇯🇵 国</h4>
+            <p>非常災害対策本部 / 緊急災害対策本部</p>
+            <div class="column-org-sub">厚生労働省 災害対策本部 → 保健医療福祉活動支援チーム</div>
+          </div>
+          <div class="column-org-arrow">▼</div>
+          <div class="column-org-level prefecture">
+            <h4>🏛️ 都道府県</h4>
+            <p>災害対策本部（知事が本部長）</p>
+            <div class="column-org-sub green">🎯
+              <strong>保健医療福祉調整本部</strong><br>統括DHEAT・災害医療コーディネーター・DMAT/DPAT/JMAT等の派遣調整</div>
+            <p style="margin-top:6px;">保健所 = 地域本部（県と市区町村をつなぐ）</p>
+          </div>
+          <div class="column-org-arrow">▼</div>
+          <div class="column-org-level city">
+            <h4>🏠 市区町村</h4>
+            <p>災害対策本部（市区町村長が本部長）</p>
+            <div class="column-org-sub orange">避難所の医療・保健ニーズ把握・要配慮者の安否確認・都道府県との情報連携</div>
+          </div>
+        </div>
+
+        <p>💡 <strong>保健医療福祉調整本部</strong>は常設ではなく、<strong>災害発生後に立ち上がる臨時組織</strong>です。県と市区町村の両方に災害対策本部が置かれます。</p>
+      </div>
+
+      <!-- 4. 支援チーム -->
+      <div class="column-section">
+        <h3>🚑 主な医療支援チーム</h3>
+        <p>すべてのチームは<strong>保健医療福祉調整本部の指揮調整のもと</strong>で役割分担と配置が決まります。</p>
+        <table class="column-table column-table-blue">
+          <thead>
+            <tr>
+              <th>チーム</th>
+              <th>主な活動時期</th>
+              <th>所管</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DMAT</strong></td>
+              <td>急性期（～48h）</td>
+              <td>厚生労働省</td>
+            </tr>
+            <tr>
+              <td><strong>JMAT</strong></td>
+              <td>亜急性期（～2週間）</td>
+              <td>日本医師会</td>
+            </tr>
+            <tr>
+              <td><strong>DPAT</strong></td>
+              <td>急性期～慢性期</td>
+              <td>厚生労働省</td>
+            </tr>
+            <tr>
+              <td><strong>DHEAT</strong></td>
+              <td>急性期～</td>
+              <td>厚生労働省</td>
+            </tr>
+            <tr>
+              <td><strong>DWAT</strong></td>
+              <td>亜急性期～慢性期</td>
+              <td>厚生労働省</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 5. シナリオ接続 -->
+      <div class="column-section">
+        <h3>📋 平時にできること</h3>
+        <table class="column-table column-table-blue">
+          <thead>
+            <tr>
+              <th>やるべきこと</th>
+              <th>理由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>EMIS登録・ログイン確認</strong></td>
+              <td>自院の稼働状況を報告できる唯一の公式手段</td>
+            </tr>
+            <tr>
+              <td>自県の担当課を調べる</td>
+              <td>保健医療福祉調整本部の平時担当課を把握</td>
+            </tr>
+            <tr>
+              <td>地域防災計画の確認</td>
+              <td>自分のクリニックがある自治体の計画を一度読む</td>
+            </tr>
+            <tr>
+              <td>医師会との連携確認</td>
+              <td>JMATや地域医師会の災害時体制における自院の位置づけ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 6. シナリオ接続 -->
+      <div class="column-callout-blue">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        シーン4で「保健医療福祉調整本部」に報告・調整を依頼しました。これは「一人でなんとかしよう」ではなく、<strong>制度として設計された仕組み</strong>を使ったということです。<br>
+        「誰も指示を出してくれない」と感じるのは、調整本部が立ち上がるまでの<strong>タイムラグ</strong>。EMISで自院の状況を発信すれば、調整本部に情報が届きます。
+      </div>
+
+      <!-- 7. 出典 -->
+      <div class="column-source column-source-blue">
+        <h3>📚 参考資料</h3>
+        <ul>
+          <li><a href="https://www.bousai.go.jp/taisaku/kihonhou/kihonhou_r7_01.html" target="_blank"
+              rel="noopener noreferrer">内閣府 災害対策基本法等の改正（令和7年）</a></li>
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000055967.html" target="_blank"
+              rel="noopener noreferrer">厚生労働省 大規模災害時の保健医療福祉活動に係る体制</a></li>
+          <li><a href="https://www.wds.emis.go.jp/" target="_blank" rel="noopener noreferrer">EMIS（広域災害救急医療情報システム）</a>
+          </li>
+        </ul>
+      </div>
+
+      <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※
+        本資料は2026年2月時点のWeb検索に基づく整理です。最新情報は各公式サイトをご確認ください。</div>
+
+      <button class="btn-column-next-blue" onclick="continueFromColumnLegal()">グループ内で振り返ったら 第3幕へ →</button>
     </div>
   </div>
 
@@ -3420,6 +3728,10 @@
         showColumnBCP();
         return;
       }
+      if (screenName === 'column-legal') {
+        showColumnLegal();
+        return;
+      }
       if (screenName === 'hazard') {
         goToHazard('summary');
         return;
@@ -3768,7 +4080,11 @@
       } else if (nextAct) {
         const actKey = nextAct;
         const actLabel = STORY[actKey].label;
-        nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
+        if (currentScene.id === '2-2') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnLegal('${actKey}')">⚖️ コラムを読む →</button>`;
+        } else {
+          nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
+        }
       } else if (nextSceneId) {
         if (currentScene.id === '2-1') {
           nextButtonHtml = `<button class="btn-continue" onclick="showColumnPhone()">📞 コラムを読む →</button>`;
@@ -3830,6 +4146,17 @@
     }
 
     let columnBCPNextAct = 'act4';
+    let columnLegalNextAct = 'act3';
+
+    function showColumnLegal(nextActKey) {
+      columnLegalNextAct = nextActKey || 'act3';
+      setActLabel('コラム：災害対応の法的枠組み');
+      showScreen('column-legal');
+    }
+
+    function continueFromColumnLegal() {
+      goToNextAct(columnLegalNextAct);
+    }
 
     function showColumnBCP(afterBCPAct) {
       columnBCPNextAct = afterBCPAct || 'act4';
