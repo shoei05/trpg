@@ -1747,6 +1747,79 @@
       margin: 4px 0;
     }
 
+    /* ===== COLUMN: MENTAL HEALTH ===== */
+    #screen-column-mental {
+      background: #FFF1F2;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .column-header-rose {
+      background: linear-gradient(135deg, #BE185D, #E11D48);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header-rose h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .column-header-rose p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .column-table-rose th {
+      background: #FCE7F3;
+      color: #BE185D;
+      border-bottom: 2px solid #FBCFE8;
+    }
+
+    .column-callout-rose {
+      background: rgba(190, 24, 93, 0.06);
+      border: 1px solid rgba(190, 24, 93, 0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #9F1239;
+      line-height: 1.7;
+    }
+
+    .column-callout-rose strong {
+      color: #881337;
+    }
+
+    .column-source-rose ul li a {
+      color: #E11D48;
+    }
+
+    .btn-column-next-rose {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #BE185D, #E11D48);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .column-highlight-box {
+      background: rgba(190, 24, 93, 0.06);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 8px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #4A044E;
+    }
+
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
       background: #F0F9FF;
@@ -2259,6 +2332,7 @@
         <div class="jump-group-title">第4幕</div>
         <button class="jump-item" type="button" onclick="jumpToScene('4-1')">シーン7（スタッフへの声かけ）</button>
         <button class="jump-item" type="button" onclick="jumpToScene('4-2')">シーン8（PFA対応）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-mental')">🧠 コラム：こころのケア</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第5幕</div>
@@ -2524,6 +2598,224 @@
   </div>
 
   <!-- ===========================
+     SCREEN: COLUMN – MENTAL HEALTH
+=========================== -->
+  <div id="screen-column-mental" class="screen">
+    <div class="column-header-rose">
+      <h2>🧠 コラム：災害時のこころのケア</h2>
+      <p>ストレス反応は「壊れた」のではなく、身体の防御反応。PFAとセルフケアの基本を学びましょう。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 1. ストレス反応 -->
+      <div class="column-section">
+        <h3>⚡ ストレス反応は「正常な反応」</h3>
+        <p>災害のような圧倒的なストレスに直面すると、人の身体は自動的に反応します。これは<strong>生存のための自然な反応</strong>です。</p>
+        <table class="column-table column-table-rose">
+          <thead>
+            <tr>
+              <th>反応</th>
+              <th>状態</th>
+              <th>サイン</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>戦う (Fight)</strong></td>
+              <td>少しの刺激にも過剰に反応</td>
+              <td>衝動的・怒りっぽい</td>
+            </tr>
+            <tr>
+              <td><strong>逃げる (Flight)</strong></td>
+              <td>常に警戒、逃げられる準備</td>
+              <td>落ち着きがない・敏感</td>
+            </tr>
+            <tr>
+              <td><strong>固まる (Freeze)</strong></td>
+              <td>刺激をシャットアウト</td>
+              <td>姙におとなしい・孤立</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="column-highlight-box">
+          💡 怒りっぽくなる、眠れない、ぼんやりする ── これらはすべて<strong>「異常な事態に対する正常な反応」</strong>です。多くの場合、時間とともに自然回復します。
+        </div>
+      </div>
+
+      <!-- 2. MHPSS -->
+      <div class="column-section">
+        <h3>🔺 MHPSS介入ピラミッド</h3>
+        <p><strong>MHPSS</strong>（精神保健および心理社会的支援）は、「こころのケア」を精神科医療だけでなく、地域のつながりや生活支援も含む包括的な枠組みです。</p>
+        <img src="MHPSS.png" alt="MHPSS介入ピラミッド：プライマリ・ケア提供者の役割" class="column-diagram">
+        <p>プライマリ・ケア提供者が主に関わる領域は<strong>第2層（コミュニティ支援）～第3層（非専門家による個別支援）</strong>です。PFAはこの第3層に位置づけられます。</p>
+      </div>
+
+      <!-- 3. PFA -->
+      <div class="column-section">
+        <h3>🩺 PFA（心理的応急処置）</h3>
+        <p>PFAはカウンセリングではなく、<strong>実用的な支援・Do No Harmの原則</strong>に基づいた初期対応です。</p>
+        <img src="1P3L.png" alt="PFAの行動原則：Preparation, Look, Listen, Link" class="column-diagram">
+        <table class="column-table column-table-rose">
+          <thead>
+            <tr>
+              <th>PFAは...</th>
+              <th>ではない</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>実用的な支援</td>
+              <td>カウンセリングではない</td>
+            </tr>
+            <tr>
+              <td>誰でもできる初期対応</td>
+              <td>傾聴（だけ）ではない</td>
+            </tr>
+            <tr>
+              <td>つなぐための行動</td>
+              <td>精神療法ではない</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4. 傾聴の5要素 -->
+      <div class="column-section">
+        <h3>👂 傾聴の5要素</h3>
+        <table class="column-table column-table-rose">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>要素</th>
+              <th>ポイント</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><strong>集中</strong></td>
+              <td>「聞いていますよ」という姿勢</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><strong>繰り返し</strong></td>
+              <td>キーワードの復唱「～なのですね」</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><strong>共感</strong></td>
+              <td>正常化「それは自然な反応ですよ」</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><strong>質問</strong></td>
+              <td>ニーズを明確にするための問い</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><strong>要約</strong></td>
+              <td>「つまり～ということですね」と確認</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>特に<strong>「正常化」</strong>が大切です。「それは異常な事態に対する正常な反応ですよ」と伝えるだけで、相手の安心感につながります。</p>
+      </div>
+
+      <!-- 5. 3R -->
+      <div class="column-section">
+        <h3>🌀 ストレス対処法の3R</h3>
+        <table class="column-table column-table-rose">
+          <thead>
+            <tr>
+              <th>R</th>
+              <th>意味</th>
+              <th>災害下での実践例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Rest</strong></td>
+              <td>休息・睡眠</td>
+              <td>こまめな休憩、十分な睡眠</td>
+            </tr>
+            <tr>
+              <td><strong>Recreation</strong></td>
+              <td>気晴らし</td>
+              <td>簡単な体操、チーム内の談笑</td>
+            </tr>
+            <tr>
+              <td><strong>Relax</strong></td>
+              <td>リラクセーション</td>
+              <td>呼吸法、ストレッチ、お茶</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>＋ <strong>身近な相手との交流・相談</strong></p>
+      </div>
+
+      <!-- 6. リラクセーション -->
+      <div class="column-section">
+        <h3>☕ リラックスの本質</h3>
+        <p>リラックスとは「無」になることではありません。<strong>「記憶を使わない時間を確保する」</strong>ことです。</p>
+        <div class="column-highlight-box">
+          💻 災害後の頭の中 = <strong>ブラウザのタブを大量に開いた状態</strong><br>
+          過去の記憶・未来の心配・やるべきことがメモリを消費し続けています。<br><br>
+          リラクセーション = <strong>タブを一時的に閉じる</strong>作業<br>
+          呼吸の感覚、お茶の温度、筋肉の緩み ── これらは<strong>記憶を使わない</strong>ため、脳が回復します。
+        </div>
+        <p>お茶をゆっくり飲むことも立派なリラクセーション法。味・匠い・温度に集中している間は、過去の記憶も未来の心配も使っていません。</p>
+      </div>
+
+      <!-- 7. 精神科紹介 -->
+      <div class="column-section">
+        <h3>🏥 専門家への紹介を考慮するサイン</h3>
+        <p>PFAで対応できる範囲を超えるケース：</p>
+        <table class="column-table column-table-rose">
+          <tbody>
+            <tr>
+              <td>状況が落ち着いた後も<strong>強いストレスが続く</strong></td>
+            </tr>
+            <tr>
+              <td>人格や行動に大きな変化があり<strong>継続している</strong></td>
+            </tr>
+            <tr>
+              <td><strong>日常生活に支障</strong>をきたしている</td>
+            </tr>
+            <tr>
+              <td>自分自身や他者を<strong>傷つけるリスク</strong>がある</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>→ MHPSSピラミッドの<strong>第4層（専門家によるサービス）</strong>への橋渡しを検討します。</p>
+      </div>
+
+      <!-- 8. シナリオ接続 -->
+      <div class="column-callout-rose">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        シーン7・8で、めっけさんの疑れない様子に気づき（<strong>Look</strong>）、声をかけて話を聞き（<strong>Listen</strong>）、必要な支援につなげました（<strong>Link</strong>）。<br>
+        そして、ネコミヤ先生自身のセルフケアも忘れずに（<strong>Preparation</strong>）。「睡眠・食事・笑うこと」が心の健康のバロメーターです。
+      </div>
+
+      <!-- 9. 出典 -->
+      <div class="column-source column-source-rose">
+        <h3>📚 参考資料</h3>
+        <ul>
+          <li><a href="https://www.who.int/publications-detail-redirect/9789241548205" target="_blank"
+              rel="noopener noreferrer">WHO PFA Guide for Field Workers (2011)</a></li>
+          <li><a href="https://kokoro.mhlw.go.jp/usagi/ug004/" target="_blank"
+              rel="noopener noreferrer">厚生労働省「こころの耳」3つのR</a></li>
+          <li>NCTSN 災害時のこころのケア PFA実践の手引き 第2版（医学書院）</li>
+          <li>日本プライマリ・ケア連合学会 PFA心のケア研修資料</li>
+        </ul>
+      </div>
+
+      <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※ 本資料はワークショップ補足教材です。</div>
+
+      <button class="btn-column-next-rose" onclick="continueFromColumnMental()">グループ内で振り返ったら 第5幕へ →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
      SCREEN: COLUMN – LEGAL FRAMEWORK
 =========================== -->
   <div id="screen-column-legal" class="screen">
@@ -2624,7 +2916,7 @@
             </tr>
             <tr>
               <td>医師会との連携確認</td>
-              <td>JMATや地域医師会の災害時体制における自院の位置づけ</td>
+              <td>地域医師会の災害時体制における自院の位置づけ</td>
             </tr>
           </tbody>
         </table>
@@ -3686,6 +3978,10 @@
         showColumnLegal();
         return;
       }
+      if (screenName === 'column-mental') {
+        showColumnMental();
+        return;
+      }
       if (screenName === 'hazard') {
         goToHazard('summary');
         return;
@@ -4036,6 +4332,8 @@
         const actLabel = STORY[actKey].label;
         if (currentScene.id === '2-2') {
           nextButtonHtml = `<button class="btn-continue" onclick="showColumnLegal('${actKey}')">⚖️ コラムを読む →</button>`;
+        } else if (currentScene.id === '4-2') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnMental('${actKey}')">🧠 コラムを読む →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
         }
@@ -4101,6 +4399,17 @@
 
     let columnBCPNextAct = 'act4';
     let columnLegalNextAct = 'act3';
+    let columnMentalNextAct = 'act5';
+
+    function showColumnMental(nextActKey) {
+      columnMentalNextAct = nextActKey || 'act5';
+      setActLabel('コラム：こころのケア');
+      showScreen('column-mental');
+    }
+
+    function continueFromColumnMental() {
+      goToNextAct(columnMentalNextAct);
+    }
 
     function showColumnLegal(nextActKey) {
       columnLegalNextAct = nextActKey || 'act3';
