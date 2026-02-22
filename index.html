@@ -1534,6 +1534,91 @@
       margin-top: 8px;
     }
 
+    /* ===== COLUMN: BCP ===== */
+    #screen-column-bcp {
+      background: #F0FDF4;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .column-header-green {
+      background: linear-gradient(135deg, #065F46, #059669);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header-green h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .column-header-green p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .column-table-green th {
+      background: #D1FAE5;
+      color: #065F46;
+      border-bottom: 2px solid #A7F3D0;
+    }
+
+    .column-callout-green {
+      background: rgba(5, 150, 105, 0.08);
+      border: 1px solid rgba(5, 150, 105, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #065F46;
+      line-height: 1.7;
+    }
+
+    .column-callout-green strong {
+      color: #064E3B;
+    }
+
+    .column-source-green ul li a {
+      color: #059669;
+    }
+
+    .btn-column-next-green {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #065F46, #059669);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .column-diagram {
+      width: 100%;
+      border-radius: 12px;
+      margin: 8px 0 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .column-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #065F46, #059669);
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
       background: #F0F9FF;
@@ -2039,6 +2124,7 @@
         <div class="jump-group-title">第3幕</div>
         <button class="jump-item" type="button" onclick="jumpToScene('3-1')">シーン5（要配慮者の避難）</button>
         <button class="jump-item" type="button" onclick="jumpToScene('3-2')">シーン6（BCPの備え）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-bcp')">📋 コラム：BCPとは</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第4幕</div>
@@ -2485,6 +2571,180 @@
         本資料は2026年2月時点のWeb検索に基づく整理です。最新情報は各公式サイトをご確認ください。</div>
 
       <button class="btn-column-next" onclick="continueFromColumn()">次のシーンへ進む →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN: COLUMN – BCP
+=========================== -->
+  <div id="screen-column-bcp" class="screen">
+    <div class="column-header-green">
+      <h2>📋 コラム：BCP（事業継続計画）</h2>
+      <p>「医療機関が倒れれば地域も倒れる」── まず自分を守る計画としてのBCPを理解しましょう。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 図 -->
+      <div class="column-section">
+        <h3>📈 BCPの基本的な理念</h3>
+        <p>BCPの目的は <strong>2つ</strong> です：</p>
+        <p>① <strong>スタッフと家族の安全・休息を確保</strong>する<br>② 病院・診療所を<strong>（なるべく）止めない</strong></p>
+        <img src="bcp_diagram.png" alt="BCPの概念図：事前の備えとBCP発動による復旧・成長" class="column-diagram">
+        <p style="font-size:11px; color:#9CA3AF; text-align:right;">図：浅野直先生スライドを改変</p>
+        <p>災害対応マニュアルで初動を乗り切った後、<strong>BCP発動</strong>により「復旧」「成長」のラインに乗せるか、「縮小」「廃業」に向かうかが決まります。</p>
+      </div>
+
+      <!-- ヒト・モノ・カネ -->
+      <div class="column-section">
+        <h3>🧩 BCPを「ヒト・モノ・カネ」で整理する</h3>
+        <table class="column-table column-table-green">
+          <thead>
+            <tr>
+              <th>区分</th>
+              <th>主なアクション</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>👤 ヒト</strong></td>
+              <td>緊急連絡網・避難場所の共有、代診ネットワーク</td>
+            </tr>
+            <tr>
+              <td><strong>📦 モノ</strong></td>
+              <td>医薬品・発電機・衛材備蓄、電子カルテのクラウド化</td>
+            </tr>
+            <tr>
+              <td><strong>💰 カネ</strong></td>
+              <td>キャッシュ確保、保険・補助金・融資枠の確認</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3ステップ -->
+      <div class="column-section">
+        <h3>🚀 診療所BCPの3ステップ</h3>
+
+        <p style="display:flex; align-items:center; margin-bottom:8px;"><span
+            class="column-step-num">1</span><strong>脆弱性の把握</strong></p>
+        <table class="column-table column-table-green">
+          <tbody>
+            <tr>
+              <td>院内の安全点検</td>
+              <td>建物耐震性、家具固定、非常口確保</td>
+            </tr>
+            <tr>
+              <td>要配慮者リスト</td>
+              <td>透析、在宅酸素、人工呼吸器、独居高齢者</td>
+            </tr>
+            <tr>
+              <td>職員出勤可能性</td>
+              <td>連絡先、居住地・通勤手段の確認・更新</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="display:flex; align-items:center; margin:12px 0 8px;"><span
+            class="column-step-num">2</span><strong>最低限の備蓄確認（72時間分）</strong></p>
+        <table class="column-table column-table-green">
+          <tbody>
+            <tr>
+              <td>水</td>
+              <td>1人1日3L × 職員数 × 3日分</td>
+            </tr>
+            <tr>
+              <td>食料</td>
+              <td>非常食、栄養補助食品</td>
+            </tr>
+            <tr>
+              <td>医薬品</td>
+              <td>慢性疾患薬を優先</td>
+            </tr>
+            <tr>
+              <td>電源・通信</td>
+              <td>ポータブル発電機（燃料72h分）、充電器</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p style="display:flex; align-items:center; margin:12px 0 8px;"><span
+            class="column-step-num">3</span><strong>中長期的な備え</strong></p>
+        <table class="column-table column-table-green">
+          <tbody>
+            <tr>
+              <td>カルテ対策</td>
+              <td>クラウド化（医療DX令和ビジョン2030との連動）</td>
+            </tr>
+            <tr>
+              <td>重要書類</td>
+              <td>保管場所の確認・バックアップ</td>
+            </tr>
+            <tr>
+              <td>運転資金</td>
+              <td>現金の確保（固定費3ヶ月分が目安）</td>
+            </tr>
+            <tr>
+              <td>地域連携</td>
+              <td>近隣医療機関や地域医師会との連携体制</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 法的状況 -->
+      <div class="column-section">
+        <h3>⚖️ BCP策定の法的状況（2025年7月現在）</h3>
+        <table class="column-table column-table-green">
+          <thead>
+            <tr>
+              <th>区分</th>
+              <th>対象</th>
+              <th>時期</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>法的義務</strong></td>
+              <td>災害拠点病院</td>
+              <td>2017年〜</td>
+            </tr>
+            <tr>
+              <td><strong>法的義務</strong></td>
+              <td>介護施設・訪問看護ST等</td>
+              <td>2024年4月〜</td>
+            </tr>
+            <tr>
+              <td><strong>努力義務</strong></td>
+              <td>一般病院・診療所</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>💡 一般診療所は努力義務ですが、<strong>「完璧を目指して何もしない」より「不完全でも今日から始める」</strong>ことが大切です。</p>
+      </div>
+
+      <!-- シナリオとの接続 -->
+      <div class="column-callout-green">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        シーン6で体験したように、薬品棚が固定されていなかった・非常用バッテリーの場所が共有されていなかったことで、発災直後の対応が遅れました。<br>
+        BCPを「ヒト・モノ・カネ」で整備し、<strong>棚の固定、備蓄確認、連絡網の整備</strong>を平時から行っておくことが、復旧への第一歩です。
+      </div>
+
+      <!-- 出典 -->
+      <div class="column-source column-source-green">
+        <h3>📚 参考資料</h3>
+        <ul>
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000089060.html" target="_blank"
+              rel="noopener noreferrer">厚生労働省 医療施設の災害対応のためのBCP</a></li>
+          <li>浅野直先生スライド（BCP概念図）改変</li>
+          <li>日本プライマリ・ケア連合学会 若手医師のための家庭医療学冬期セミナー資料</li>
+        </ul>
+      </div>
+
+      <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※
+        本資料はワークショップ補足教材です。BCPの具体的な策定は厚生労働省ガイドラインを参照してください。</div>
+
+      <button class="btn-column-next-green" onclick="continueFromColumnBCP()">ハザードマップを確認する →</button>
     </div>
   </div>
 
@@ -3155,6 +3415,10 @@
         showColumnPhone();
         return;
       }
+      if (screenName === 'column-bcp') {
+        showColumnBCP();
+        return;
+      }
       if (screenName === 'hazard') {
         goToHazard('summary');
         return;
@@ -3493,7 +3757,11 @@
 
       if (nextAct === 'hazard') {
         const afterBCPAct = currentScene.nextAfterBCP || 'summary';
-        nextButtonHtml = `<button class="btn-continue" onclick="goToHazard('${afterBCPAct}')">ハザードマップを確認する →</button>`;
+        if (currentScene.id === '3-2') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnBCP('${afterBCPAct}')">📋 コラム：BCPを読む →</button>`;
+        } else {
+          nextButtonHtml = `<button class="btn-continue" onclick="goToHazard('${afterBCPAct}')">ハザードマップを確認する →</button>`;
+        }
       } else if (nextAct === 'summary') {
         nextButtonHtml = `<button class="btn-continue" onclick="showSummary()">まとめへ進む →</button>`;
       } else if (nextAct) {
@@ -3558,6 +3826,18 @@
       showChoiceArea(false);
       loadNextScene(scene);
       scrollToBottom();
+    }
+
+    let columnBCPNextAct = 'act4';
+
+    function showColumnBCP(afterBCPAct) {
+      columnBCPNextAct = afterBCPAct || 'act4';
+      setActLabel('コラム：BCP（事業継続計画）');
+      showScreen('column-bcp');
+    }
+
+    function continueFromColumnBCP() {
+      goToHazard(columnBCPNextAct);
     }
 
     function showColumnPhone() {
