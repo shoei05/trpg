@@ -4096,10 +4096,16 @@
               { type: "narrator", text: "地域の急性期対応が落ち着き始め、医師会から「状況報告のために集まろう」と連絡があり、会合に出席した。" },
               { type: "system", text: "🏥 【外部チームからの提案】\nDMAT、JMAT等急性期の救護班の活動に目処が立ち、今後のケアを地域の医療者へ引き継ぎたい。" },
               { type: "nanta", text: "（引き継ぐといっても……自分自身も目の前の診療で手一杯だ。）" },
-              { type: "nanta", text: "（道路状況も悪く、普段30分で行ける訪問診療に1〜2時間かかる。新たな支援を引き受ける余裕なんて……）" },
+              { type: "nanta", text: "（まだクリニックも十分に片付いてないし、やることは山積みだ……）" },
               { type: "narrator", text: "そんな時、Primary Care Assistance Team（PCAT）の事務局から「メディカルスタッフを派遣できる可能性がある」と連絡が入った。" }
             ],
-            autoScreen: "column-pcat",
+            choices: [
+              {
+                text: "🤝 PCATについて知る",
+                comment: "",
+                action: "column-pcat"
+              }
+            ],
             nextAct: "summary"
           }
         ]
@@ -4467,6 +4473,22 @@
           if (runId !== messageRunId) return;
           if (currentScene && currentScene.autoScreen === 'column-pcat') {
             showColumnPcat(currentScene.nextAct || 'summary');
+          } else if (currentScene && currentScene.choices && currentScene.choices.some(c => c.action === 'column-pcat')) {
+            showChoiceArea(true);
+            const btnContainer = document.getElementById('choice-buttons');
+            btnContainer.innerHTML = '';
+            const choiceLabel = document.getElementById('choice-label');
+            choiceLabel.textContent = 'どうしますか？';
+            currentScene.choices.forEach(c => {
+              const btn = document.createElement('button');
+              btn.className = 'choice-btn';
+              btn.textContent = c.text;
+              btn.onclick = () => {
+                showColumnPcat(currentScene.nextAct || 'summary');
+              };
+              btnContainer.appendChild(btn);
+            });
+            scrollToBottom();
           } else {
             showChoiceArea(true);
             scrollToBottom();
