@@ -2410,6 +2410,7 @@
       <div class="jump-group">
         <div class="jump-group-title">システム</div>
         <button class="jump-item" type="button" onclick="reloadPage()">ページ更新</button>
+        <button class="jump-item" type="button" onclick="shareApp()">📤 このアプリをシェアする</button>
       </div>
     </div>
   </aside>
@@ -4213,6 +4214,34 @@
     function reloadPage() {
       closeJumpMenu();
       window.location.reload();
+    }
+
+    function shareApp() {
+      closeJumpMenu();
+      const url = 'https://shoei05.github.io/trpg';
+      const title = '災害医療ワークショップ';
+      if (navigator.share) {
+        navigator.share({ title: title, url: url }).catch(() => { });
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          showToast('📋 URLをコピーしました');
+        }).catch(() => {
+          prompt('URLをコピーしてください：', url);
+        });
+      }
+    }
+
+    function showToast(msg) {
+      let t = document.getElementById('share-toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'share-toast';
+        t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1F2937;color:#fff;padding:10px 20px;border-radius:24px;font-size:14px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.3);';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity = '1';
+      setTimeout(() => { t.style.opacity = '0'; }, 2000);
     }
 
     function jumpToOpeningDoor() {
