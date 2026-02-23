@@ -2893,7 +2893,7 @@
   <div id="screen-column-pcat" class="screen">
     <div class="column-header-teal">
       <h2>🤝 コラム：災害支援チームとPCAT</h2>
-      <p>災害時にどんな支援チームが・いつ・どこで活動するのか。PCATの役割と活動原則について学びましょう。</p>
+      <p>災害時にどんな支援チームが・いつ・どこで活動するのか。PCATの役割と活動原則について紹介します。</p>
     </div>
     <div class="column-body">
 
@@ -2902,9 +2902,9 @@
         <h3>⏰ 各チームの活動フェーズ</h3>
         <p>災害発生後、時間の経過とともに異なるチームが活動します。すべてのチームが同じタイミングで動くわけではありません。</p>
         <img src="活動フェーズ.png" alt="各団体の活動フェーズ" class="column-diagram">
-        <p style="font-size:12px; color:#6B7280; text-align:center;">出典：PCAT導入研修資料 p.82</p>
+        <p style="font-size:12px; color:#6B7280; text-align:center;">出典：PCAT導入研修資料</p>
         <p><strong>発災直後〜急性期</strong>には、DMAT・日赤救護班・自衛隊が救命医療や搬送を担います。<strong>急性期〜亜急性期</strong>にかけて、JMAT・DWAT・JRATなどが地域医療や福祉の支援に入ります。</p>
-        <p><strong>PCATが活動を開始するのは亜急性期から</strong>。慢性期・中長期まで活動が続きます。</p>
+        <p><strong>PCATが活動を開始するのは亜急性期からがメインです</strong>。慢性期・中長期までの活動を想定しています。</p>
       </div>
 
       <!-- 2. 現行の支援体制 -->
@@ -2947,17 +2947,17 @@
 
         <p style="margin-top:12px;"><strong>① 小規模医療・福祉関連機関への支援</strong></p>
         <img src="支援イメージ.png" alt="PCATの支援イメージ：JPCA会員医療機関から災害の影響を受けた地域の小規模機関へ" class="column-diagram" style="margin-bottom:8px;">
-        <p>災害時、災害拠点病院や避難所には多くの支援チームが入りますが、地域の診療所や小規模福祉施設への支援は手薄になりがちです。PCATは<strong>クリニック・訪問看護ステーション・老人福祉施設等</strong>を支援対象としています。</p>
+        <p>PCATはクリニック・訪問看護ステーション・老人福祉施設等に対する支援を想定しています。</p>
 
         <p style="margin-top:12px;"><strong>② 保健医療福祉調整本部でのリエゾン活動</strong></p>
-        <p>災害の影響を受けた地域での診療支援に加えて、<strong>県庁の保健医療福祉調整本部に出席し、地域のプライマリ・ケアの現状を伝える橋渡し</strong>の役割を担います。</p>
+        <p>災害の影響を受けた地域での支援活動の際に他機関との調整・協働のためにリエゾン活動も想定しています。</p>
       </div>
 
       <!-- 4. Do No Harm -->
       <div class="column-section">
         <h3>🛡️ 活動原則 ── Do No Harm</h3>
         <p>PCATの活動原則は<strong>「Do No Harm（地域医療資源を傷つけない支援）」</strong>です。</p>
-        <p>外部から来た支援チームが現場を主導するのではなく、<strong>受援側（被災した地域の医療者）が意思決定の中心にいる</strong>ということを意味しています。</p>
+        <p>外部から来た支援チームが現場を主導するのではなく、<strong>受援側（災害の影響を受けた地域の医療者）が意思決定の中心にいる</strong>ということを意味しています。</p>
         <table class="column-table column-table-teal">
           <tbody>
             <tr>
@@ -3974,17 +3974,7 @@
               { type: "nanta", text: "（道路状況も悪く、普段30分で行ける訪問診療に1〜2時間かかる。新たな支援を引き受ける余裕なんて……）" },
               { type: "narrator", text: "そんな時、Primary Care Assistance Team（PCAT）の事務局から「メディカルスタッフを派遣できる可能性がある」と連絡が入った。" }
             ],
-            question: "あなたのクリニックに、PCATチームをどんな目的・形で入ってもらいますか？",
-            choices: [
-              {
-                letter: "W",
-                text: "【グループワーク】自院へのPCAT受け入れシミュレーション",
-                quality: "ok",
-                comment: "この付箋のアイデアを写真に撮り、共有ドライブにアップロードしてください。",
-                bestComment: null,
-                action: "open_upload"
-              }
-            ],
+            autoScreen: "column-pcat",
             nextAct: "summary"
           }
         ]
@@ -4320,11 +4310,14 @@
       if (runId !== messageRunId) return;
 
       if (messageQueue.length === 0) {
-        // Show choices
         setTimeout(() => {
           if (runId !== messageRunId) return;
-          showChoiceArea(true);
-          scrollToBottom();
+          if (currentScene && currentScene.autoScreen === 'column-pcat') {
+            showColumnPcat(currentScene.nextAct || 'summary');
+          } else {
+            showChoiceArea(true);
+            scrollToBottom();
+          }
         }, 400);
         return;
       }
@@ -4601,7 +4594,7 @@
     }
 
     function continueFromColumnPcat() {
-      goToNextAct(columnPcatNextAct);
+      showSummary();
     }
 
     function showColumnMental(nextActKey) {
