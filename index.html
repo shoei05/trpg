@@ -1820,6 +1820,69 @@
       color: #4A044E;
     }
 
+    /* ===== COLUMN: PCAT / SUPPORT TEAMS ===== */
+    #screen-column-pcat {
+      background: #F0FDF4;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .column-header-teal {
+      background: linear-gradient(135deg, #0D9488, #14B8A6);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header-teal h2 {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .column-header-teal p {
+      font-size: 13px;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+
+    .column-table-teal th {
+      background: #CCFBF1;
+      color: #0F766E;
+      border-bottom: 2px solid #5EEAD4;
+    }
+
+    .column-callout-teal {
+      background: rgba(13, 148, 136, 0.06);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #115E59;
+      line-height: 1.7;
+    }
+
+    .column-callout-teal strong {
+      color: #0F766E;
+    }
+
+    .column-source-teal ul li a {
+      color: #0D9488;
+    }
+
+    .btn-column-next-teal {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #0D9488, #14B8A6);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
     /* ===== DISASTER APP GUIDE SCREEN ===== */
     #screen-disaster-apps {
       background: #F0F9FF;
@@ -2337,6 +2400,7 @@
       <div class="jump-group">
         <div class="jump-group-title">第5幕</div>
         <button class="jump-item" type="button" onclick="jumpToScene('5-1')">シーン9（受援力）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-pcat')">🤝 コラム：支援チームとPCATの歩み</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">その他</div>
@@ -2633,7 +2697,7 @@
             <tr>
               <td><strong>固まる (Freeze)</strong></td>
               <td>刺激をシャットアウト</td>
-              <td>姙におとなしい・孤立</td>
+              <td>妙におとなしい・孤立</td>
             </tr>
           </tbody>
         </table>
@@ -2820,6 +2884,134 @@
       <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※ 本資料はワークショップ補足教材です。</div>
 
       <button class="btn-column-next-rose" onclick="continueFromColumnMental()">グループ内で振り返ったら 第5幕へ →</button>
+    </div>
+  </div>
+
+  <!-- ===========================
+     SCREEN: COLUMN – PCAT / SUPPORT TEAMS
+=========================== -->
+  <div id="screen-column-pcat" class="screen">
+    <div class="column-header-teal">
+      <h2>🤝 コラム：災害支援チームとPCAT</h2>
+      <p>各支援チームの役割分担と活動時期、PCATが担う「地域のプライマリ・ケアの隙間を埋める支援」について学びましょう。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 1. 全体像 -->
+      <div class="column-section">
+        <h3>⏰ 時間軸で見る支援チーム</h3>
+        <p>災害発生後の時間経過に応じて、異なるチームが異なる役割で活動します。</p>
+        <img src="活動フェーズ.png" alt="各団体の活動フェーズ" class="column-diagram">
+        <table class="column-table column-table-teal">
+          <thead>
+            <tr>
+              <th>チーム</th>
+              <th>主な活動時期</th>
+              <th>主な役割</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DMAT</strong></td>
+              <td>発災直後〜急性期</td>
+              <td>急性期の機動的災害医療</td>
+            </tr>
+            <tr>
+              <td><strong>日赤救護班</strong></td>
+              <td>発災直後〜亜急性期</td>
+              <td>医療救護（救護所、避難所）など幅広く対応</td>
+            </tr>
+            <tr>
+              <td><strong>DPAT/DWAT</strong></td>
+              <td>超急性期/急性期〜中長期</td>
+              <td>精神科医療・精神保健 / 福祉的支援</td>
+            </tr>
+            <tr>
+              <td><strong>JMAT</strong></td>
+              <td>急性期〜中長期</td>
+              <td>地域医療の継続支援（医師会ネットワーク）</td>
+            </tr>
+            <tr>
+              <td><strong>PCAT</strong></td>
+              <td><strong>亜急性期〜中長期</strong></td>
+              <td><strong>小規模医療・福祉関連機関への支援</strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="column-callout-teal" style="background:#fff;">
+          💡 <strong>ポイント</strong><br>
+          「急性期に集中するチーム（DMAT・日赤）」と「中長期まで残るチーム（PCAT等）」があります。すべてのチームは<strong>保健医療福祉調整本部</strong>の傘の下で活動します。
+        </div>
+      </div>
+
+      <!-- 2. PCATとは -->
+      <div class="column-section">
+        <h3>🌱 PCATの歩みと名前の変遷</h3>
+        <p>2011年の東日本大震災で発足し、気仙沼・石巻で約4年半活動。熊本地震（2016年）や能登半島地震（2024年）でも支援を実施し、2025年に正式な導入研修（学会認定制度）が始まりました。</p>
+        <table class="column-table column-table-teal" style="margin-top:10px;">
+          <tbody>
+            <tr>
+              <td>2011年〜</td>
+              <td><strong>Primary Care <u style="color:#0D9488">for All</u> Team</strong><br><span
+                  style="font-size:11px;">「すべての人のためのチーム」</span></td>
+            </tr>
+            <tr>
+              <td>2022年〜</td>
+              <td><strong>Primary Care <u style="color:#0D9488">Assistance</u> Team</strong><br><span
+                  style="font-size:11px;">「地域の医療を支援するチーム」</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <p>自らすべてをやるのではなく、「支援する」チームへの転換です。</p>
+      </div>
+
+      <!-- 3. PCATの強み・活動指針 -->
+      <div class="column-section">
+        <h3>🎯 PCATは他のチームと何が違う？</h3>
+        <p>他の多くのチーム（DMATや日赤など）が「公的医療機関・避難所」を主戦場とするのに対し、PCATはそれらの<strong>隙間</strong>を埋めます。</p>
+        <img src="支援イメージ.png" alt="PCATの支援概要：公的医療機関ではなく小規模機関を支援" class="column-diagram" style="margin-bottom:8px;">
+        <table class="column-table column-table-teal">
+          <tbody>
+            <tr>
+              <td><strong>支援対象</strong></td>
+              <td><strong>小規模医療機関・福祉施設・訪看ST</strong></td>
+            </tr>
+            <tr>
+              <td><strong>活動時期</strong></td>
+              <td><strong>亜急性期〜中長期</strong>の地域ケア</td>
+            </tr>
+            <tr>
+              <td><strong>活動原則</strong></td>
+              <td><strong>Do No Harm</strong><br>受援側の意思決定を中心に据える</td>
+            </tr>
+            <tr>
+              <td><strong>活動内容</strong></td>
+              <td>診療代行、事務機能回復支援、<br><strong>調整本部へのリエゾン</strong>（橋渡し）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 4. シナリオ接続 -->
+      <div class="column-callout-teal">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        発災から1ヶ月（亜急性期以降）、急性期のチームが撤収し始める中で、PCATから支援の提案がありました。<br>
+        PCATは直接的な医療だけでなく、経営再建や調整業務の手伝いもします。「自分たちが一番やってほしいこと（Do No Harm）」を率直に伝えることで、真の受援力につながります。
+      </div>
+
+      <!-- 5. 出典 -->
+      <div class="column-source column-source-teal">
+        <h3>📚 参考資料</h3>
+        <ul>
+          <li>日本プライマリ・ケア連合学会 PCAT導入研修資料</li>
+          <li><a href="https://www.primarycare-japan.com/theme-detail.php?thid=58" target="_blank"
+              rel="noopener noreferrer">JPCA PCAT 特設ページ</a></li>
+        </ul>
+      </div>
+
+      <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※ 本資料はワークショップ補足教材です。</div>
+
+      <button class="btn-column-next-teal" onclick="continueFromColumnPcat()">まとめページへ進む →</button>
     </div>
   </div>
 
@@ -3990,6 +4182,10 @@
         showColumnMental();
         return;
       }
+      if (screenName === 'column-pcat') {
+        showColumnPcat();
+        return;
+      }
       if (screenName === 'hazard') {
         goToHazard('summary');
         return;
@@ -4342,6 +4538,8 @@
           nextButtonHtml = `<button class="btn-continue" onclick="showColumnLegal('${actKey}')">⚖️ コラムを読む →</button>`;
         } else if (currentScene.id === '4-2') {
           nextButtonHtml = `<button class="btn-continue" onclick="showColumnMental('${actKey}')">🧠 コラムを読む →</button>`;
+        } else if (currentScene.id === '5-1') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnPcat('${actKey}')">🤝 コラムを読む →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToNextAct('${actKey}')">グループ内で振り返ったら ${actLabel} へ →</button>`;
         }
@@ -4408,6 +4606,17 @@
     let columnBCPNextAct = 'act4';
     let columnLegalNextAct = 'act3';
     let columnMentalNextAct = 'act5';
+    let columnPcatNextAct = 'summary';
+
+    function showColumnPcat(nextActKey) {
+      columnPcatNextAct = nextActKey || 'summary';
+      setActLabel('コラム：支援チームとPCAT');
+      showScreen('column-pcat');
+    }
+
+    function continueFromColumnPcat() {
+      goToNextAct(columnPcatNextAct);
+    }
 
     function showColumnMental(nextActKey) {
       columnMentalNextAct = nextActKey || 'act5';
