@@ -4310,7 +4310,7 @@
       lbl.innerHTML = `<span>${scene.label}</span>`;
       chatBody.appendChild(lbl);
 
-      const msgs = scene.preMessages || [];
+      const msgs = scene.preMessages || scene.messages || [];
       messageQueue = [...msgs];
       showChoiceArea(false);
       showNextMessage(runId);
