@@ -2175,7 +2175,7 @@
 
     /* ===== SUMMARY SCREEN ===== */
     #screen-summary {
-      background: linear-gradient(160deg, #1D1D2C, #2D1B4E);
+      background: linear-gradient(160deg, #F0F9FF, #EDE9FE, #FCE7F3);
       min-height: 100vh;
       flex-direction: column;
     }
@@ -2193,13 +2193,13 @@
     .summary-title {
       font-size: 22px;
       font-weight: 900;
-      color: white;
+      color: #1E293B;
       margin-bottom: 8px;
     }
 
     .summary-sub {
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
+      color: #64748B;
       line-height: 1.6;
     }
 
@@ -2209,14 +2209,15 @@
     }
 
     .summary-key {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.08);
       border-radius: 14px;
       padding: 16px;
       margin-bottom: 14px;
       display: flex;
       gap: 14px;
       align-items: flex-start;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .summary-key-num {
@@ -2240,28 +2241,29 @@
     .summary-key-title {
       font-size: 15px;
       font-weight: 700;
-      color: white;
+      color: #1E293B;
       margin-bottom: 4px;
     }
 
     .summary-key-text {
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
+      color: #475569;
       line-height: 1.6;
     }
 
     .action-plan-box {
-      background: rgba(255, 255, 255, 0.08);
-      border: 2px solid rgba(255, 209, 102, 0.4);
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #F59E0B;
       border-radius: 14px;
       padding: 16px;
       margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .action-plan-box h3 {
       font-size: 15px;
       font-weight: 700;
-      color: var(--yellow);
+      color: #B45309;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
@@ -2270,11 +2272,11 @@
 
     .action-input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
       border-radius: 10px;
       padding: 12px;
-      color: white;
+      color: #1E293B;
       font-size: 14px;
       font-family: var(--font-main);
       line-height: 1.6;
@@ -2283,17 +2285,17 @@
     }
 
     .action-input::placeholder {
-      color: rgba(255, 255, 255, 0.35);
+      color: #9CA3AF;
     }
 
     .action-input:focus {
       outline: none;
-      border-color: var(--yellow);
+      border-color: #F59E0B;
     }
 
     .action-hint {
       font-size: 11px;
-      color: rgba(255, 255, 255, 0.4);
+      color: #9CA3AF;
       margin-top: 6px;
       text-align: right;
     }
@@ -2304,7 +2306,7 @@
       padding: 12px;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(135deg, #0F766E, #0E7490);
+      background: linear-gradient(135deg, #14B8A6, #0EA5E9);
       color: white;
       font-size: 14px;
       font-weight: 800;
@@ -2324,7 +2326,7 @@
 
     .summary-footer p {
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
+      color: #94A3B8;
       margin-bottom: 20px;
       line-height: 1.6;
     }
@@ -2332,11 +2334,11 @@
     .btn-restart {
       width: 100%;
       padding: 16px;
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.6);
+      color: #475569;
       font-size: 15px;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 14px;
       cursor: pointer;
     }
@@ -3937,7 +3939,7 @@
 =========================== -->
   <div id="screen-summary" class="screen">
     <div class="summary-header">
-      <div class="summary-emoji"><img src="ogp.png" alt="災害医療ワークショップ" style="width:80px; height:auto;"></div>
+      <div class="summary-emoji"><img src="ogp.png" alt="災害医療ワークショップ" style="width:100%; max-width:320px; height:auto; border-radius:16px;"></div>
       <div class="summary-title">ワークショップ完了！</div>
       <div class="summary-sub">3つの幕を通じて、地域医療を守るための<br>気づきを得ることができました</div>
     </div>
@@ -5502,8 +5504,9 @@
         const fileName = `workshop-summary-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}.png`;
         const file = new File([blob], fileName, { type: 'image/png' });
 
+        const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
         let saved = false;
-        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        if (isMobile && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
               files: [file],
