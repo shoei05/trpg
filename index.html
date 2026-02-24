@@ -5407,10 +5407,10 @@
           ctx.save();
           drawRoundedRect(ctx, imgX, y, imgW, imgH, 20);
           ctx.clip();
-          /* 正方形画像を横長にクロップ（中央寄せ） */
+          /* 正方形画像を横長にクロップ（やや下寄せ＝上をカット） */
           const scale = imgW / ogpImg.width;
           const drawH = ogpImg.height * scale;
-          const drawY = y + (imgH - drawH) / 2;
+          const drawY = y + (imgH - drawH) * 0.35;
           ctx.drawImage(ogpImg, imgX, drawY, imgW, drawH);
           ctx.restore();
           y += imgH + 16;
