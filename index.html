@@ -64,6 +64,8 @@
       background: #0f172a;
       color: var(--text-main);
       -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     /* ===== SCREEN SYSTEM ===== */
@@ -73,8 +75,10 @@
       width: 100%;
       min-height: 100vh;
       min-height: 100dvh;
-      overflow: visible;
-      overflow-x: hidden;
+      height: 100vh;
+      height: 100dvh;
+      overflow-x: clip;
+      overflow-y: auto;
       overscroll-behavior-y: auto;
       background: var(--bg-gradient);
     }
@@ -82,6 +86,7 @@
     @supports (-webkit-touch-callout: none) {
       .screen {
         min-height: 100svh;
+        height: 100svh;
       }
     }
 
@@ -98,7 +103,9 @@
       background: var(--bg-dark);
       position: relative;
       overflow-x: hidden;
+      overflow-y: auto;
       min-height: 100vh;
+      max-height: 100vh;
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
     }
 
@@ -977,7 +984,7 @@
       background: var(--light-gray);
       min-height: 100vh;
       flex-direction: column;
-      overflow: visible;
+      overflow-y: auto;
     }
 
     .result-header {
@@ -1694,6 +1701,80 @@
       margin-top: 8px;
     }
 
+    /* -- emerald (vulnerable patients column) -- */
+    .column-header-emerald {
+      background: linear-gradient(135deg, #059669, #10B981);
+      padding: 20px 16px;
+      color: white;
+    }
+
+    .column-header-emerald h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .column-header-emerald p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .column-table-emerald {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .column-table-emerald th {
+      background: #ECFDF5;
+      color: #065F46;
+      font-weight: 700;
+      padding: 10px;
+      text-align: left;
+      border-bottom: 2px solid #D1FAE5;
+    }
+
+    .column-table-emerald td {
+      padding: 10px;
+      border-bottom: 1px solid #E5E7EB;
+      color: #374151;
+      vertical-align: top;
+    }
+
+    .column-callout-emerald {
+      background: #F0FDF4;
+      border-left: 4px solid #10B981;
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #064E3B;
+    }
+
+    .btn-column-next-emerald {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #059669, #10B981);
+      color: white;
+      font-size: 16px;
+      font-weight: 900;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+
     .column-org-chart {
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
@@ -2394,12 +2475,13 @@
         <button class="jump-item" type="button" onclick="jumpToScreen('column-phone')">📞 コラム：災害時優先電話</button>
         <button class="jump-item" type="button" onclick="jumpToScene('2-info')">シーン情報収集（防災アプリ）</button>
         <button class="jump-item" type="button" onclick="openDisasterAppsGuide('2-2')">防災アプリ紹介ページ</button>
-        <button class="jump-item" type="button" onclick="jumpToScene('2-2')">シーン4（透析患者の対応）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('2-2')">シーン4（災害対策本部と調整本部）</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('column-legal')">⚖️ コラム：災害対応の法的枠組み</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第3幕</div>
         <button class="jump-item" type="button" onclick="jumpToScene('3-1')">シーン5（要配慮者の避難）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-vulnerable')">💊 コラム：要配慮者と「もしものとき」</button>
         <button class="jump-item" type="button" onclick="jumpToScene('3-2')">シーン6（BCPの備え）</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('column-bcp')">📋 コラム：BCPとは</button>
       </div>
@@ -2925,17 +3007,7 @@
     </div>
     <div class="column-body">
 
-      <!-- 1. 活動フェーズ -->
-      <div class="column-section">
-        <h3>⏰ 各チームの活動フェーズ</h3>
-        <p>災害発生後、時間の経過とともに異なるチームが活動します。すべてのチームが同じタイミングで動くわけではありません。</p>
-        <img src="活動フェーズ.png" alt="各団体の活動フェーズ" class="column-diagram">
-        <p style="font-size:12px; color:#6B7280; text-align:center;">出典：PCAT導入研修資料</p>
-        <p>
-          <strong>発災直後〜急性期</strong>には、DMAT・日赤救護班・自衛隊が救命医療や搬送を担います。<strong>急性期〜亜急性期</strong>にかけて、JMAT・DWAT・JRATなどが地域医療や福祉の支援に入ります。
-        </p>
-        <p><strong>PCATが活動を開始するのは亜急性期からがメインです</strong>。慢性期・中長期までの活動を想定しています。</p>
-      </div>
+
 
       <!-- 2. 現行の支援体制 -->
       <div class="column-section">
@@ -3140,19 +3212,80 @@
   </div>
 
   <!-- ===========================
-     SCREEN: COLUMN – LEGAL FRAMEWORK
+     SCREEN: COLUMN - LEGAL FRAMEWORK
 =========================== -->
   <div id="screen-column-legal" class="screen">
     <div class="column-header-blue">
       <h2>⚖️ コラム：災害対応の法的枠組み</h2>
-      <p>シナリオで登場した「保健医療福祉調整本部」はどんな組織？ 日本の災害対応の仕組みを俯瞰します。</p>
+      <p>「激甚災害」「保健医療福祉調整本部」ってどんな仕組み？ 日本の災害対応の法制度を俯瞰します。</p>
     </div>
     <div class="column-body">
 
+      <!-- 0. 導入：まず全体像をつかもう -->
+      <div class="column-section">
+        <h3>🗺️ まず全体像をつかもう ── 3つの法律の役割</h3>
+        <p>日本の災害対応には、大きく<strong>3つの法律</strong>が関わっています。それぞれ<strong>役割が違い</strong>、<strong>動くタイミングも違います</strong>。</p>
+        <p>家づくりにたとえると、こう整理できます：</p>
+        <div class="column-org-chart" style="margin: 12px 0;">
+          <div class="column-org-level" style="background:#EFF6FF; border-left:4px solid #3B82F6; padding:10px 14px;">
+            <div style="font-size:15px; font-weight:bold;">📜 災害対策基本法 ＝ 設計図</div>
+            <div style="font-size:13px; color:#374151; margin-top:4px;">「誰が、いつ、何をするか」の全体の枠組みを決める</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:2px;">→ 常に存在する基本ルール（平時から有効）</div>
+          </div>
+          <div class="column-org-arrow">▼ 災害が起きたら…</div>
+          <div class="column-org-level" style="background:#FEF3C7; border-left:4px solid #F59E0B; padding:10px 14px;">
+            <div style="font-size:15px; font-weight:bold;">🏥 災害救助法 ＝ 救急車</div>
+            <div style="font-size:13px; color:#374151; margin-top:4px;">避難所・食料・医療など「今すぐ届ける」救助を実行</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:2px;">→ 発災直後に適用される（応急段階）</div>
+          </div>
+          <div class="column-org-arrow">▼ 被害が特に甚大だと…</div>
+          <div class="column-org-level" style="background:#FEE2E2; border-left:4px solid #EF4444; padding:10px 14px;">
+            <div style="font-size:15px; font-weight:bold;">⚡ 激甚災害法 ＝ 特別な保険</div>
+            <div style="font-size:13px; color:#374151; margin-top:4px;">復旧費用を国が大幅に肩代わりする特別措置</div>
+            <div style="font-size:12px; color:#6B7280; margin-top:2px;">→ 復旧・復興段階で政令により指定</div>
+          </div>
+        </div>
+        <p style="font-size:13px; color:#6B7280; margin-top:8px;">💡 つまり：<strong>基本法が全体の「骨格」</strong>を作り、その中で<strong>救助法が「今すぐの助け」</strong>を動かし、被害が特に大きいときに<strong>激甚災害法が「お金の面の特別支援」</strong>を上乗せする──という関係です。</p>
+      </div>
+
+      <!-- 実例で見る：能登半島地震 -->
+      <div class="column-section">
+        <h3>📅 実例で見る：令和6年能登半島地震のとき</h3>
+        <p>「3つの法律がどういう順番で動くのか」を、能登半島地震の実例で見てみましょう。</p>
+        <table class="column-table column-table-blue">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>何が起きたか</th>
+              <th>動いた法律</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024年1月1日</td>
+              <td>地震発生 → 災害対策本部を設置、救助を開始</td>
+              <td>📜 災害対策基本法<br>🏥 災害救助法</td>
+            </tr>
+            <tr>
+              <td>2024年1月11日</td>
+              <td>被害が甚大 → 閣議で激甚災害に指定（本激）</td>
+              <td>⚡ 激甚災害法</td>
+            </tr>
+            <tr>
+              <td>2024年2月9日</td>
+              <td>さらに追加指定</td>
+              <td>⚡ 激甚災害法</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#6B7280;">このように、まず基本法と救助法が<strong>すぐに</strong>動き、被害の全体像が見えてきた段階で激甚災害法が<strong>あとから</strong>適用されます。</p>
+      </div>
+
       <!-- 1. 災害対策基本法 -->
       <div class="column-section">
-        <h3>📜 災害対策基本法 ── 災害対応の"憲法"</h3>
-        <p>「<strong>災害対策基本法</strong>」（昭和36年制定）は、日本の災害対応全体の枠組みを定める法律です。</p>
+        <h3>📜 災害対策基本法 ── 災害対応の"設計図"</h3>
+        <p>「<strong>災害対策基本法</strong>」（昭和36年制定）は、日本の災害対応の<strong>いちばん基本となる法律</strong>です。「防災の憲法」ともいわれます。</p>
+        <p style="font-size:13px; color:#6B7280;">🏠 家づくりでいうと「設計図」。誰がどの部屋を担当するか、全体の間取りを決めるものです。</p>
         <table class="column-table column-table-blue">
           <thead>
             <tr>
@@ -3163,7 +3296,7 @@
           <tbody>
             <tr>
               <td>役割分担</td>
-              <td>国・都道府県・市区町村の責務を定めています</td>
+              <td>国・都道府県・市区町村、それぞれ何をするかの責務を定めています</td>
             </tr>
             <tr>
               <td>災害対策本部</td>
@@ -3179,13 +3312,60 @@
             </tr>
           </tbody>
         </table>
+        <p style="font-size:13px; color:#6B7280;">⏰ <strong>いつ動く？</strong> → 平時から常に有効。災害が起きたらこの法律に基づいて対策本部が設置されます。</p>
       </div>
 
       <!-- 2. 災害救助法 -->
       <div class="column-section">
-        <h3>🏥 災害救助法 ── 災害の影響を受けた人びとや地域を支える</h3>
-        <p>「<strong>災害救助法</strong>」は災害の影響を受けた人びとへの具体的な救助（避難所設置、食糧・飲料水、医療提供等）を定めた法律です。</p>
-        <p>災害対策基本法が「枠組み（誰が何をするか）」なら、災害救助法は「<strong>実行（何を届けるか）</strong>」を規定しています。</p>
+        <h3>🏥 災害救助法 ── 今すぐ届ける「応急救助」</h3>
+        <p>「<strong>災害救助法</strong>」は、被災した人たちへ<strong>具体的な救助</strong>（避難所設置、食料・飲料水、医療提供、仮設住宅など）を届けるための法律です。</p>
+        <p style="font-size:13px; color:#6B7280;">🚑 家づくりでいうと「救急車」。災害が起きたとき、実際に何を届けるかのメニューが書いてあります。</p>
+        <p>災害対策基本法が「<strong>枠組み（誰が何をするか）</strong>」を定めるのに対し、災害救助法は「<strong>実行（被災者に何を届けるか）</strong>」を定めています。</p>
+        <p>実施主体は<strong>都道府県知事</strong>です。つまり、県が中心となって救助を進めます。</p>
+        <p style="font-size:13px; color:#6B7280;">⏰ <strong>いつ動く？</strong> → 一定規模以上の災害が発生したとき、発災直後に適用されます。</p>
+      </div>
+
+      <!-- 3. 激甚災害法 -->
+      <div class="column-section">
+        <h3>⚡ 激甚災害指定 ── 「特に大きな被害」への特別な財政支援</h3>
+        <p>「<strong>激甚災害に対処するための特別の財政援助等に関する法律</strong>」（激甚災害法・昭和37年制定）は、被害が特に甚大な災害に対して、<strong>国の財政支援を大幅に引き上げる</strong>制度です。</p>
+        <p style="font-size:13px; color:#6B7280;">💰 家づくりでいうと「特別な保険」。通常の保険では足りないほど大きな被害のとき、国が追加で費用を出してくれるイメージです。</p>
+
+        <p style="margin-top:10px;"><strong>他の2つの法律との違い：</strong></p>
+        <ul style="font-size:14px; line-height:1.7; margin:6px 0 10px 16px;">
+          <li>基本法・救助法は<strong>「人を助ける」</strong>ための法律</li>
+          <li>激甚災害法は<strong>「お金を支援する」</strong>ための法律</li>
+          <li>基本法・救助法は<strong>すぐに動く</strong>が、激甚災害法は<strong>被害額の調査後に指定される</strong></li>
+        </ul>
+
+        <table class="column-table column-table-blue">
+          <thead>
+            <tr>
+              <th>ポイント</th>
+              <th>内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>指定の仕組み</td>
+              <td>中央防災会議の意見を聴いた上で、<strong>政令（閣議決定）</strong>で指定されます</td>
+            </tr>
+            <tr>
+              <td>指定の種類</td>
+              <td><strong>本激</strong>（全国規模の大災害）と<strong>局激</strong>（市町村単位の局地的な災害）の2種類</td>
+            </tr>
+            <tr>
+              <td>主な効果</td>
+              <td>公共土木施設の復旧費、農林水産業・中小企業への支援など、<strong>国庫補助率が引き上げ</strong>られます</td>
+            </tr>
+            <tr>
+              <td>指定基準の例</td>
+              <td>本激：復旧費が全国標準税収入の0.5%超 など、数値基準で判定</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>💡 激甚災害の指定は発災直後ではなく、被害額の調査後に閣議決定されます。シナリオの地震でも、今後被害が甚大と認定されれば指定される可能性があります。指定されると被災自治体の財政負担が大きく軽減されます。</p>
+        <p style="font-size:13px; color:#6B7280;">⏰ <strong>いつ動く？</strong> → 発災後、被害額の調査を経て政令で指定されます（発災から数日〜数週間後）。</p>
       </div>
 
       <!-- 3. 組織図 -->
@@ -3259,6 +3439,8 @@
         <ul>
           <li><a href="https://www.bousai.go.jp/taisaku/kihonhou/kihonhou_r7_01.html" target="_blank"
               rel="noopener noreferrer">内閣府 災害対策基本法等の改正（令和7年）</a></li>
+          <li><a href="https://www.bousai.go.jp/taisaku/gekijinhukko/index.html" target="_blank"
+              rel="noopener noreferrer">内閣府 激甚災害制度について</a></li>
           <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000055967.html" target="_blank"
               rel="noopener noreferrer">厚生労働省 大規模災害時の保健医療福祉活動に係る体制</a></li>
           <li><a href="https://www.wds.emis.go.jp/" target="_blank" rel="noopener noreferrer">EMIS（広域災害救急医療情報システム）</a>
@@ -3452,6 +3634,116 @@
       <button class="btn-column-next" onclick="continueFromColumn()">次のシーンへ進む →</button>
     </div>
   </div>
+
+  <!-- ===========================
+     SCREEN: COLUMN - VULNERABLE
+=========================== -->
+  <div id="screen-column-vulnerable" class="screen">
+    <div class="column-header-emerald">
+      <h2>💊 コラム：要配慮者と「もしものとき」を話しておく</h2>
+      <p>透析・在宅酸素・車いすの患者さん──災害時にいちばん困るのは「あの患者さん、今どこにいるんだろう」がわからないこと。かかりつけ医として、平時にできることを考えてみましょう。</p>
+    </div>
+    <div class="column-body">
+
+      <!-- 1. かかりつけ医の立ち位置 -->
+      <div class="column-section">
+        <h3>🩺 かかりつけ医は何ができる？</h3>
+        <p>正直なところ、災害時の要配慮者対応には<strong>全国統一のフローがあるわけではありません</strong>。地域の医師会や行政、事業者の体制によってやり方はさまざまです。</p>
+        <p>ただ、混沌としているからこそ、ふだん患者さんを診ているかかりつけ医が<strong>「うちにはこういう患者さんがいる」と把握していること自体</strong>が大きな意味を持ちます。</p>
+        <p>たとえばこんなことが考えられます：</p>
+        <ul style="font-size:14px; line-height:1.8; margin:6px 0 0 16px;">
+          <li>ふだんの診療で「災害のとき、自分で動けますか？」と聞いてみる</li>
+          <li>自分で動ける方には、災害時にどう行動するかを一緒に考えておく</li>
+          <li>動けない在宅患者さんは、リストにしておく</li>
+        </ul>
+      </div>
+
+      <!-- 2. 在宅酸素（HOT） -->
+      <div class="column-section">
+        <h3>🫁 在宅酸素（HOT）── 開業医が関わりやすい領域</h3>
+        <p>在宅酸素の患者さんは、多くの開業医が処方元として直接関わっています。災害時は<strong>停電でボンベ残量がゼロになる</strong>ことが最大のリスクです。</p>
+        <p>酸素事業者の中には、<strong>24時間体制の緊急窓口</strong>を設けているところがあり、災害時は自社システムで被災エリアの患者を特定し、安否確認や予備ボンベの配送まで動く仕組みを持っている企業もあります。</p>
+        <p>かかりつけ医としてやっておけるとよいこと：</p>
+        <table class="column-table column-table-emerald">
+          <tbody>
+            <tr><td>患者さんごとに、<strong>酸素事業者名と緊急連絡先</strong>を把握しておく</td></tr>
+            <tr><td>機器の種類（濃縮器かボンベか）、<strong>予備ボンベ・電源の有無</strong>を確認しておく</td></tr>
+            <tr><td>患者さん自身が「停電時にボンベに切り替える」手順を理解しているか確認する</td></tr>
+            <tr><td>自力で避難できるか、<strong>ADLや社会的サポートの状況</strong>を把握しておく</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#6B7280;">※ 酸素事業者の災害対応体制は会社ごとに異なり、同意書の書式なども現在各社で見直しが進んでいるところです。</p>
+      </div>
+
+      <!-- 3. 透析 -->
+      <div class="column-section">
+        <h3>💉 透析 ── 知っておくと役立つこと</h3>
+        <p>透析の患者さんは、多くの場合<strong>別の透析施設</strong>に通っています。災害時の受入調整は、日本透析医会の<strong>「災害時情報ネットワーク」</strong>や、地域の透析ネットワークが中心になって行います。</p>
+        <p>開業医が直接この調整に入ることは少ないかもしれません。ただ、かかりつけ医として知っておくと助かる場面はあります：</p>
+        <ul style="font-size:14px; line-height:1.8; margin:6px 0 0 16px;">
+          <li>透析日が中1日空いた場合、中2日まで待てるかどうかの判断</li>
+          <li>被災中の食事変化（塩分・カリウム・水分）に対する注意点のアドバイス</li>
+          <li>その患者さんがどの透析施設に通っているか、把握しておくこと</li>
+        </ul>
+        <p style="font-size:13px; color:#6B7280;">※ 透析ネットワークの体制は地域差が大きく、機能している地域とそうでない地域があります。</p>
+      </div>
+
+      <!-- 4. リストを作る -->
+      <div class="column-section">
+        <h3>📋 「リスト」を作っておくという提案</h3>
+        <p>決まったフォーマットがあるわけではありませんが、<strong>自院の要配慮な患者さんについて、最低限の情報をリスト化しておく</strong>ことは、災害時の初動を大きく変える可能性があります。</p>
+        <table class="column-table column-table-emerald">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>なぜ必要か</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>患者名・住所・家族連絡先</td>
+              <td>安否確認の出発点になる</td>
+            </tr>
+            <tr>
+              <td>治療内容（HOT / 透析 / 人工呼吸器など）</td>
+              <td>緊急度の判断に直結する</td>
+            </tr>
+            <tr>
+              <td>関係する事業者・施設の連絡先</td>
+              <td>酸素事業者、透析施設など</td>
+            </tr>
+            <tr>
+              <td>ADL・移動手段・社会的サポート</td>
+              <td>自力で動けるかどうかで対応が変わる</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:13px; color:#6B7280;">行政の要配慮者名簿と、事業者や病院が持つ患者リスト。これらをどう突き合わせるかは、地域ごとの課題です。各地の医師会でも取り組みが始まっていますが、統一されたフォーマットはまだありません。</p>
+      </div>
+
+      <!-- 5. まとめ -->
+      <div class="column-callout-emerald">
+        <strong>🐱 マタタビクリニックの場合</strong><br>
+        三毛田チヨさんのことを思い出してください。ふだんは一人で通院できていても、災害時は「移動できない」「連絡がつかない」ことが起こります。<br><br>
+        統一されたフローがないからこそ、<strong>かかりつけ医が「この患者さんは災害時に困るかもしれない」という意識を持っていること</strong>。それだけでも、いざというときの対応が変わってきます。
+      </div>
+
+      <!-- 出典 -->
+      <div class="column-source column-source-emerald" style="margin-top:16px;">
+        <h3>📚 参考</h3>
+        <ul>
+          <li><a href="https://touseki-ikai.or.jp/saigai-kankei/saigaiji-joho-nw/" target="_blank" rel="noopener noreferrer">日本透析医会 災害時情報ネットワーク</a></li>
+          <li><a href="https://www.fukuda.co.jp/public/inhome_medical/saigai.html" target="_blank" rel="noopener noreferrer">フクダ電子 在宅酸素 災害時の対応</a></li>
+          <li><a href="https://www.teijin-pharma.co.jp/project/story02.html" target="_blank" rel="noopener noreferrer">帝人ヘルスケア 災害対応の取り組み</a></li>
+          <li><a href="https://www.jimga.or.jp/hot/" target="_blank" rel="noopener noreferrer">日本産業・医療ガス協会（JIMGA）在宅酸素療法</a></li>
+          <li><a href="https://www.pref.tochigi.lg.jp/e04/nanbyo/saigaijitousekigaidorain.html" target="_blank" rel="noopener noreferrer">栃木県 災害時透析ガイドライン</a></li>
+        </ul>
+      </div>
+
+      <button class="btn-column-next-emerald" onclick="continueFromColumnVulnerable()">シーン6へ進む →</button>
+    </div>
+  </div>
+
 
   <!-- ===========================
      SCREEN: COLUMN – BCP
@@ -3887,43 +4179,16 @@
             label: "第2幕 シーン4",
             preMessages: [
               { type: "system", text: "📡 【防災アプリで判明した被害状況】\n\n・市内の複数建物倒壊、主要道路が土砂崩れ等で寸断（南西側市道のみ一部通行可）\n・またたび中央病院など3つの主要施設が被災・機能不全\n・死傷者多数（現在も被害の全容は不明）\n・一部停電、断水地区あり、インターネット接続不安定\n・避難所開設" },
-
-
-
               { type: "narrator", text: "連絡ツリーを使い、家族の無事を確認。スタッフ4人のうち3人の安否も取れた。1人は道路寸断で来られないが無事とのこと。" },
               { type: "narrator", text: "迂回路を通り、なんとかクリニックに到着した。午前11時30分。" },
               { type: "narrator", text: "クリニックは建物の外観は無事で、電気も復旧している。" },
               { type: "nanta", text: "よかった……。さあ、クリニックを再開する準備を——" },
-              { type: "patient", text: "先生！ 透析病院が被災したって聞きました。どうすればいいんですか……！" },
-              { type: "narrator", text: "週3回透析が必要な患者さん・三毛ノリさん（78歳）から緊急連絡が入った。次の透析は明日だ。" },
-              { type: "narrator", text: "<img src='phone_call_scene.png' alt='電話対応するナンタ院長' style='width: 100%; max-width: 360px; border-radius: 12px; margin: 8px auto; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.15);'>" }
+              { type: "system", text: "📺 【速報】政府はまたたび市を含む一帯の震災について、災害対策本部を設置。県は災害救助法の適用を決定しました。" },
+              { type: "nanta", text: "災害対策本部に災害救助法……聞いたことはあるけど、具体的にどういう仕組みなんだろう。今はもう調べる余裕もない……。こういうことは事前に知っておくべきだったな……。" },
+              { type: "narrator", text: "災害対策本部の設置、災害救助法の適用、保健医療福祉調整本部……大規模災害時の法的枠組みを事前に知っておくことが、いざという時の行動を変える。ここで少し確認しておこう。" }
             ],
-            question: "この状況、どう対応しますか？",
-            choices: [
-              {
-                letter: "A",
-                text: "市役所に設置された「保健医療福祉調整本部」に被害状況を報告し、広域連携で透析可能施設を調整してもらう",
-                quality: "great",
-                comment: "正解！プライマリ・ケア医は地域の状況を把握し、行政や調整本部へ確実につなぐ「受援力（外部支援を適切に受け入れる力）」が求められます。公式ルートを活用した調整が最も確実です。",
-                bestComment: null
-              },
-              {
-                letter: "B",
-                text: "知り合いの病院に片っ端から直接電話する",
-                quality: "ok",
-                comment: "人脈は大切ですが、大規模災害時はどこも被災しており、個別の電話は調整の混乱を招く可能性があります。公式の調整本部等を通した広域連携を優先させましょう。",
-                bestComment: "A → 保健医療福祉調整本部を通じた広域調整が基本となります"
-              },
-              {
-                letter: "C",
-                text: "明日まで様子を見る",
-                quality: "rethink",
-                comment: "透析患者さんにとって1日の遅れは命に関わります。今すぐ調整に向けた情報伝達（行政・調整本部へのSOS）を開始することが必要です。",
-                bestComment: "A → 行政や保健医療福祉調整本部へ即座に報告・相談する"
-              }
-            ],
-            learningPoint: "コミュニケーション手段は必ず2つ以上確保しよう。\n外部の支援や調整機関（保健医療福祉調整本部等）を頼る「受援力」が地域医療を守る鍵です。",
-            nextAct: "act3"
+            nextAct: "act3",
+            column: "column-legal"
           }
         ]
       },
@@ -3968,6 +4233,7 @@
                 bestComment: "B → 「どこに逃げるか・どう移動するか」まで話し合っておくことが重要"
               }
             ],
+            learningPoint: "【要配慮者とは、平時に話しておく】\n\n車いすの方、透析・在宅酸素（HOT）の方など、災害時に自力での避難や治療継続が難しい患者さんがいます。ふだんの診療の中で「どこに逃げるか」「誰に連絡するか」を話しておくことが、いちばんの備えです。\n\n💡 「リスト」を作っておこう\n・透析：施設名、曜日、移動手段、家族連絡先\n・HOT：機器種別、予備ボンベ・電源の有無、酸素事業者の緊急連絡先\n・車いす・独居：避難先、移動手段、支援してくれる人\n\n💡 災害時、実際に動くのは誰？\n・透析 → かかりつけの透析施設が中心。日本透析医会の「災害時情報ネットワーク」で受入調整が行われます\n・HOT → 酸素事業者が中心。24時間体制で安否確認・ボンベ配送まで対応する企業もあります\n・開業医の役割は「自院にこうした患者さんがいることを把握し、いざという時に正しい連絡先を知っていること」です\n\n※ 透析ネットワークや事業者の体制は地域によって異なります。自分の地域ではどうなっているか、平時に確認しておきましょう。",
             nextScene: "3-2"
           },
           {
@@ -4178,6 +4444,7 @@
     let nextSceneAfterAppsGuide = null;
     let nextActAfterBCP = 'summary';
     let messageRunId = 0;
+    let chatAutoFollow = true;
 
     // ===========================
     // SCREEN MANAGEMENT
@@ -4309,6 +4576,10 @@
         showColumnBCP();
         return;
       }
+      if (screenName === 'column-vulnerable') {
+        showColumnVulnerable('3-2');
+        return;
+      }
       if (screenName === 'column-legal') {
         showColumnLegal();
         return;
@@ -4360,6 +4631,7 @@
       const chatBody = document.getElementById('chat-body');
       chatBody.innerHTML = '';
       addDateLabel();
+      resetChatAutoFollow();
 
       showScreen('chat');
       loadScene(scene);
@@ -4407,6 +4679,7 @@
       const chatBody = document.getElementById('chat-body');
       chatBody.innerHTML = '';
       addDateLabel();
+      resetChatAutoFollow();
 
       showScreen('chat');
       loadScene(act.scenes[0]);
@@ -4433,6 +4706,7 @@
       currentScene = scene;
       messageRunId += 1;
       const runId = messageRunId;
+      resetChatAutoFollow();
 
       const chatBody = document.getElementById('chat-body');
 
@@ -4441,6 +4715,7 @@
       lbl.className = 'chat-scene-label animate-in';
       lbl.innerHTML = `<span>${scene.label}</span>`;
       chatBody.appendChild(lbl);
+      scrollToBottom(true);
 
       const msgs = scene.messages || (scene.preMessages ? [...scene.preMessages] : []);
       messageQueue = [...msgs];
@@ -4452,12 +4727,14 @@
       currentScene = scene;
       messageRunId += 1;
       const runId = messageRunId;
+      resetChatAutoFollow();
       const chatBody = document.getElementById('chat-body');
 
       const lbl = document.createElement('div');
       lbl.className = 'chat-scene-label animate-in';
       lbl.innerHTML = `<span>${scene.label}</span>`;
       chatBody.appendChild(lbl);
+      scrollToBottom(true);
 
       const msgs = scene.preMessages || scene.messages || [];
       messageQueue = [...msgs];
@@ -4473,6 +4750,8 @@
           if (runId !== messageRunId) return;
           if (currentScene && currentScene.autoScreen === 'column-pcat') {
             showColumnPcat(currentScene.nextAct || 'summary');
+          } else if (currentScene && currentScene.autoScreen === 'column-legal') {
+            showColumnLegal(currentScene.nextAct || 'act3');
           } else if (currentScene && currentScene.choices && currentScene.choices.some(c => c.action === 'column-pcat')) {
             showChoiceArea(true);
             const btnContainer = document.getElementById('choice-buttons');
@@ -4488,10 +4767,10 @@
               };
               btnContainer.appendChild(btn);
             });
-            scrollToBottom();
+            scrollToBottom(true);
           } else {
             showChoiceArea(true);
-            scrollToBottom();
+            scrollToBottom(true);
           }
         }, 400);
         return;
@@ -4570,8 +4849,35 @@
       }
 
       area.style.display = 'block';
-      document.getElementById('choice-label').textContent = currentScene.question;
+      document.getElementById('choice-label').textContent = currentScene.question || '';
       btns.innerHTML = '';
+
+      // 選択肢がない場合、columnまたはnextActに応じたボタンを表示
+      if (!currentScene.choices || currentScene.choices.length === 0) {
+        const column = currentScene.column;
+        const nextAct = currentScene.nextAct || currentScene.nextAfterBCP;
+
+        if (column === 'column-legal') {
+          const btn = document.createElement('button');
+          btn.className = 'choice-btn';
+          btn.innerHTML = '<div style="font-size: 16px;">⚖️ コラム：災害対応の法的枠組みを見る</div>';
+          btn.onclick = () => showColumnLegal(nextAct);
+          btns.appendChild(btn);
+        } else if (column === 'column-pcat') {
+          const btn = document.createElement('button');
+          btn.className = 'choice-btn';
+          btn.innerHTML = '<div style="font-size: 16px;">📋 PCATについてのコラムを見る</div>';
+          btn.onclick = () => showColumnPcat(nextAct);
+          btns.appendChild(btn);
+        } else if (nextAct) {
+          const btn = document.createElement('button');
+          btn.className = 'choice-btn';
+          btn.innerHTML = '<div style="font-size: 16px;">▶ 次へ進む</div>';
+          btn.onclick = () => goToNextAct(nextAct);
+          btns.appendChild(btn);
+        }
+        return;
+      }
 
       currentScene.choices.forEach((choice, i) => {
         const btn = document.createElement('button');
@@ -4702,6 +5008,8 @@
           nextButtonHtml = `<button class="btn-continue" onclick="showColumnPhone()">📞 コラムを読む →</button>`;
         } else if (currentScene.id === '2-info') {
           nextButtonHtml = `<button class="btn-continue" onclick="openDisasterAppsGuide('${nextSceneId}')">防災アプリ紹介へ →</button>`;
+        } else if (currentScene.id === '3-1') {
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnVulnerable('${nextSceneId}')">💊 コラムを読む →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
         }
@@ -4751,16 +5059,17 @@
 
       showScreen('chat');
 
-      const chatBody = document.getElementById('chat-body');
+      resetChatAutoFollow();
       showChoiceArea(false);
       loadNextScene(scene);
-      scrollToBottom();
+      scrollToBottom(true);
     }
 
     let columnBCPNextAct = 'act4';
     let columnLegalNextAct = 'act3';
     let columnMentalNextAct = 'act5';
     let columnPcatNextAct = 'summary';
+
 
     function showColumnPcat(nextActKey) {
       columnPcatNextAct = nextActKey || 'summary';
@@ -4805,6 +5114,25 @@
     function showColumnPhone() {
       setActLabel('コラム：災害時優先電話');
       showScreen('column-phone');
+    }
+
+    let columnVulnerableNextScene = null;
+    function showColumnVulnerable(nextSceneId) {
+      columnVulnerableNextScene = nextSceneId;
+      setActLabel('コラム：要配慮者と「もしものとき」');
+      showScreen('column-vulnerable');
+    }
+
+    function continueFromColumnVulnerable() {
+      if (!columnVulnerableNextScene) {
+        goToNextAct('act4');
+        return;
+      }
+      const sceneId = columnVulnerableNextScene;
+      columnVulnerableNextScene = null;
+      const act = STORY[currentAct];
+      if (act) setActLabel(act.label + '：' + act.title);
+      goToNextScene(sceneId);
     }
 
     function continueFromColumn() {
@@ -5208,27 +5536,52 @@
       updateProgress(0);
       document.getElementById('action-input').value = '';
       document.getElementById('chat-body').innerHTML = '';
+      resetChatAutoFollow();
       showScreen('title');
     }
 
     // ===========================
     // UTILITIES
     // ===========================
-    function scrollToBottom() {
+    function isNearBottom(element, threshold = 48) {
+      if (!element) return true;
+      return (element.scrollHeight - element.clientHeight - element.scrollTop) <= threshold;
+    }
+
+    function resetChatAutoFollow() {
+      chatAutoFollow = true;
+    }
+
+    function setupChatScrollBehavior() {
+      const chatScreen = document.getElementById('screen-chat');
       const chatBody = document.getElementById('chat-body');
-      const activeScreen = document.querySelector('.screen.active');
-      const docRoot = document.documentElement;
+      const choiceArea = document.getElementById('choice-area');
+      if (!chatScreen || !chatBody) return;
+
+      chatBody.addEventListener('scroll', () => {
+        if (!chatScreen.classList.contains('active')) return;
+        chatAutoFollow = isNearBottom(chatBody);
+      }, { passive: true });
+
+      // Allow mouse-wheel scrolling from the chat header area too.
+      chatScreen.addEventListener('wheel', (event) => {
+        if (!chatScreen.classList.contains('active')) return;
+        const target = event.target instanceof Element ? event.target : null;
+        if (target && target.closest('#chat-body')) return;
+        if (target && choiceArea && choiceArea.contains(target)) return;
+        if (chatBody.scrollHeight <= chatBody.clientHeight + 1) return;
+        chatBody.scrollTop += event.deltaY;
+        event.preventDefault();
+      }, { passive: false });
+    }
+
+    function scrollToBottom(force = false) {
+      const chatBody = document.getElementById('chat-body');
+      if (!chatBody) return;
+      if (!force && !chatAutoFollow) return;
 
       const applyBottomScroll = () => {
-        if (chatBody) {
-          chatBody.scrollTop = chatBody.scrollHeight;
-        }
-        if (activeScreen) {
-          activeScreen.scrollTop = activeScreen.scrollHeight;
-        }
-        if (docRoot) {
-          window.scrollTo(0, docRoot.scrollHeight);
-        }
+        chatBody.scrollTop = chatBody.scrollHeight;
       };
 
       requestAnimationFrame(() => {
@@ -5239,6 +5592,8 @@
         });
       });
     }
+
+    setupChatScrollBehavior();
   </script>
 </body>
 
