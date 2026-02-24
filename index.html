@@ -3941,7 +3941,7 @@
     <div class="summary-header">
       <div class="summary-emoji"><img src="ogp.png" alt="災害医療ワークショップ" style="width:100%; max-width:320px; height:auto; border-radius:16px;"></div>
       <div class="summary-title">ワークショップ完了！</div>
-      <div class="summary-sub">3つの幕を通じて、地域医療を守るための<br>気づきを得ることができました</div>
+      <div class="summary-sub">5つの幕を通じて、地域医療を守るための<br>気づきを得ることができました</div>
     </div>
     <div class="summary-body">
       <div class="summary-key">
@@ -5380,123 +5380,117 @@
           }));
         const userText = document.getElementById('action-input')?.value?.trim() || '（未入力）';
 
-        const width = 1170;
-        const height = 2532;
-        const topInset = 120;
+        const width = 1080;
+        const height = 1350;
+        const pad = 56;
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('Canvas not supported');
 
-        const bg = ctx.createLinearGradient(0, 0, 0, height);
-        bg.addColorStop(0, '#1D1D2C');
-        bg.addColorStop(1, '#2D1B4E');
+        /* パステルグラデーション背景 */
+        const bg = ctx.createLinearGradient(0, 0, width, height);
+        bg.addColorStop(0, '#F0F9FF');
+        bg.addColorStop(0.5, '#EDE9FE');
+        bg.addColorStop(1, '#FCE7F3');
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, width, height);
 
-        const snapshotTitle = '災害への備えを\nプライマリ・ケア診療に活かす';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = '900 56px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        const titleLines = snapshotTitle.split('\n');
-        const titleStartY = 126 + topInset;
-        titleLines.forEach((line, idx) => {
-          ctx.fillText(line, 72, titleStartY + idx * 66);
-        });
-        ctx.fillStyle = 'rgba(255,255,255,0.72)';
-        ctx.font = '500 32px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText('ワークショップまとめ', 72, titleStartY + titleLines.length * 66 + 8);
+        /* ogp画像 */
+        let y = pad;
+        try {
+          const ogpImg = await loadImage('ogp.png');
+          const imgSize = 160;
+          const imgX = (width - imgSize) / 2;
+          ctx.save();
+          drawRoundedRect(ctx, imgX, y, imgSize, imgSize, 24);
+          ctx.clip();
+          ctx.drawImage(ogpImg, imgX, y, imgSize, imgSize);
+          ctx.restore();
+          y += imgSize + 20;
+        } catch (e) { y += 20; }
 
-        let y = 250 + topInset;
+        /* タイトル */
+        ctx.fillStyle = '#1E293B';
+        ctx.font = '900 38px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ワークショップまとめ', width / 2, y + 36);
+        ctx.fillStyle = '#64748B';
+        ctx.font = '500 22px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        ctx.fillText('災害への備えをプライマリ・ケア診療に活かす', width / 2, y + 68);
+        ctx.textAlign = 'left';
+        y += 96;
+
+        /* 3つのキーポイント */
         summaryKeys.forEach((item) => {
-          const boxX = 72;
-          const boxW = width - 144;
-          const boxH = 300;
+          const boxX = pad;
+          const boxW = width - pad * 2;
+          const boxH = 140;
 
-          drawRoundedRect(ctx, boxX, y, boxW, boxH, 28);
-          ctx.fillStyle = 'rgba(255,255,255,0.1)';
+          drawRoundedRect(ctx, boxX, y, boxW, boxH, 18);
+          ctx.fillStyle = 'rgba(255,255,255,0.75)';
           ctx.fill();
-          ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+          ctx.lineWidth = 1;
           ctx.stroke();
 
-          const badgeSize = 58;
-          const badgeX = boxX + 24;
-          const badgeY = y + 24;
+          const badgeSize = 38;
+          const badgeX = boxX + 18;
+          const badgeY = y + 16;
           ctx.fillStyle = '#F97316';
           ctx.beginPath();
           ctx.arc(badgeX + badgeSize / 2, badgeY + badgeSize / 2, badgeSize / 2, 0, Math.PI * 2);
           ctx.fill();
           ctx.fillStyle = '#FFFFFF';
-          ctx.font = '900 34px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+          ctx.font = '900 22px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText(item.num, badgeX + badgeSize / 2, badgeY + badgeSize / 2 + 1);
           ctx.textAlign = 'left';
           ctx.textBaseline = 'alphabetic';
 
-          ctx.fillStyle = '#FFFFFF';
-          ctx.font = '700 36px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-          ctx.fillText(item.title, badgeX + 78, y + 66);
+          ctx.fillStyle = '#1E293B';
+          ctx.font = '700 24px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+          ctx.fillText(item.title, badgeX + 52, y + 42);
 
-          ctx.fillStyle = 'rgba(255,255,255,0.88)';
-          ctx.font = '500 30px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-          drawWrappedText(ctx, item.text, badgeX + 78, y + 116, boxW - 120, 46, 4);
+          ctx.fillStyle = '#475569';
+          ctx.font = '500 19px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+          drawWrappedText(ctx, item.text, badgeX + 52, y + 72, boxW - 88, 28, 3);
 
-          y += boxH + 24;
+          y += boxH + 14;
         });
 
-        const actionBoxX = 72;
-        const actionBoxY = y;
-        const actionBoxW = width - 144;
-        const actionBoxH = 980;
-        drawRoundedRect(ctx, actionBoxX, actionBoxY, actionBoxW, actionBoxH, 28);
-        ctx.fillStyle = 'rgba(255,255,255,0.1)';
+        /* アクションプラン */
+        y += 6;
+        const actionBoxX = pad;
+        const actionBoxW = width - pad * 2;
+        const actionBoxH = height - y - 70;
+        drawRoundedRect(ctx, actionBoxX, y, actionBoxW, actionBoxH, 18);
+        ctx.fillStyle = 'rgba(255,255,255,0.75)';
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255,209,102,0.55)';
-        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#F59E0B';
+        ctx.lineWidth = 2;
         ctx.stroke();
 
-        ctx.fillStyle = '#FCD34D';
-        ctx.font = '700 36px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText('✍ あなたのアクションプラン', actionBoxX + 30, actionBoxY + 62);
+        ctx.fillStyle = '#B45309';
+        ctx.font = '700 24px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        ctx.fillText('✍ あなたのアクションプラン', actionBoxX + 22, y + 38);
 
-        drawRoundedRect(ctx, actionBoxX + 26, actionBoxY + 92, actionBoxW - 52, actionBoxH - 160, 18);
-        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        drawRoundedRect(ctx, actionBoxX + 16, y + 56, actionBoxW - 32, actionBoxH - 76, 12);
+        ctx.fillStyle = '#FFFBEB';
         ctx.fill();
 
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = '500 32px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        drawWrappedText(ctx, userText, actionBoxX + 46, actionBoxY + 146, actionBoxW - 92, 46, 14);
+        ctx.fillStyle = '#1E293B';
+        ctx.font = '500 20px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        drawWrappedText(ctx, userText, actionBoxX + 30, y + 86, actionBoxW - 60, 30, 10);
 
-        try {
-          const goodImg = await loadImage('ok.png');
-          const iconSize = 208;
-          const iconX = width - 56 - iconSize;
-          const iconY = height - 64 - iconSize;
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(iconX + iconSize / 2, iconY + iconSize / 2, iconSize / 2, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.clip();
-          ctx.drawImage(goodImg, iconX, iconY, iconSize, iconSize);
-          ctx.restore();
-          ctx.strokeStyle = 'rgba(255,255,255,0.75)';
-          ctx.lineWidth = 4;
-          ctx.beginPath();
-          ctx.arc(iconX + iconSize / 2, iconY + iconSize / 2, iconSize / 2 - 2, 0, Math.PI * 2);
-          ctx.stroke();
-        } catch (e) {
-          ctx.fillStyle = '#10B981';
-          ctx.font = '900 108px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-          ctx.fillText('👍', width - 190, height - 92);
-        }
-
+        /* フッター */
         const now = new Date();
         const stamp = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        ctx.fillStyle = 'rgba(255,255,255,0.55)';
-        ctx.font = '500 26px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-        ctx.fillText(`Generated at ${stamp}`, 72, height - 58);
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = '500 16px "Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
+        ctx.fillText(`Generated at ${stamp}`, pad, height - 24);
 
         const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
         if (!blob) throw new Error('PNG生成に失敗しました');
