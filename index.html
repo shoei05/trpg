@@ -5397,19 +5397,24 @@
         ctx.fillStyle = bg;
         ctx.fillRect(0, 0, width, height);
 
-        /* ogp画像 */
+        /* ogp画像（横長バナー） */
         let y = pad;
         try {
           const ogpImg = await loadImage('ogp.png');
-          const imgSize = 160;
-          const imgX = (width - imgSize) / 2;
+          const imgW = width - pad * 2;
+          const imgH = 180;
+          const imgX = pad;
           ctx.save();
-          drawRoundedRect(ctx, imgX, y, imgSize, imgSize, 24);
+          drawRoundedRect(ctx, imgX, y, imgW, imgH, 20);
           ctx.clip();
-          ctx.drawImage(ogpImg, imgX, y, imgSize, imgSize);
+          /* 正方形画像を横長にクロップ（中央寄せ） */
+          const scale = imgW / ogpImg.width;
+          const drawH = ogpImg.height * scale;
+          const drawY = y + (imgH - drawH) / 2;
+          ctx.drawImage(ogpImg, imgX, drawY, imgW, drawH);
           ctx.restore();
-          y += imgSize + 20;
-        } catch (e) { y += 20; }
+          y += imgH + 16;
+        } catch (e) { y += 16; }
 
         /* タイトル */
         ctx.fillStyle = '#1E293B';
