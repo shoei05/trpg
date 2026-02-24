@@ -4502,17 +4502,40 @@
 
     function shareApp() {
       closeJumpMenu();
-      const url = 'https://shoei05.github.io/trpg';
-      const title = '災害医療ワークショップ';
-      if (navigator.share) {
-        navigator.share({ title: title, url: url }).catch(() => { });
-      } else {
+      const url = 'https://shoei05.github.io/trpg/';
+
+      // シェアダイアログを表示
+      let overlay = document.getElementById('share-overlay');
+      if (overlay) overlay.remove();
+
+      overlay = document.createElement('div');
+      overlay.id = 'share-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:10000;display:flex;align-items:center;justify-content:center;';
+      overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+
+      const dialog = document.createElement('div');
+      dialog.style.cssText = 'background:#fff;border-radius:16px;padding:24px;margin:16px;max-width:360px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.2);';
+      dialog.innerHTML = `
+        <div style="font-size:16px;font-weight:bold;margin-bottom:12px;">📤 このアプリをシェア</div>
+        <div style="display:flex;align-items:center;gap:8px;background:#F3F4F6;border-radius:8px;padding:10px 12px;">
+          <span style="flex:1;font-size:13px;color:#374151;word-break:break-all;user-select:all;">${url}</span>
+          <button id="share-copy-btn" style="flex-shrink:0;background:#3B82F6;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:bold;cursor:pointer;white-space:nowrap;">コピー</button>
+        </div>
+        <button id="share-close-btn" style="display:block;margin:14px auto 0;background:none;border:none;color:#6B7280;font-size:13px;cursor:pointer;">閉じる</button>
+      `;
+      overlay.appendChild(dialog);
+      document.body.appendChild(overlay);
+
+      document.getElementById('share-copy-btn').onclick = () => {
         navigator.clipboard.writeText(url).then(() => {
-          showToast('📋 URLをコピーしました');
+          document.getElementById('share-copy-btn').textContent = 'コピーしました';
+          document.getElementById('share-copy-btn').style.background = '#10B981';
+          setTimeout(() => overlay.remove(), 1200);
         }).catch(() => {
           prompt('URLをコピーしてください：', url);
         });
-      }
+      };
+      document.getElementById('share-close-btn').onclick = () => overlay.remove();
     }
 
     function showToast(msg) {
