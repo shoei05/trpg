@@ -2480,10 +2480,10 @@
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第3幕</div>
-        <button class="jump-item" type="button" onclick="jumpToScene('3-1')">シーン5（要配慮者の避難）</button>
-        <button class="jump-item" type="button" onclick="jumpToScreen('column-vulnerable')">💊 コラム：要配慮者と「もしものとき」</button>
-        <button class="jump-item" type="button" onclick="jumpToScene('3-2')">シーン6（BCPの備え）</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('3-1')">シーン5（BCPの備え）</button>
         <button class="jump-item" type="button" onclick="jumpToScreen('column-bcp')">📋 コラム：BCPとは</button>
+        <button class="jump-item" type="button" onclick="jumpToScene('3-2')">シーン6（要配慮者の避難）</button>
+        <button class="jump-item" type="button" onclick="jumpToScreen('column-vulnerable')">💊 コラム：要配慮者と「もしものとき」</button>
       </div>
       <div class="jump-group">
         <div class="jump-group-title">第4幕</div>
@@ -3740,7 +3740,7 @@
         </ul>
       </div>
 
-      <button class="btn-column-next-emerald" onclick="continueFromColumnVulnerable()">シーン6へ進む →</button>
+      <button class="btn-column-next-emerald" onclick="continueFromColumnVulnerable()">ハザードマップを確認する →</button>
     </div>
   </div>
 
@@ -3916,7 +3916,7 @@
       <div style="font-size:11px; color:#9CA3AF; text-align:center; margin-bottom:12px;">※
         本資料はワークショップ補足教材です。BCPの具体的な策定は厚生労働省ガイドラインを参照してください。</div>
 
-      <button class="btn-column-next-green" onclick="continueFromColumnBCP()">ハザードマップを確認する →</button>
+      <button class="btn-column-next-green" onclick="continueFromColumnBCP()">シーン6へ進む →</button>
     </div>
   </div>
 
@@ -4203,42 +4203,6 @@
           {
             id: "3-1",
             label: "第3幕 シーン5",
-            messages: [
-              { type: "narrator", text: "発災から3日目。クリニックの診療を再開し、患者への連絡対応が続いていた。" },
-              { type: "staff", text: "先生、昨日来る予定だった車いすの三毛田チヨさんが、今日も来られていないんです。電話もつながらなくて……心配で。" },
-              { type: "nanta", text: "三毛田さんか……。事前に避難経路や緊急連絡先を確認しておかなかったな……。" },
-              { type: "narrator", text: "三毛田チヨさんは下肢障害のある患者で、車いすなしには外出できない。家族は遠方で、ふだんは独居だ。" }
-            ],
-            question: "こうした状況を防ぐために、普段からできることは何でしたか？",
-            choices: [
-              {
-                letter: "A",
-                text: "災害時は市の行政や民生委員が対応してくれるはず",
-                quality: "rethink",
-                comment: "行政・民生委員も大切な役割ですが、大規模災害時は人手が圧倒的に不足します。とくに移動に支援が必要な患者さんには、かかりつけ医との日常的な関係が重要な安全網になります。",
-                bestComment: "B → 普段の診療で「避難先」「緊急連絡先」を確認しておく"
-              },
-              {
-                letter: "B",
-                text: "普段の診療のなかで「どこに避難するか」「誰に助けてもらうか」を話し合っておく",
-                quality: "great",
-                comment: "正解！かかりつけ医は患者さんの生活・家族状況をよく知っています。移動に支援が必要な患者さんほど、日常診療の中で「災害時個別避難計画」の話題を出しておくことが最大の備えです。",
-                bestComment: null
-              },
-              {
-                letter: "C",
-                text: "緊急連絡先だけカルテに記録しておけば十分",
-                quality: "ok",
-                comment: "緊急連絡先の把握は必要ですが、「誰がどこに避難するか・どう移動するか」まで具体化しておかないと、災害時に動けません。車いすユーザーには特に具体的な計画が必要です。",
-                bestComment: "B → 「どこに逃げるか・どう移動するか」まで話し合っておくことが重要"
-              }
-            ],
-            learningPoint: "【要配慮者とは、平時に話しておく】\n\n車いすの方、透析・在宅酸素（HOT）の方など、災害時に自力での避難や治療継続が難しい患者さんがいます。ふだんの診療の中で「どこに逃げるか」「誰に連絡するか」を話しておくことが、いちばんの備えです。\n\n💡 「リスト」を作っておこう\n・透析：施設名、曜日、移動手段、家族連絡先\n・HOT：機器種別、予備ボンベ・電源の有無、酸素事業者の緊急連絡先\n・車いす・独居：避難先、移動手段、支援してくれる人\n\n💡 災害時、実際に動くのは誰？\n・透析 → かかりつけの透析施設が中心。日本透析医会の「災害時情報ネットワーク」で受入調整が行われます\n・HOT → 酸素事業者が中心。24時間体制で安否確認・ボンベ配送まで対応する企業もあります\n・開業医の役割は「自院にこうした患者さんがいることを把握し、いざという時に正しい連絡先を知っていること」です\n\n※ 透析ネットワークや事業者の体制は地域によって異なります。自分の地域ではどうなっているか、平時に確認しておきましょう。",
-            nextScene: "3-2"
-          },
-          {
-            id: "3-2",
-            label: "第3幕 シーン6",
             preMessages: [
 
               // <!-- 画像挿入ポイント：棚から薬が散乱している画像 -->
@@ -4274,6 +4238,42 @@
               }
             ],
             learningPoint: "「人・モノ・通信・お金」の4視点でBCPを整備しよう。\n要配慮者との平時の対話が、災害時の安全網になる。",
+            nextScene: "3-2"
+          },
+          {
+            id: "3-2",
+            label: "第3幕 シーン6",
+            messages: [
+              { type: "narrator", text: "発災から3日目。クリニックの診療を再開し、患者への連絡対応が続いていた。" },
+              { type: "staff", text: "先生、昨日来る予定だった車いすの三毛田チヨさんが、今日も来られていないんです。電話もつながらなくて……心配で。" },
+              { type: "nanta", text: "三毛田さんか……。事前に避難経路や緊急連絡先を確認しておかなかったな……。" },
+              { type: "narrator", text: "三毛田チヨさんは下肢障害のある患者で、車いすなしには外出できない。家族は遠方で、ふだんは独居だ。" }
+            ],
+            question: "こうした状況を防ぐために、普段からできることは何でしたか？",
+            choices: [
+              {
+                letter: "A",
+                text: "災害時は市の行政や民生委員が対応してくれるはず",
+                quality: "rethink",
+                comment: "行政・民生委員も大切な役割ですが、大規模災害時は人手が圧倒的に不足します。とくに移動に支援が必要な患者さんには、かかりつけ医との日常的な関係が重要な安全網になります。",
+                bestComment: "B → 普段の診療で「避難先」「緊急連絡先」を確認しておく"
+              },
+              {
+                letter: "B",
+                text: "普段の診療のなかで「どこに避難するか」「誰に助けてもらうか」を話し合っておく",
+                quality: "great",
+                comment: "正解！かかりつけ医は患者さんの生活・家族状況をよく知っています。移動に支援が必要な患者さんほど、日常診療の中で「災害時個別避難計画」の話題を出しておくことが最大の備えです。",
+                bestComment: null
+              },
+              {
+                letter: "C",
+                text: "緊急連絡先だけカルテに記録しておけば十分",
+                quality: "ok",
+                comment: "緊急連絡先の把握は必要ですが、「誰がどこに避難するか・どう移動するか」まで具体化しておかないと、災害時に動けません。車いすユーザーには特に具体的な計画が必要です。",
+                bestComment: "B → 「どこに逃げるか・どう移動するか」まで話し合っておくことが重要"
+              }
+            ],
+            learningPoint: "【要配慮者とは、平時に話しておく】\n\n車いすの方、透析・在宅酸素（HOT）の方など、災害時に自力での避難や治療継続が難しい患者さんがいます。ふだんの診療の中で「どこに逃げるか」「誰に連絡するか」を話しておくことが、いちばんの備えです。\n\n💡 「リスト」を作っておこう\n・透析：施設名、曜日、移動手段、家族連絡先\n・HOT：機器種別、予備ボンベ・電源の有無、酸素事業者の緊急連絡先\n・車いす・独居：避難先、移動手段、支援してくれる人\n\n💡 災害時、実際に動くのは誰？\n・透析 → かかりつけの透析施設が中心。日本透析医会の「災害時情報ネットワーク」で受入調整が行われます\n・HOT → 酸素事業者が中心。24時間体制で安否確認・ボンベ配送まで対応する企業もあります\n・開業医の役割は「自院にこうした患者さんがいることを把握し、いざという時に正しい連絡先を知っていること」です\n\n※ 透析ネットワークや事業者の体制は地域によって異なります。自分の地域ではどうなっているか、平時に確認しておきましょう。",
             nextAct: "hazard",
             nextAfterBCP: "act4"
           }
@@ -4573,11 +4573,11 @@
         return;
       }
       if (screenName === 'column-bcp') {
-        showColumnBCP();
+        showColumnBCP('3-2');
         return;
       }
       if (screenName === 'column-vulnerable') {
-        showColumnVulnerable('3-2');
+        showColumnVulnerable('hazard');
         return;
       }
       if (screenName === 'column-legal') {
@@ -4985,7 +4985,7 @@
       if (nextAct === 'hazard') {
         const afterBCPAct = currentScene.nextAfterBCP || 'summary';
         if (currentScene.id === '3-2') {
-          nextButtonHtml = `<button class="btn-continue" onclick="showColumnBCP('${afterBCPAct}')">📋 コラム：BCPを読む →</button>`;
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnVulnerable('hazard')">💊 コラムを読む →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToHazard('${afterBCPAct}')">ハザードマップを確認する →</button>`;
         }
@@ -5009,7 +5009,7 @@
         } else if (currentScene.id === '2-info') {
           nextButtonHtml = `<button class="btn-continue" onclick="openDisasterAppsGuide('${nextSceneId}')">防災アプリ紹介へ →</button>`;
         } else if (currentScene.id === '3-1') {
-          nextButtonHtml = `<button class="btn-continue" onclick="showColumnVulnerable('${nextSceneId}')">💊 コラムを読む →</button>`;
+          nextButtonHtml = `<button class="btn-continue" onclick="showColumnBCP('${nextSceneId}')">📋 コラム：BCPを読む →</button>`;
         } else {
           nextButtonHtml = `<button class="btn-continue" onclick="goToNextScene('${nextSceneId}')">次のシーンへ →</button>`;
         }
@@ -5101,14 +5101,21 @@
       goToNextAct(columnLegalNextAct);
     }
 
-    function showColumnBCP(afterBCPAct) {
-      columnBCPNextAct = afterBCPAct || 'act4';
+    function showColumnBCP(nextTarget) {
+      columnBCPNextAct = nextTarget || 'act4';
       setActLabel('コラム：BCP（事業継続計画）');
       showScreen('column-bcp');
     }
 
     function continueFromColumnBCP() {
-      goToHazard(columnBCPNextAct);
+      // nextTarget がシーンID（例: '3-2'）ならそのシーンへ、それ以外ならハザードへ
+      if (columnBCPNextAct && columnBCPNextAct.match(/^\d+-\d+$/)) {
+        const act = STORY[currentAct];
+        if (act) setActLabel(act.label + '：' + act.title);
+        goToNextScene(columnBCPNextAct);
+      } else {
+        goToHazard(columnBCPNextAct);
+      }
     }
 
     function showColumnPhone() {
@@ -5116,23 +5123,25 @@
       showScreen('column-phone');
     }
 
-    let columnVulnerableNextScene = null;
-    function showColumnVulnerable(nextSceneId) {
-      columnVulnerableNextScene = nextSceneId;
+    let columnVulnerableNextTarget = null;
+    function showColumnVulnerable(nextTarget) {
+      columnVulnerableNextTarget = nextTarget;
       setActLabel('コラム：要配慮者と「もしものとき」');
       showScreen('column-vulnerable');
     }
 
     function continueFromColumnVulnerable() {
-      if (!columnVulnerableNextScene) {
-        goToNextAct('act4');
-        return;
+      const target = columnVulnerableNextTarget || 'act4';
+      columnVulnerableNextTarget = null;
+      if (target === 'hazard') {
+        goToHazard('act4');
+      } else if (target.match(/^\d+-\d+$/)) {
+        const act = STORY[currentAct];
+        if (act) setActLabel(act.label + '：' + act.title);
+        goToNextScene(target);
+      } else {
+        goToNextAct(target);
       }
-      const sceneId = columnVulnerableNextScene;
-      columnVulnerableNextScene = null;
-      const act = STORY[currentAct];
-      if (act) setActLabel(act.label + '：' + act.title);
-      goToNextScene(sceneId);
     }
 
     function continueFromColumn() {
